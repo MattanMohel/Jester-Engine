@@ -8,7 +8,7 @@ Gameobject* Gameobject::Instantiate(std::string&& name)
 
 void Gameobject::Destroy(Gameobject* gameobject)
 {
-	//delete at a certain point later
+	//delete at a certain-after application->Run()?
 	delete gameobject;
 }
 

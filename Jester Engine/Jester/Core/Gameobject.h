@@ -17,14 +17,16 @@ public:
 
 #pragma region Component Templated Methods
 
-	//statically instances TComponent to get ID
+	/*statically instances unique pointers for different
+	TComponents - each with their own templated instance*/
 	template<typename TComponent>
-	static const COMPONENT_ID& GetTComponentID()
+	static const COMP_ID& GetTComponentID()
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		static TComponent componentInstance;
-		return componentInstance.GetID();
+		static COMP_ID ID = Component::NewID();
+		
+		return ID;
 	}	
 
 	//adds component of type TComponent
@@ -42,14 +44,13 @@ public:
 		TComponent* component = new TComponent();
 		component->Init(this);
 
-		m_Components.insert({ component->GetID(), component });
+		m_Components.insert({ GetTComponentID<TComponent>(), component });
 	}	
 	
 	//removes component of type TComponent
 	template<typename TComponent>
 	void RemoveComponent()
 	{
-
 		DERIVES_FROM_COMPONENT_ASSERT;
 
 		if (m_Components.find(GetTComponentID<TComponent>()) == m_Components.end())
@@ -75,7 +76,6 @@ public:
 	template<typename TComponent>
 	static TComponent* FindComponent()
 	{
-
 		DERIVES_FROM_COMPONENT_ASSERT;
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects())
@@ -93,7 +93,6 @@ public:
 	template<typename TComponent>
 	static std::vector<TComponent*> FindComponents()
 	{
-
 		DERIVES_FROM_COMPONENT_ASSERT;
 
 		std::vector<TComponent*> components; 
@@ -122,6 +121,6 @@ private:
 
 private:
 
-	std::unordered_map<COMPONENT_ID, Component*> m_Components;
+	std::unordered_map<COMP_ID, Component*> m_Components;
 };
 

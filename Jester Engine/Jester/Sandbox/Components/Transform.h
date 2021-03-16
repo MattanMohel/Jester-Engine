@@ -22,16 +22,10 @@ public:
 		std::cout << "Transform Awake\n";
 		std::cout << transform.position << "\n";
 	}
-	void OnUpdate(const Time* Time) override
+	void OnFixedUpdate(const Time* Time) override
 	{
-		
+		std::cout << "transform\n";
 	}
-
-	const COMPONENT_ID& GetID() const override
-	{
-		static COMPONENT_ID ID = HashID("Transform");
-		return ID;
-	}	
 
 	TransformData transform;
 	//data regarding children/parents

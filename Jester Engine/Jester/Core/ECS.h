@@ -4,7 +4,7 @@
 
 #define DERIVES_FROM_COMPONENT_ASSERT static_assert(std::is_base_of<Component, TComponent>::value, "TComponent must derive from Component")
 
-typedef unsigned int COMPONENT_ID;
+typedef unsigned int COMP_ID;
 
 class Component
 {
@@ -19,8 +19,6 @@ public:
 	virtual void OnUpdate(const Time* Time) {}
 	//called in Application->Run every .2 seconds;
 	virtual void OnFixedUpdate(const Time* Time) {}
-
-	virtual const COMPONENT_ID& GetID() const = 0;
 	
 	//initializes gameobject value
 	virtual void Init(Gameobject* gameobject)
@@ -37,10 +35,12 @@ protected:
 		std::cout << "Deleted Component\n";
 	}
 
-	//returns a hash of component string ID
-	inline static COMPONENT_ID HashID(std::string&& ID) 
+	//retrieves static data identifier
+	static const COMP_ID& NewID()
 	{
-		static std::hash<std::string> IDHash;
-		return IDHash(ID);
+		static COMP_ID currID = 0; 
+		currID++;
+
+		return currID;
 	}
 };

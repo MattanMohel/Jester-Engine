@@ -17,12 +17,6 @@ public:
 	{
 		PrintSample(3);
 	}
-	
-	const COMPONENT_ID& GetID() const override
-	{
-		static const COMPONENT_ID ID = HashID("Sample");
-		return ID;
-	}
 
 	void PrintSample(int a)
 	{
