@@ -1,4 +1,6 @@
 #include "Application.h"
+#include <thread>
+using namespace std::literals::chrono_literals;
 
 Application* Application::Get()
 {
@@ -16,7 +18,8 @@ void Application::Init()
 	//On Awake Call
 	for (Gameobject* gameobject : m_Gameobjects)
 	{
-		gameobject->OnAwake();
+		if (!(gameobject->isEnabled)) continue;
+		gameobject->OnAwake(); 
 	}
 }
 
@@ -39,6 +42,7 @@ void Application::Run()
 
 			for (Gameobject* gameobject : m_Gameobjects)
 			{
+				if (!(gameobject->isEnabled)) continue;
 				gameobject->OnFixedUpdate(Time::Get());
 			}
 		}
@@ -46,6 +50,7 @@ void Application::Run()
 		//Call Gameobject Updates
 		for (Gameobject* gameobject : m_Gameobjects)
 		{
+			if (!(gameobject->isEnabled)) continue;
 			gameobject->OnUpdate(Time::Get());
 		}
 	}

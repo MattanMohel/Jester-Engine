@@ -1,11 +1,13 @@
 #pragma once
 
 #include <unordered_map>
+#include <typeindex>
 
 #include "Jester.h"
 
 class Gameobject  
 {
+
 	friend class Application;
 
 public:
@@ -14,20 +16,9 @@ public:
 	static void Destroy(Gameobject* gameobject);
 
 	std::string name;
+	bool isEnabled = true;
 
 #pragma region Component Templated Methods
-
-	/*statically instances unique pointers for different
-	TComponents - each with their own templated instance*/
-	template<typename TComponent>
-	static const COMP_ID& GetTComponentID()
-	{
-		DERIVES_FROM_COMPONENT_ASSERT;
-
-		static COMP_ID ID = Component::NewID();
-		
-		return ID;
-	}	
 
 	//adds component of type TComponent
 	template<typename TComponent>
@@ -35,16 +26,16 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (m_Components.find(GetTComponentID<TComponent>()) != m_Components.end())
+		if (m_Components.find(std::type_index(typeid(TComponent))) != m_Components.end())
 		{
-			std::cerr << "tried to add a duplicate component to " << name << "\n";
+			Logger::Print(Logger::Warning, "Tried to add duplicate component to ", name);
 			return;
 		}
-		
+
 		TComponent* component = new TComponent();
 		component->Init(this);
 
-		m_Components.insert({ GetTComponentID<TComponent>(), component });
+		m_Components.insert({ std::type_index(typeid(TComponent)), component });
 	}	
 	
 	//removes component of type TComponent
@@ -53,14 +44,14 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (m_Components.find(GetTComponentID<TComponent>()) == m_Components.end())
+		if (m_Components.find(std::type_index(typeid(TComponent))) == m_Components.end())
 		{
-			std::cerr << "tried to remove a non-existent component from " << name << "\n";
+			Logger::Print(Logger::Warning, "Tried to remove non-existing component from ", name);
 			return;
 		}
 
-		delete m_Components[GetTComponentID<TComponent>()];
-		m_Components.erase (GetTComponentID<TComponent>());
+		delete m_Components[std::type_index(typeid(TComponent))];
+		m_Components.erase (std::type_index(typeid(TComponent)));
 	}
 
 	//Accesses type TComponent of gameobject
@@ -69,7 +60,7 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		return (TComponent*)m_Components[GetTComponentID<TComponent>()];
+		return (TComponent*)m_Components[std::type_index(typeid(TComponent))];
 	}
 
 	//Finds first component of type TComponent in all Gameobjects
@@ -80,9 +71,9 @@ public:
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects())
 		{
-			if (gameobject->m_Components.find(GetTComponentID<TComponent>()) != gameobject->m_Components.end())
+			if (gameobject->m_Components.find(std::type_index(typeid(TComponent))) != gameobject->m_Components.end())
 			{
-				return (TComponent*)(gameobject->m_Components[GetTComponentID<TComponent>()]);
+				return (TComponent*)(gameobject->m_Components[std::type_index(typeid(TComponent))]);
 			}
 		}
 
@@ -99,9 +90,9 @@ public:
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects()) 
 		{
-			if (gameobject->m_Components.find(GetTComponentID<TComponent>()) != gameobject->m_Components.end())
+			if (gameobject->m_Components.find(std::type_index(typeid(TComponent))) != gameobject->m_Components.end())
 			{
-				components.push_back((TComponent*)gameobject->m_Components[GetTComponentID<TComponent>()]);
+				components.push_back((TComponent*)gameobject->m_Components[std::type_index(typeid(TComponent))]);
 			}
 		}
 
@@ -121,6 +112,6 @@ private:
 
 private:
 
-	std::unordered_map<COMP_ID, Component*> m_Components;
+	std::unordered_map<std::type_index, Component*> m_Components;
 };
 

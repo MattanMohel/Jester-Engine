@@ -23,8 +23,10 @@ private:
 
 	~Application() { delete Get(); std::cout << "Application Terminated"; }
 
+	//adds gameobject from overall Gameobject vector
 	void AddGameobject(Gameobject* gameobject);
-
+	
+	//removes gameobject from overall Gameobject vector
 	void RemoveGameobject(Gameobject* gameobject);
 	
 	std::vector<Gameobject*> GetGameobjects();

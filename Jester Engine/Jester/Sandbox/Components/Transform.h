@@ -19,15 +19,14 @@ class Transform : public Component
 public:
 	void OnAwake() override
 	{
-		std::cout << "Transform Awake\n";
-		std::cout << transform.position << "\n";
+		Logger::Print("Transform Awake");
 	}
 	void OnFixedUpdate(const Time* Time) override
 	{
-		std::cout << "transform\n";
+		Logger::Print("Transform");
 	}
 
 	TransformData transform;
-	//data regarding children/parents
+	//Node struct
 };
 

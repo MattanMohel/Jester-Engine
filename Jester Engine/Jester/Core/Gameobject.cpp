@@ -8,7 +8,6 @@ Gameobject* Gameobject::Instantiate(std::string&& name)
 
 void Gameobject::Destroy(Gameobject* gameobject)
 {
-	//delete at a certain-after application->Run()?
 	delete gameobject;
 }
 
@@ -41,6 +40,7 @@ void Gameobject::OnUpdate(const Time* Time)
 {
 	for (auto& component : m_Components)
 	{
+		if (!(component.second->isEnabled)) continue;
 		component.second->OnUpdate(Time);
 	}
 }

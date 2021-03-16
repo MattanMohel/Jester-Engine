@@ -66,8 +66,9 @@ private:
 	}
 
 	Time() : fpsTracker{ 0 } {}
+	~Time() { delete Get(); }
 
-	static constexpr size_t FPS_RESOLUTION = 25;
+	static constexpr size_t FPS_RESOLUTION = 5;
 	static_assert(FPS_RESOLUTION % 5 == 0, "FPS_RESOLUTION must be divisible by 5");
 
 	double fpsTracker[FPS_RESOLUTION];

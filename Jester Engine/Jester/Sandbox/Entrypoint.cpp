@@ -8,11 +8,9 @@ int main()
 
 	Gameobject* obj = Gameobject::Instantiate("obj");
 	obj->AddComponent<Sample>();
+	obj->AddComponent<Transform>();
 
-	Gameobject* obj_1 = Gameobject::Instantiate("obj_1");
-	obj_1->AddComponent<Sample>();
-
-	Gameobject::Destroy(obj_1);
+	Gameobject::FindComponents<Transform>()[0]->gameobject->RemoveComponent<Transform>();
 
 	Application::Get()->Init(); 
 	Application::Get()->Run();

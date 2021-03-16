@@ -1,6 +1,6 @@
 #pragma once
 
-#define Quote(x) #x
+/*to include within all main Jester files*/
 
 #include <iostream>
 #include <vector>
@@ -10,6 +10,7 @@ class Application;
 class Gameobject;
 
 //common - independent includes
+#include "Log.h"
 #include "Time.h"
 #include "Vector2.h"
 #include "EventSystem.h"
