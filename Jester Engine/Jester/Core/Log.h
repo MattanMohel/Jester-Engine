@@ -1,56 +1,49 @@
 #pragma once
 
 #include <iostream>
-#include <csignal>
-
-enum class LogFlag
-{
-	Debug,
-	Info,
-	Warning,
-	Error
-};
 
 class Logger
 {
 public:
 
+	enum LogFlag
+	{
+		Debug,
+		Info,
+		Warning,
+		Error
+	};
+
 	template<typename... Args>
 	static void Print(const LogFlag& flag, const Args&... args)
 	{
-
-		Time::PrintDateTime();
-
 		switch (flag)
 		{
 		case LogFlag::Debug:
-			std::cout << "-DEBUG- ";
+			std::cout << "Debug ";
 			break;
 		case LogFlag::Info:
-			std::cout << "-INFO- ";
+			std::cout << "Info ";
 			break;
 		case LogFlag::Warning:
-			std::cout << "-WARNING- ";
+			std::cout << "Warning ";
 			break;
 		case LogFlag::Error:
-			std::cout << "-ERROR- ";
+			std::cout << "Error ";
 			break;
 		}
 
 		(std::cout << ... << args) << '\n';
-
-		if (flag == LogFlag::Error)
-			std::raise(SIGINT);
-
 	}
 
 	template<typename... Args>
 	static void Print(const Args&... args)
 	{
-		Time::PrintDateTime();
 
 		(std::cout << ... << args) << '\n';
 	}
+
+private:
 	
 };
 

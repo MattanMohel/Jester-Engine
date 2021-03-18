@@ -4,7 +4,6 @@
 #include <typeindex>
 
 #include "Jester.h"
-#include "../Sandbox/Components.h"
 
 class Gameobject  
 {
@@ -12,28 +11,16 @@ class Gameobject
 	friend class Application;
 
 public:
-	//Instances a new Gameobject, returns a pointer
-	template<typename... TComponent>
-	static Gameobject* Instantiate(std::string&& name)
-	{
-		auto* gameobject = new Gameobject(name);
 
-		(gameobject->AddComponent<TComponent>(), ...);
-
-		return gameobject;
-	}
-
-	static void Destroy(Gameobject* gameobject)
-	{
-		delete gameobject;
-	}
+	static Gameobject* Instantiate(std::string&& name);
+	static void Destroy(Gameobject* gameobject);
 
 	std::string name;
 	bool isEnabled = true;
 
 #pragma region Component Templated Methods
 
-	//Adds component of type TComponent
+	//adds component of type TComponent
 	template<typename TComponent>
 	void AddComponent()
 	{
@@ -41,17 +28,17 @@ public:
 
 		if (m_Components.find(std::type_index(typeid(TComponent))) != m_Components.end())
 		{
-			Logger::Print(LogFlag::Warning, "Tried to add duplicate component to ", name);
+			Logger::Print(Logger::Warning, "Tried to add duplicate component to ", name);
 			return;
 		}
 
-		auto* component = new TComponent();
+		TComponent* component = new TComponent();
 		component->Init(this);
 
 		m_Components.insert({ std::type_index(typeid(TComponent)), component });
 	}	
 	
-	//Removes component of type TComponent
+	//removes component of type TComponent
 	template<typename TComponent>
 	void RemoveComponent()
 	{
@@ -59,7 +46,7 @@ public:
 
 		if (m_Components.find(std::type_index(typeid(TComponent))) == m_Components.end())
 		{
-			Logger::Print(LogFlag::Warning, "Tried to remove non-existing component from ", name);
+			Logger::Print(Logger::Warning, "Tried to remove non-existing component from ", name);
 			return;
 		}
 
@@ -76,7 +63,7 @@ public:
 		return (TComponent*)m_Components[std::type_index(typeid(TComponent))];
 	}
 
-	//Finds first instance of type TComponent
+	//Finds first component of type TComponent in all Gameobjects
 	template<typename TComponent>
 	static TComponent* FindComponent()
 	{
@@ -93,7 +80,7 @@ public:
 		return nullptr;
 	}	
 	
-	//Finds all instances of type TComponent 
+	//Finds all components of type TComponent in all Gameobjects
 	template<typename TComponent>
 	static std::vector<TComponent*> FindComponents()
 	{

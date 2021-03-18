@@ -59,8 +59,5 @@
     <ClCompile Include="Jester\Sandbox\Entrypoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Core\Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
