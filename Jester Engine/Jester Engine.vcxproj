@@ -161,7 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Jester\Core\Application.cpp" />
-    <ClCompile Include="Jester\Core\Log.cpp" />
     <ClCompile Include="Jester\Sandbox\Entrypoint.cpp" />
     <ClCompile Include="Jester\Core\Gameobject.cpp" />
   </ItemGroup>
