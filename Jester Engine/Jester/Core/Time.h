@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Jester.h"
+#include <ctime>
 
 class Time
 {
@@ -40,6 +41,17 @@ public:
 	{
 		return 
 			std::chrono::duration_cast<std::chrono::milliseconds>(CLOCK::now() - m_InitPoint).count();
+	}
+	static void PrintDateTime()
+	{
+		time_t now = time(0);
+		tm* time = localtime(&now);
+
+		std::string tm_sec  = time->tm_sec  < 10 ? "0" + std::to_string(time->tm_sec )  : std::to_string(time->tm_sec);
+		std::string tm_min  = time->tm_min  < 10 ? "0" + std::to_string(time->tm_min )  : std::to_string(time->tm_min);
+		std::string tm_hour = time->tm_hour < 10 ? "0" + std::to_string(time->tm_hour) : std::to_string(time->tm_hour);
+
+		std::cout << "[" + tm_hour + ':' + tm_min + ':' + tm_sec + "] ";
 	}
 
 	size_t GetFPS() const
