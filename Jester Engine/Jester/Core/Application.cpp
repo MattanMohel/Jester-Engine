@@ -11,7 +11,7 @@ Application* Application::Get()
 
 void Application::Init()
 {
-	std::cout << "Init\n";
+	Logger::Print(LogFlag::Info, "Init");
 
 	Time::Get()->Init();
 
@@ -25,7 +25,7 @@ void Application::Init()
 
 void Application::Run()
 {
-	std::cout << "Running\n";
+	Logger::Print(LogFlag::Info, "Running");
 
 	while (isRunning)
 	{

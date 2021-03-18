@@ -1,16 +1,5 @@
 #include "Gameobject.h"
 
-Gameobject* Gameobject::Instantiate(std::string&& name)
-{
-	Gameobject* gameobject = new Gameobject(name);
-	return gameobject;
-}
-
-void Gameobject::Destroy(Gameobject* gameobject)
-{
-	delete gameobject;
-}
-
 Gameobject::Gameobject(std::string& name)
 	:name{ name }
 {
@@ -19,7 +8,7 @@ Gameobject::Gameobject(std::string& name)
 
 Gameobject::~Gameobject()
 {
-	std::cout << "Deleting Gameobject \n";
+	Logger::Print("Deleting Object");
 	Application::Get()->RemoveGameobject(this);
 
 	for (auto& component : m_Components)
