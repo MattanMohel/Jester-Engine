@@ -1,7 +1,9 @@
 #pragma once
 
-#include "Jester.h"
 #include <ctime>
+#include <chrono>
+
+class Application;
 
 class Time
 {

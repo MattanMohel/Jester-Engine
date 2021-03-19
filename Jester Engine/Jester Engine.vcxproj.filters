@@ -24,7 +24,7 @@
     <ClInclude Include="Jester\Core\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Sandbox\Components.h">
+    <ClInclude Include="Jester\Core\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Core\Jester.h">
@@ -36,16 +36,19 @@
     <ClInclude Include="Jester\Core\Vector2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Sandbox\Components\Sample.h">
+    <ClInclude Include="Jester\Sandbox\Sample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Sandbox\Components\Transform.h">
+    <ClInclude Include="Jester\Core\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Core\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Core\EventSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Sandbox\Internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -57,6 +60,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Sandbox\Entrypoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Sandbox\Sample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Core\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -9,17 +9,17 @@
 class Application;
 class Gameobject;
 
-//common - independent includes
-#include "Time.h"
-#include "Log.h"
+#include "Transform.h"
 #include "Vector2.h"
 #include "EventSystem.h"
 
-//core - interdependent includes
+#include "Time.h"
+#include "Log.h"
+
+
 #include "ECS.h"
 
 #include "Application.h"
 
 #include "Gameobject.h"
 
-//log.h

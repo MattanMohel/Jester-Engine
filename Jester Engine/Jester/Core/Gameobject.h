@@ -1,10 +1,16 @@
 #pragma once
 
-#include <unordered_map>
+#include <vector>
 #include <typeindex>
+#include <unordered_map>
 
-#include "Jester.h"
-#include "../Sandbox/Components.h"
+#include "Log.h"
+#include "Application.h"
+#include "ECS.h"
+class Timer; 
+
+class Transform;
+#include "Transform.h"
 
 class Gameobject  
 {
@@ -13,25 +19,13 @@ class Gameobject
 
 public:
 	//Instances a new Gameobject, returns a pointer
-	template<typename... TComponent>
-	static Gameobject* Instantiate(std::string&& name)
-	{
-		auto* gameobject = new Gameobject(name);
-
-		(gameobject->AddComponent<TComponent>(), ...);
-
-		return gameobject;
-	}
-
-	static void Destroy(Gameobject* gameobject)
-	{
-		delete gameobject;
-	}
+	static Gameobject* Instantiate(std::string&& name);
+	//Destroys Gameobject pointer
+	static void Destroy(Gameobject* gameobject);
 
 	std::string name;
 	bool isEnabled = true;
-
-#pragma region Component Templated Methods
+	Transform* transform;
 
 	//Adds component of type TComponent
 	template<typename TComponent>
@@ -111,8 +105,6 @@ public:
 
 		return components;
 	}
-
-#pragma endregion
 
 private:
 

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Jester.h"
+class Timer;
+class Gameobject;
 
 #define DERIVES_FROM_COMPONENT_ASSERT static_assert(std::is_base_of<Component, TComponent>::value, "TComponent must derive from Component")
 

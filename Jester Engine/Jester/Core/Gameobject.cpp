@@ -1,7 +1,19 @@
 #include "Gameobject.h"
 
+Gameobject* Gameobject::Instantiate(std::string&& name)
+{
+	auto* gameobject = new Gameobject(name);
+
+	return gameobject;
+}
+
+void Gameobject::Destroy(Gameobject* gameobject)
+{
+	delete gameobject;
+}
+
 Gameobject::Gameobject(std::string& name)
-	:name{ name }
+	:name(name), transform(new Transform(this))
 {
 	Application::Get()->AddGameobject(this);
 }
@@ -9,6 +21,9 @@ Gameobject::Gameobject(std::string& name)
 Gameobject::~Gameobject()
 {
 	Logger::Print("Deleting Object");
+
+	delete transform;
+
 	Application::Get()->RemoveGameobject(this);
 
 	for (auto& component : m_Components)

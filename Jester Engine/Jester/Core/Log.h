@@ -3,6 +3,8 @@
 #include <iostream>
 #include <csignal>
 
+#include "Time.h"
+
 enum class LogFlag
 {
 	Debug,
@@ -14,9 +16,8 @@ enum class LogFlag
 class Logger
 {
 public:
-
 	template<typename... Args>
-	static void Print(const LogFlag& flag, const Args&... args)
+	inline static void Print(const LogFlag& flag, const Args&... args)
 	{
 
 		Time::PrintDateTime();
@@ -45,7 +46,7 @@ public:
 	}
 
 	template<typename... Args>
-	static void Print(const Args&... args)
+	inline static void Print(const Args&... args)
 	{
 		Time::PrintDateTime();
 

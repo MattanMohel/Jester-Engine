@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Jester.h"
-
 //make events trigger on/before application->Run
 //OnDestroy: add OnDestroy event to Application
 

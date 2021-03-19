@@ -1,6 +1,4 @@
 #include "Application.h"
-#include <thread>
-using namespace std::literals::chrono_literals;
 
 Application* Application::Get()
 {
