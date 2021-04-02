@@ -18,12 +18,14 @@ int main()
 	  /   \  
    obj_3  ob_4   */
 
+	//Set Child-Parent Tree pictured above
 	obj_1->transform->SetChild(obj_3);
 	obj_1->transform->SetChild(obj_4);
 
 	obj_0->transform->SetChild(obj_1);
 	obj_0->transform->SetChild(obj_2);
 
+	//print out Child-Parent dependencies 
 	Logger::Print("obj_0's child[0] is ", obj_0->transform->GetChild(0)->name);
 	Logger::Print("obj_0's child[1] is ", obj_0->transform->GetChild(1)->name);
 
@@ -35,16 +37,20 @@ int main()
 	Logger::Print("obj_3's root is ", obj_3->transform->GetRoot()->name);
 	Logger::Print("obj_4's root is ", obj_4->transform->GetRoot()->name);
 
+	//Read/Write components to gameobject
 	obj_0->AddComponent<SampleComponent>();
 	obj_0->GetComponent<SampleComponent>()->SetInt(5);
 	Logger::Print("obj_0's Sample Returned: ", obj_0->GetComponent<SampleComponent>()->GetInt());
 
 	obj_1->AddComponent<SampleComponent>();
 
-	//cached refrence to SampleComponent 
+	//cached reference to SampleComponent 
 	SampleComponent* sample = obj_1->GetComponent<SampleComponent>();
 	sample->SetInt(10);
 	Logger::Print("obj_1's cached reference to Sample component printed: ", sample->GetInt());
+
+	//Destroy obj_1 so it isn't called on OnUpdate
+	Gameobject::Destroy(obj_1);
 
 	Application::Get()->Init(); 
 	Application::Get()->Run();

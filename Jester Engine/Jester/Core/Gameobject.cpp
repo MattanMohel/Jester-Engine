@@ -20,7 +20,7 @@ Gameobject::Gameobject(std::string& name)
 
 Gameobject::~Gameobject()
 {
-	Logger::Print("Deleting Object");
+	Logger::Print("Deleting ", name);
 
 	delete transform;
 
