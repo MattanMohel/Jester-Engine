@@ -35,12 +35,14 @@ int main()
 	Logger::Print("obj_3's root is ", obj_3->transform->GetRoot()->name);
 	Logger::Print("obj_4's root is ", obj_4->transform->GetRoot()->name);
 
-	obj_0->AddComponent<Sample>();
-	obj_0->GetComponent<Sample>()->SetInt(5);
-	Logger::Print("obj_0's Sample Returned: ", obj_0->GetComponent<Sample>()->GetInt());
+	obj_0->AddComponent<SampleComponent>();
+	obj_0->GetComponent<SampleComponent>()->SetInt(5);
+	Logger::Print("obj_0's Sample Returned: ", obj_0->GetComponent<SampleComponent>()->GetInt());
 
-	obj_1->AddComponent<Sample>();
-	Sample* sample = obj_1->GetComponent<Sample>();
+	obj_1->AddComponent<SampleComponent>();
+
+	//cached refrence to SampleComponent 
+	SampleComponent* sample = obj_1->GetComponent<SampleComponent>();
 	sample->SetInt(10);
 	Logger::Print("obj_1's cached reference to Sample component printed: ", sample->GetInt());
 

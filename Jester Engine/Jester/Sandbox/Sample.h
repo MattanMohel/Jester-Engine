@@ -2,7 +2,7 @@
 
 #include "Internal.h"
 
-class Sample : public Component
+class SampleComponent : public Component
 {
 public:
 	void OnAwake() override;

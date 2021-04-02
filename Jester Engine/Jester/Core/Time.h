@@ -8,7 +8,7 @@ class Application;
 class Time
 {
 
-#define MILL 1000.0
+#define MIL 1000.0
 
 	friend class Application;
 
@@ -37,7 +37,7 @@ public:
 	double TimeSinceStartupInSeconds() const
 	{
 		return 
-			std::chrono::duration_cast<std::chrono::milliseconds>(CLOCK::now() - m_InitPoint).count() / MILL;
+			std::chrono::duration_cast<std::chrono::milliseconds>(CLOCK::now() - m_InitPoint).count() / MIL;
 	}	
 	double TimeSinceStartupInMilliseconds() const
 	{

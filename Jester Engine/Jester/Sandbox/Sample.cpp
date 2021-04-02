@@ -2,12 +2,12 @@
 
 class Time;
 
-void Sample::OnAwake()
+void SampleComponent::OnAwake()
 {
 	Logger::Print("Sample: Awake");
 }
 
-void Sample::OnFixedUpdate(const Time* Time)
+void SampleComponent::OnFixedUpdate(const Time* Time)
 {
 	Logger::Print(gameobject->name, "'s Sample printed from fixed update");
 }
