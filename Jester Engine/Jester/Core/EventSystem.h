@@ -1,5 +1,7 @@
 #pragma once
 
+class Gameobject;
+
 template<typename Args>
 struct EventArgs
 {

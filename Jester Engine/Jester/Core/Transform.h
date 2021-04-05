@@ -6,6 +6,9 @@ class Gameobject;
 
 class Transform 
 {
+
+	friend class Gameobject;
+
 public:
 	Transform(Gameobject* gameobject);
 	~Transform();

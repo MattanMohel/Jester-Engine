@@ -18,7 +18,7 @@
     <ClInclude Include="Jester\Core\Gameobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\ECS.h">
+    <ClInclude Include="Jester\Core\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Core\Application.h">
@@ -51,6 +51,12 @@
     <ClInclude Include="Jester\Sandbox\Internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Jester\Core\Collider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Core\Vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Jester\Core\Gameobject.cpp">
@@ -66,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Core\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Core\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

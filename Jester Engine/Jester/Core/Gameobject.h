@@ -4,18 +4,24 @@
 #include <typeindex>
 #include <unordered_map>
 
+#include "Vector2.h"
+
 #include "Log.h"
 #include "Application.h"
-#include "ECS.h"
+#include "Component.h"
 class Timer; 
 
+class Collider;
 class Transform;
 #include "Transform.h"
+
+#define HASH_OF(TComponent) std::type_index(typeid(TComponent)).hash_code()
 
 class Gameobject  
 {
 
 	friend class Application;
+	friend class Collider;
 
 public:
 	//Instances a new Gameobject, returns a pointer
@@ -25,6 +31,7 @@ public:
 
 	std::string name;
 	bool isEnabled = true;
+	Vector2 position;
 	Transform* transform;
 
 	//Adds component of type TComponent
@@ -33,7 +40,7 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (m_Components.find(std::type_index(typeid(TComponent))) != m_Components.end())
+		if (m_Components.find(HASH_OF(TComponent)) != m_Components.end())
 		{
 			Logger::Print(LogFlag::Warning, "Tried to add duplicate component to ", name);
 			return;
@@ -42,7 +49,7 @@ public:
 		auto* component = new TComponent();
 		component->Init(this);
 
-		m_Components.insert({ std::type_index(typeid(TComponent)), component });
+		m_Components.insert({ HASH_OF(TComponent), component });
 	}	
 	
 	//Removes component of type TComponent
@@ -51,14 +58,14 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (m_Components.find(std::type_index(typeid(TComponent))) == m_Components.end())
+		if (m_Components.find(HASH_OF(TComponent)) == m_Components.end())
 		{
 			Logger::Print(LogFlag::Warning, "Tried to remove non-existing component from ", name);
 			return;
 		}
 
-		delete m_Components[std::type_index(typeid(TComponent))];
-		m_Components.erase (std::type_index(typeid(TComponent)));
+		delete m_Components[HASH_OF(TComponent)];
+		m_Components.erase (HASH_OF(TComponent));
 	}
 
 	//Accesses type TComponent of gameobject
@@ -67,7 +74,7 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		return (TComponent*)m_Components[std::type_index(typeid(TComponent))];
+		return (TComponent*)m_Components[HASH_OF(TComponent)];
 	}
 
 	//Finds first instance of type TComponent
@@ -78,9 +85,9 @@ public:
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects())
 		{
-			if (gameobject->m_Components.find(std::type_index(typeid(TComponent))) != gameobject->m_Components.end())
+			if (gameobject->m_Components.find(HASH_OF(TComponent)) != gameobject->m_Components.end())
 			{
-				return (TComponent*)(gameobject->m_Components[std::type_index(typeid(TComponent))]);
+				return (TComponent*)(gameobject->m_Components[HASH_OF(TComponent)]);
 			}
 		}
 
@@ -97,9 +104,9 @@ public:
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects()) 
 		{
-			if (gameobject->m_Components.find(std::type_index(typeid(TComponent))) != gameobject->m_Components.end())
+			if (gameobject->m_Components.find(HASH_OF(TComponent)) != gameobject->m_Components.end())
 			{
-				components.push_back((TComponent*)gameobject->m_Components[std::type_index(typeid(TComponent))]);
+				components.push_back((TComponent*)gameobject->m_Components[HASH_OF(TComponent)]);
 			}
 		}
 
@@ -115,8 +122,13 @@ private:
 	void OnUpdate(const Time* Time);
 	void OnFixedUpdate(const Time* Time);
 
+	void OnCollisionEnter(Collider& other);
+	void  OnCollisionStay(Collider& other);
+	void  OnCollisionExit(Collider& other);
+
 private:
 
-	std::unordered_map<std::type_index, Component*> m_Components;
+	std::unordered_map<unsigned short, Component*> m_Components;
+	unsigned long m_ID;
 };
 

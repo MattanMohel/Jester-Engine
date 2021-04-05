@@ -3,6 +3,10 @@
 Gameobject* Gameobject::Instantiate(std::string&& name)
 {
 	auto* gameobject = new Gameobject(name);
+	
+	static unsigned long curr_ID = 0;
+	gameobject->m_ID = curr_ID;
+	curr_ID++;
 
 	return gameobject;
 }
@@ -13,7 +17,7 @@ void Gameobject::Destroy(Gameobject* gameobject)
 }
 
 Gameobject::Gameobject(std::string& name)
-	:name(name), transform(new Transform(this))
+	:name(name), m_ID(0), transform(new Transform(this)), position({0, 0})
 {
 	Application::Get()->AddGameobject(this);
 }
@@ -55,4 +59,31 @@ void Gameobject::OnFixedUpdate(const Time* Time)
 	{
 		component.second->OnFixedUpdate(Time);
 	}
+}
+
+void Gameobject::OnCollisionEnter(Collider& other)
+{
+	for (auto& component : m_Components)
+		component.second->OnCollisionEnter(other);
+
+	for (auto& child : transform->m_Children)
+		child->gameobject->OnCollisionEnter(other);
+}
+
+void Gameobject::OnCollisionStay(Collider& other)
+{
+	for (auto& component : m_Components)
+		component.second->OnCollisionStay(other);
+
+	for (auto& child : transform->m_Children)
+		child->gameobject->OnCollisionStay(other);
+}
+
+void Gameobject::OnCollisionExit(Collider& other)
+{
+	for (auto& component : m_Components)
+		component.second->OnCollisionExit(other);
+
+	for (auto& child : transform->m_Children)
+		child->gameobject->OnCollisionExit(other);
 }

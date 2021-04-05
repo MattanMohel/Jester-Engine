@@ -1,6 +1,7 @@
 #pragma once
 
-class Timer;
+class Time;
+class Collider;
 class Gameobject;
 
 #define DERIVES_FROM_COMPONENT_ASSERT static_assert(std::is_base_of<Component, TComponent>::value, "TComponent must derive from Component")
@@ -12,30 +13,33 @@ class Component
 	friend class Gameobject; 
 
 public:
-
-	//called in Application->Init
+	//called once on app initialization
 	virtual void OnAwake() {}
-	//called in Application->Run every frame
+	//called once every frame
 	virtual void OnUpdate(const Time* Time) {}
-	//called in Application->Run every .2 seconds;
+	//called once every .2 seconds;
 	virtual void OnFixedUpdate(const Time* Time) {}
-	
+
+	//collision calls, overridden in specialization
+	virtual void OnCollisionEnter(Collider& other) {}
+	virtual void  OnCollisionStay(Collider& other) {}
+	virtual void  OnCollisionExit(Collider& other) {}
 
 	Gameobject* gameobject;
 	bool isEnabled = true;
 
 protected:
-
 	~Component()
 	{
 		std::cout << "Deleted Component\n";
 	}
 
 private:
-
 	//initializes gameobject value
 	virtual void Init(Gameobject* gameobject)
 	{
 		this->gameobject = gameobject;
 	}
+
+	size_t m_IDIndex;
 };

@@ -6,11 +6,14 @@
 struct Vector2
 {
 public:
+	Vector2()
+		: x(0), y(0)
+	{}
 	Vector2(float x, float y)
 		: x(x), y(y)
 	{}
 
-	//returns a vector with x-y components rangig from 0 to 1
+	//returns a vector with x-y components ranging from 0 to 1
 	Vector2 Normalized() const
 	{
 		if (x > y)
@@ -23,7 +26,7 @@ public:
 		}
 	}
 
-	//returns absolute value of length, sqaured
+	//returns absolute value of length, squared
 	static float SquaredDistance(const Vector2& a, const Vector2& b)
 	{
 		return abs((a.x - b.x) * (a.x - b.x)
@@ -35,7 +38,7 @@ public:
 		return 	sqrt(abs((a.x - b.x) * (a.x - b.x)
 			+ (a.y - b.y) * (a.y - b.y)));
 	}
-	//returns length, sqaured
+	//returns length, squared
 	static float SquaredLength(const Vector2& a, const Vector2& b)
 	{
 		return (a.x - b.x) * (a.x - b.x) +
@@ -69,21 +72,26 @@ public:
 		y /= divider;
 	}
 
-	Vector2 operator+ (const Vector2& vec2)
+	Vector2 operator+ (const Vector2& vec2) const
 	{
 		return Vector2(x + vec2.x, y + vec2.y);
 	}
-	Vector2 operator- (const Vector2& vec2)
+	Vector2 operator- (const Vector2& vec2) const
 	{
 		return Vector2(x - vec2.x, y - vec2.y);
 	}
-	Vector2 operator* (const float& num)
+	Vector2 operator* (const float& num) const
 	{
 		return Vector2(x * num, y * num);
 	}
-	Vector2 operator/ (const float& num)
+	Vector2 operator/ (const float& num) const
 	{
 		return Vector2(x / num, y / num);
+	}
+
+	bool operator== (const Vector2 vec2)
+	{
+		return vec2.x == x && vec2.y == y;
 	}
 
 	static friend std::ostream& operator<< (std::ostream& os, const Vector2& vec2)

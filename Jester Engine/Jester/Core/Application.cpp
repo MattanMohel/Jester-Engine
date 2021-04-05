@@ -14,7 +14,7 @@ void Application::Init()
 	Time::Get()->Init();
 
 	//On Awake Call
-	for (Gameobject* gameobject : m_Gameobjects)
+	for (Gameobject* gameobject : m_GameobjectRegistry)
 	{
 		if (!(gameobject->isEnabled)) continue;
 		gameobject->OnAwake(); 
@@ -38,7 +38,7 @@ void Application::Run()
 		{
 			FIXED_UPDATE_TIMER = 0;
 
-			for (Gameobject* gameobject : m_Gameobjects)
+			for (Gameobject* gameobject : m_GameobjectRegistry)
 			{
 				if (!(gameobject->isEnabled)) continue;
 				gameobject->OnFixedUpdate(Time::Get());
@@ -46,7 +46,7 @@ void Application::Run()
 		}
 
 		//Call Gameobject Updates
-		for (Gameobject* gameobject : m_Gameobjects)
+		for (Gameobject* gameobject : m_GameobjectRegistry)
 		{
 			if (!(gameobject->isEnabled)) continue;
 			gameobject->OnUpdate(Time::Get());
@@ -62,16 +62,16 @@ bool Application::Close()
 
 void Application::AddGameobject(Gameobject* gameobject)
 {
-	m_Gameobjects.push_back(gameobject);
+	m_GameobjectRegistry.push_back(gameobject);
 }
 
 void Application::RemoveGameobject(Gameobject* gameobject)
 {
-	const auto& it = std::find(m_Gameobjects.begin(), m_Gameobjects.end(), gameobject);
-	m_Gameobjects.erase(it);
+	const auto& it = std::find(m_GameobjectRegistry.begin(), m_GameobjectRegistry.end(), gameobject);
+	m_GameobjectRegistry.erase(it);
 }
 
 std::vector<Gameobject*> Application::GetGameobjects()
 {
-	return m_Gameobjects;
+	return m_GameobjectRegistry;
 }

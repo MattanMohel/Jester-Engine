@@ -17,7 +17,7 @@ class Gameobject;
 #include "Log.h"
 
 
-#include "ECS.h"
+#include "Component.h"
 
 #include "Application.h"
 

@@ -147,20 +147,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Jester\Core\Collider.h" />
     <ClInclude Include="Jester\Core\Application.h" />
     <ClInclude Include="Jester\Core\EventSystem.h" />
     <ClInclude Include="Jester\Core\Log.h" />
     <ClInclude Include="Jester\Core\Components.h" />
-    <ClInclude Include="Jester\Core\ECS.h" />
+    <ClInclude Include="Jester\Core\Component.h" />
     <ClInclude Include="Jester\Core\Gameobject.h" />
     <ClInclude Include="Jester\Core\Jester.h" />
     <ClInclude Include="Jester\Core\Time.h" />
     <ClInclude Include="Jester\Core\Vector2.h" />
+    <ClInclude Include="Jester\Core\Vector3.h" />
     <ClInclude Include="Jester\Sandbox\Internal.h" />
     <ClInclude Include="Jester\Sandbox\Sample.h" />
     <ClInclude Include="Jester\Core\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Jester\Core\Collider.cpp" />
     <ClCompile Include="Jester\Core\Application.cpp" />
     <ClCompile Include="Jester\Sandbox\Sample.cpp" />
     <ClCompile Include="Jester\Core\Transform.cpp" />

@@ -1,15 +1,17 @@
 #pragma once
 
+#include <vector>
+
 #include "Log.h"
 #include "Time.h"
 #include "Gameobject.h"
+#include "Component.h"
 
 class Application
 {
 	friend class Gameobject;
 
 public:
-
 	static Application* Get();
 
 	void Init();
@@ -18,9 +20,7 @@ public:
 
 	bool Close();
 
-
 private:
-
 	Application() {};
 
 	~Application() { delete Get(); std::cout << "Application Terminated"; }
@@ -37,7 +37,7 @@ private:
 
 	bool isRunning = true;
 
-	std::vector<Gameobject*> m_Gameobjects;
+	std::vector<Gameobject*> m_GameobjectRegistry;
 
 	static constexpr float TIME_BETWEEN_FIXED_UPDATE = 0.2f;
 };
