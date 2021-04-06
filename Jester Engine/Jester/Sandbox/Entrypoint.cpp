@@ -2,6 +2,7 @@
 
 int main()
 {
+#if 0
 	/*Declare Gameobjects here for now
 	Init location will change once you can create Gameobejcts in app*/
 
@@ -51,6 +52,13 @@ int main()
 
 	//Destroy obj_1 so it isn't called on OnUpdate
 	Gameobject::Destroy(obj_1);
+#endif
+	
+	for (int i = 0; i < 100; i++)
+	{
+		Gameobject* obj = Gameobject::Instantiate("test");
+		obj->AddComponent<SampleComponent>();
+	}
 
 	Application::Get()->Init(); 
 	Application::Get()->Run();

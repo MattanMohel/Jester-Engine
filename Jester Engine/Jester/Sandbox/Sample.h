@@ -6,7 +6,7 @@ class SampleComponent : public Component
 {
 public:
 	void OnAwake() override;
-	void OnFixedUpdate(const Time* Time) override;
+	void OnUpdate(const Time* Time) override;
 
 	void SetInt(int a)
 	{

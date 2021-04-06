@@ -25,9 +25,7 @@ public:
 		m_DeltaTime = CLOCK::now() - m_PreviousTime;
 		m_PreviousTime = CLOCK::now();
 
-		static size_t fpsIndex = 0;
-		fpsTracker[fpsIndex] = m_DeltaTime.count();
-		fpsIndex = (fpsIndex + 1) % FPS_RESOLUTION;
+		fpsTracker = m_DeltaTime.count();
 	}
 
 	double DeltaTime() const
@@ -56,19 +54,9 @@ public:
 		std::cout << "[" + tm_hour + ':' + tm_min + ':' + tm_sec + "] ";
 	}
 
-	size_t GetFPS() const
+	double GetFPS() const
 	{
-		double total = 0;
-		for (size_t i = 0; i < FPS_RESOLUTION; i += 5)
-		{
-			total += fpsTracker[i + 0];
-			total += fpsTracker[i + 1];
-			total += fpsTracker[i + 2];
-			total += fpsTracker[i + 3];
-			total += fpsTracker[i + 4];
-		}
-
-		return round(FPS_RESOLUTION / total);
+		return round(1 / fpsTracker);
 	}
 
 private:
@@ -82,10 +70,7 @@ private:
 	Time() : fpsTracker{ 0 } {}
 	~Time() { delete Get(); }
 
-	static constexpr size_t FPS_RESOLUTION = 5;
-	static_assert(FPS_RESOLUTION % 5 == 0, "FPS_RESOLUTION must be divisible by 5");
-
-	double fpsTracker[FPS_RESOLUTION];
+	double fpsTracker;
 
 	std::chrono::duration<double> m_DeltaTime;
 	std::chrono::time_point<CLOCK> m_InitPoint;

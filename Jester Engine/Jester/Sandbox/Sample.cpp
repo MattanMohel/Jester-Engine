@@ -7,7 +7,7 @@ void SampleComponent::OnAwake()
 	Logger::Print("Sample: Awake");
 }
 
-void SampleComponent::OnFixedUpdate(const Time* Time)
+void SampleComponent::OnUpdate(const Time* Time)
 {
-	Logger::Print(gameobject->name, "'s Sample printed from fixed update");
+	std::cout << Time->DeltaTime() << '\n';
 }
