@@ -16,6 +16,28 @@ void Gameobject::Destroy(Gameobject* gameobject)
 	delete gameobject;
 }
 
+bool Gameobject::haveComponent(unsigned int hash)
+{
+	for (auto& component : m_Components)
+	{
+		if (hash == HASH_OF(component))
+			return true;
+	}
+
+	return false;
+}
+
+size_t Gameobject::getComponentIndex(unsigned int hash)
+{
+	for (size_t i = 0; i < m_Components.size(); i++)
+	{
+		if (hash == HASH_OF(m_Components[i]))
+			return i;
+	}
+
+	return 0;
+}
+
 Gameobject::Gameobject(std::string& name)
 	:name(name), m_ID(0), transform(new Transform(this)), position({0, 0})
 {
@@ -31,40 +53,34 @@ Gameobject::~Gameobject()
 	Application::Get()->RemoveGameobject(this);
 
 	for (auto& component : m_Components)
-	{
-		delete component.second;
-	}
+		delete component;
 }
 
 void Gameobject::OnAwake()
 {
 	for (auto& component : m_Components)
-	{
-		component.second->OnAwake();
-	}
+		component->OnAwake();
 }
 
 void Gameobject::OnUpdate(const Time* Time)
 {
 	for (auto& component : m_Components)
 	{
-		if (!(component.second->isEnabled)) continue;
-		component.second->OnUpdate(Time);
+		if (!(component->isEnabled)) continue;
+			component->OnUpdate(Time);
 	}
 }
 
 void Gameobject::OnFixedUpdate(const Time* Time)
 {
 	for (auto& component : m_Components)
-	{
-		component.second->OnFixedUpdate(Time);
-	}
+		component->OnFixedUpdate(Time);
 }
 
 void Gameobject::OnCollisionEnter(Collider& other)
 {
 	for (auto& component : m_Components)
-		component.second->OnCollisionEnter(other);
+		component->OnCollisionEnter(other);
 
 	for (auto& child : transform->m_Children)
 		child->gameobject->OnCollisionEnter(other);
@@ -73,7 +89,7 @@ void Gameobject::OnCollisionEnter(Collider& other)
 void Gameobject::OnCollisionStay(Collider& other)
 {
 	for (auto& component : m_Components)
-		component.second->OnCollisionStay(other);
+		component->OnCollisionStay(other);
 
 	for (auto& child : transform->m_Children)
 		child->gameobject->OnCollisionStay(other);
@@ -82,7 +98,7 @@ void Gameobject::OnCollisionStay(Collider& other)
 void Gameobject::OnCollisionExit(Collider& other)
 {
 	for (auto& component : m_Components)
-		component.second->OnCollisionExit(other);
+		component->OnCollisionExit(other);
 
 	for (auto& child : transform->m_Children)
 		child->gameobject->OnCollisionExit(other);

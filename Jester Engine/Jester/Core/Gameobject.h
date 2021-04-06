@@ -40,7 +40,7 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (m_Components.find(HASH_OF(TComponent)) != m_Components.end())
+		if (haveComponent(HASH_OF(TComponent)))
 		{
 			Logger::Print(LogFlag::Warning, "Tried to add duplicate component to ", name);
 			return;
@@ -49,7 +49,7 @@ public:
 		auto* component = new TComponent();
 		component->Init(this);
 
-		m_Components.insert({ HASH_OF(TComponent), component });
+		m_Components.push_back(component);
 	}	
 	
 	//Removes component of type TComponent
@@ -58,14 +58,15 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (m_Components.find(HASH_OF(TComponent)) == m_Components.end())
+		if (haveComponent(HASH_OF(TComponent)))
 		{
 			Logger::Print(LogFlag::Warning, "Tried to remove non-existing component from ", name);
 			return;
 		}
 
-		delete m_Components[HASH_OF(TComponent)];
-		m_Components.erase (HASH_OF(TComponent));
+		size_t index = getComponentIndex(HASH_OF(TComponent));
+		delete m_Components[index];
+		m_Components.erase(m_Components.begin() + index);
 	}
 
 	//Accesses type TComponent of gameobject
@@ -74,7 +75,7 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		return (TComponent*)m_Components[HASH_OF(TComponent)];
+		return (TComponent*)m_Components[getComponentIndex(HASH_OF(TComponent))];
 	}
 
 	//Finds first instance of type TComponent
@@ -84,12 +85,8 @@ public:
 		DERIVES_FROM_COMPONENT_ASSERT;
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects())
-		{
-			if (gameobject->m_Components.find(HASH_OF(TComponent)) != gameobject->m_Components.end())
-			{
-				return (TComponent*)(gameobject->m_Components[HASH_OF(TComponent)]);
-			}
-		}
+			if (gameobject->haveComponent(HASH_OF(TComponent)))
+				return (TComponent*)(gameobject->m_Components[getComponentIndex(HASH_OF(TComponent))]);
 
 		return nullptr;
 	}	
@@ -103,17 +100,16 @@ public:
 		std::vector<TComponent*> components; 
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects()) 
-		{
-			if (gameobject->m_Components.find(HASH_OF(TComponent)) != gameobject->m_Components.end())
-			{
-				components.push_back((TComponent*)gameobject->m_Components[HASH_OF(TComponent)]);
-			}
-		}
+			if (gameobject->haveComponent(HASH_OF(TComponent)))
+				components.push_back((TComponent*)gameobject->m_Components[getComponentIndex(HASH_OF(TComponent))]);
 
 		return components;
 	}
 
 private:
+
+	bool haveComponent(unsigned int hash);
+	size_t getComponentIndex(unsigned int hash);
 
 	Gameobject(std::string& name);
 	~Gameobject();
@@ -128,7 +124,7 @@ private:
 
 private:
 
-	std::unordered_map<unsigned short, Component*> m_Components;
+	std::vector<Component*> m_Components;
 	unsigned long m_ID;
 };
 
