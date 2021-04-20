@@ -30,9 +30,7 @@ public:
 
 protected:
 	~Component()
-	{
-		std::cout << "Deleted Component\n";
-	}
+	{}
 
 private:
 	//initializes gameobject value

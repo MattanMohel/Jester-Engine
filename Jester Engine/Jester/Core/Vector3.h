@@ -6,8 +6,11 @@
 
 struct  Vector3
 {
-public:
-	 Vector3(float x, float y, float z)
+	Vector3()
+		: x(0), y(0), z(0)
+	{}
+
+    Vector3(float x, float y, float z)
 		: x(x), y(y), z(z)
 	{}	 
 	 
@@ -19,24 +22,27 @@ public:
 		 : x(x), y(yz.x), z(yz.y)
 	 {}
 
-	//returns a vector with x-y components ranging from 0 to 1
-	 Vector3 Normalized() const
+	 //returns the magnitude of a vector
+	 float Magnitude() const
 	 {
-		if (x > y)
-		{
-			if (x > z)
-			{
-				return  Vector3(1, y / x, z / x);
-			}
-		}
-		if (y > z)
-		{
-			return  Vector3(x / y, 1, z / y);
-		}
-		else
-		{
-			return Vector3(x / z, y / z, 1);
-		}
+		 return sqrt(x * x + y * y + z * z);
+	 }	 
+	 //returns a magnitude of a vector without taking the root
+	 float SquaredMagnitude() const
+	 {
+		 return x * x + y * y + z * z;
+	 }
+
+	//returns a vector with x-y components ranging from 0 to 1
+	Vector3 Normalized() const
+	{
+		float mag = Magnitude();
+		return Vector3(x / mag, y / mag, z / mag);
+	}
+
+	static float DotProduct(const Vector3& a, const Vector3& b)
+	{
+		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
 
 	//returns absolute value of length, squared
@@ -68,18 +74,19 @@ public:
 			+ (a.z - b.z) * (a.z - b.z));
 	}
 
-	void operator+= (const  Vector3& vec3)
+	void operator+= (const Vector3& vec3)
 	{
 		x += vec3.x;
 		y += vec3.y;
 		z += vec3.z;
 	}
-	void operator-= (const  Vector3& vec3)
+	void operator-= (const Vector3& vec3)
 	{
 		x -= vec3.x;
 		y -= vec3.y;
 		z -= vec3.z;
-	}
+	}	
+
 	void operator*= (const float& multiplier)
 	{
 		x *= multiplier;
@@ -93,21 +100,26 @@ public:
 		z /= divider;
 	}
 
-	 Vector3 operator+ (const  Vector3& vec3)
+	Vector3 operator+ (const  Vector3& vec3) const
 	{
 		return  Vector3(x + vec3.x, y + vec3.y, z + vec3.z);
 	}
-	 Vector3 operator- (const  Vector3& vec3)
+	Vector3 operator- (const  Vector3& vec3) const
 	{
 		return  Vector3(x - vec3.x, y - vec3.y, z - vec3.z);
 	}
-	 Vector3 operator* (const float& num)
+	Vector3 operator* (const float& num) const
 	{
 		return  Vector3(x * num, y * num, z * num);
 	}
-	 Vector3 operator/ (const float& num)
+	Vector3 operator/ (const float& num) const
 	{
 		return  Vector3(x / num, y / num, z / num);
+	}
+
+	bool operator== (const Vector3 vec3) const
+	{
+		return vec3.x == x && vec3.y == y && vec3.z == z;
 	}
 
 	static friend std::ostream& operator<< (std::ostream& os, const  Vector3& vec3)
@@ -116,6 +128,5 @@ public:
 		return os;
 	}
 
-public:
 	float x = 0, y = 0, z = 0;
 };

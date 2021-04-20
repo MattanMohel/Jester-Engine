@@ -5,13 +5,25 @@
 
 struct Vector2
 {
-public:
 	Vector2()
 		: x(0), y(0)
 	{}
+
 	Vector2(float x, float y)
 		: x(x), y(y)
 	{}
+
+	//returns the magnitude of a vector
+	float Magnitude() const
+	{
+		return sqrt(x * x + y * y);
+	}
+	//returns a magnitude of a vector without taking the root
+	float SquaredMagnitude() const
+	{
+		return x * x + y * y;
+	}
+
 
 	//returns a vector with x-y components ranging from 0 to 1
 	Vector2 Normalized() const
@@ -24,6 +36,11 @@ public:
 		{
 			return Vector2(x / y, 1);
 		}
+	}
+
+	static float DotProduct(const Vector2& a, const Vector2& b)
+	{
+		return a.x * b.x + a.y * b.y;
 	}
 
 	//returns absolute value of length, squared
@@ -70,7 +87,8 @@ public:
 	{
 		x /= divider;
 		y /= divider;
-	}
+	}	
+
 
 	Vector2 operator+ (const Vector2& vec2) const
 	{
@@ -79,7 +97,7 @@ public:
 	Vector2 operator- (const Vector2& vec2) const
 	{
 		return Vector2(x - vec2.x, y - vec2.y);
-	}
+	}	
 	Vector2 operator* (const float& num) const
 	{
 		return Vector2(x * num, y * num);
@@ -89,7 +107,7 @@ public:
 		return Vector2(x / num, y / num);
 	}
 
-	bool operator== (const Vector2 vec2)
+	bool operator== (const Vector2 vec2) const
 	{
 		return vec2.x == x && vec2.y == y;
 	}
@@ -100,6 +118,5 @@ public:
 		return os;
 	}
 
-public:
 	float x = 0, y = 0;
 };

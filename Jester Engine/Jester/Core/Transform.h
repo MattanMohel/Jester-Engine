@@ -2,6 +2,7 @@
 
 class Gameobject;
 #include "Gameobject.h"
+#include "Vector3.h"
 #include "Vector2.h"
 
 class Transform 
@@ -23,10 +24,13 @@ public:
 
 	Gameobject* gameobject;
 
-	Vector2 position;
 	Vector2 scale;
+	Vector2 position;
+	Vector3 rotation;
 
-	float rotation;
+	void Translate(float x, float y) { position += Vector2(x, y); }
+	void Dilate(float x, float y, float z) { scale += Vector2(x, y); }
+	void Rotate(float x, float y, float z) { rotation += Vector3(x, y, z); }
 
 private:
 	void Refresh();

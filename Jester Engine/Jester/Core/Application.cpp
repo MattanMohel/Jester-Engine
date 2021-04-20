@@ -1,5 +1,10 @@
 #include "Application.h"
 
+#include "Time.h"
+#include "Gameobject.h"
+#include "Component.h"
+#include "Renderer/Window.h"
+
 Application* Application::Get()
 {
 	static Application* s_Instance = new Application();
@@ -10,8 +15,7 @@ Application* Application::Get()
 void Application::Init()
 {
 	Logger::Print(LogFlag::Info, "Init");
-
-	Time::Get()->Init();
+	Window::Get(); 
 
 	//On Awake Call
 	for (Gameobject* gameobject : m_GameobjectRegistry)
@@ -25,10 +29,15 @@ void Application::Run()
 {
 	Logger::Print(LogFlag::Info, "Running");
 
-	while (isRunning)
+	while (!Window::shouldClose())
 	{
+		//Poll GLFW events
+		Window::PollEvents();
+
 		//Update Time Instance
 		Time::Get()->OnUpdate();
+
+		Window::Get()->GLClear();
 
 		//Check for FixedUpdate
 		static float FIXED_UPDATE_TIMER = 0;
@@ -51,13 +60,12 @@ void Application::Run()
 			if (!(gameobject->isEnabled)) continue;
 			gameobject->OnUpdate(Time::Get());
 		}
-	}
-}
 
-bool Application::Close()
-{
-	isRunning = false;
-	return false;
+		Window::Get()->SwapBuffers();
+		Window::EndFrame();
+	}
+
+	delete Window::Get();
 }
 
 void Application::AddGameobject(Gameobject* gameobject)
@@ -71,7 +79,7 @@ void Application::RemoveGameobject(Gameobject* gameobject)
 	m_GameobjectRegistry.erase(it);
 }
 
-std::vector<Gameobject*> Application::GetGameobjects()
+const std::vector<Gameobject*>& Application::GetGameobjects()
 {
 	return m_GameobjectRegistry;
 }

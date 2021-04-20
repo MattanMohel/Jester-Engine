@@ -2,6 +2,8 @@
 
 int main()
 {
+	Application::Get()->Init(); 
+
 #if 0
 	/*Declare Gameobjects here for now
 	Init location will change once you can create Gameobejcts in app*/
@@ -53,13 +55,22 @@ int main()
 	//Destroy obj_1 so it isn't called on OnUpdate
 	Gameobject::Destroy(obj_1);
 #endif
+	Gameobject* obj = Gameobject::Instantiate("Camera");
 	
-	for (int i = 0; i < 100; i++)
-	{
-		Gameobject* obj = Gameobject::Instantiate("test");
-		obj->AddComponent<SampleComponent>();
-	}
+  	obj->AddComponent<Camera>();
 
-	Application::Get()->Init(); 
-	Application::Get()->Run();
-} 
+	Gameobject* obj1 = Gameobject::Instantiate("Phil");
+	obj1->AddComponent<SampleComponent>(); 
+	obj1->AddComponent<Sprite>();
+	Sprite* sp = obj1->GetComponent<Sprite>();
+	obj1->transform->Dilate(1, 1.5f, 0);
+	obj1->transform->Translate(5, 5);
+	sp->SetTexture("resources/textures/Phil Statue.png"); 
+
+	Gameobject* obj2 = Gameobject::Instantiate("Spitoon");
+	obj2->AddComponent<SampleComponent>();
+	obj2->AddComponent<Sprite>();
+	obj2->GetComponent<Sprite>()->SetTexture("resources/textures/Spitoon.png");
+
+	Application::Get()->Run(); 
+}  

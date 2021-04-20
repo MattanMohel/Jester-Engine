@@ -16,11 +16,11 @@ void Gameobject::Destroy(Gameobject* gameobject)
 	delete gameobject;
 }
 
-bool Gameobject::haveComponent(unsigned int hash)
+bool Gameobject::hasComponent(unsigned int hash)
 {
 	for (auto& component : m_Components)
 	{
-		if (hash == HASH_OF(component))
+		if (hash == HASH_OF(*component))
 			return true;
 	}
 
@@ -31,7 +31,7 @@ size_t Gameobject::getComponentIndex(unsigned int hash)
 {
 	for (size_t i = 0; i < m_Components.size(); i++)
 	{
-		if (hash == HASH_OF(m_Components[i]))
+		if (hash == HASH_OF(*m_Components[i]))
 			return i;
 	}
 
@@ -39,7 +39,7 @@ size_t Gameobject::getComponentIndex(unsigned int hash)
 }
 
 Gameobject::Gameobject(std::string& name)
-	:name(name), m_ID(0), transform(new Transform(this)), position({0, 0})
+	:name(name), m_ID(0), transform(new Transform(this))
 {
 	Application::Get()->AddGameobject(this);
 }

@@ -2,7 +2,7 @@
 
 Transform::Transform(Gameobject* gameobject)
 	: gameobject(gameobject), m_Parent(this), m_Root(this)
-	, position(0, 0), scale(1, 1), rotation(0) { }
+	, position(0, 0), scale(1, 1), rotation(0, 0, 0) { }
 
 Transform::~Transform()
 {

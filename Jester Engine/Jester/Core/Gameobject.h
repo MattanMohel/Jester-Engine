@@ -4,16 +4,14 @@
 #include <typeindex>
 #include <unordered_map>
 
-#include "Vector2.h"
-
 #include "Log.h"
 #include "Application.h"
 #include "Component.h"
-class Timer; 
+#include "Transform.h"
 
+class Timer; 
 class Collider;
 class Transform;
-#include "Transform.h"
 
 #define HASH_OF(TComponent) std::type_index(typeid(TComponent)).hash_code()
 
@@ -31,7 +29,6 @@ public:
 
 	std::string name;
 	bool isEnabled = true;
-	Vector2 position;
 	Transform* transform;
 
 	//Adds component of type TComponent
@@ -40,7 +37,7 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (haveComponent(HASH_OF(TComponent)))
+		if (hasComponent(HASH_OF(TComponent)))
 		{
 			Logger::Print(LogFlag::Warning, "Tried to add duplicate component to ", name);
 			return;
@@ -58,7 +55,7 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (haveComponent(HASH_OF(TComponent)))
+		if (!(hasComponent(HASH_OF(TComponent))))
 		{
 			Logger::Print(LogFlag::Warning, "Tried to remove non-existing component from ", name);
 			return;
@@ -75,7 +72,13 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		return (TComponent*)m_Components[getComponentIndex(HASH_OF(TComponent))];
+		if (!(hasComponent(HASH_OF(TComponent))))
+		{
+			Logger::Print(LogFlag::Error, "Trying to access nonexistent component"); 
+			return nullptr;
+		}
+
+		return (TComponent*)m_Components[getComponentIndex(HASH_OF(TComponent))]; 
 	}
 
 	//Finds first instance of type TComponent
@@ -85,8 +88,8 @@ public:
 		DERIVES_FROM_COMPONENT_ASSERT;
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects())
-			if (gameobject->haveComponent(HASH_OF(TComponent)))
-				return (TComponent*)(gameobject->m_Components[getComponentIndex(HASH_OF(TComponent))]);
+			if (gameobject->hasComponent(HASH_OF(TComponent))) 
+				return (TComponent*)(gameobject->m_Components[gameobject->getComponentIndex(HASH_OF(TComponent))]); 
 
 		return nullptr;
 	}	
@@ -100,15 +103,14 @@ public:
 		std::vector<TComponent*> components; 
 
 		for (Gameobject* gameobject : Application::Get()->GetGameobjects()) 
-			if (gameobject->haveComponent(HASH_OF(TComponent)))
-				components.push_back((TComponent*)gameobject->m_Components[getComponentIndex(HASH_OF(TComponent))]);
+			if (gameobject->hasComponent(HASH_OF(TComponent))) 
+				components.push_back((TComponent*)gameobject->m_Components[gameobject->getComponentIndex(HASH_OF(TComponent))]);
 
 		return components;
 	}
 
 private:
-
-	bool haveComponent(unsigned int hash);
+	bool hasComponent(unsigned int hash);
 	size_t getComponentIndex(unsigned int hash);
 
 	Gameobject(std::string& name);
