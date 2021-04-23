@@ -38,6 +38,4 @@ private:
 	{
 		this->gameobject = gameobject;
 	}
-
-	size_t m_IDIndex;
 };

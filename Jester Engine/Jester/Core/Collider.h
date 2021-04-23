@@ -1,5 +1,6 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <vector>
 
 #include "Vector2.h"
@@ -7,6 +8,8 @@
 
 #include "Component.h"
 #include "Gameobject.h"
+
+#define CALC_PRECISION 0.005f
 
 class Collider : public Component
 {
@@ -23,7 +26,24 @@ enum class State
 
 public:
 	Collider();
-	const std::vector<Vector2>& GetIndices() const;
+	~Collider();
+
+	template<typename... Vertices>
+	void AddVertices(Vertices... vertices)
+	{
+		(m_Vertices.push_back(std::forward<Vector2>(vertices)), ...); 
+
+		float maxDistance = 0;
+		for (const auto& vert : m_Vertices)
+		{
+			float distance = Vector2::SquaredDistance(vert, Vector2::Zero());
+			maxDistance = distance > maxDistance? distance : maxDistance;  
+		}
+
+		m_FurthestVertexDistance = maxDistance;
+	}
+
+	const std::vector<Vector2>& GetVertices() const;
 	Vector2 GetIndex(int index) const;
 
 	bool isTrigger() const;
@@ -32,7 +52,6 @@ public:
 	Type GetType() const;
 
 	inline bool isInCollisionArray(const Collider* a) const;
-	inline auto&& collisionArrayIt(const Collider* a) const;
 
 	void OnUpdate(const Time* Time) override;
 
@@ -43,10 +62,13 @@ private:
 	Type m_Type = Type::Polygon;
 	State m_State = State::Physics;
 
-	std::vector<Vector2> Indices;
-	std::vector<Collider*> Collisions;
+	std::vector<Vector2> m_Vertices;
+	std::vector<Collider*> m_Collisions;
+
+	float m_FurthestVertexDistance; 
 
 	static std::vector<Collider*> colliderRegistery;
+	static size_t callIndex;
 	static bool checked;
 };
 

@@ -6,12 +6,12 @@ class Time;
 
 void SampleComponent::OnAwake()
 {
-	Logger::Print("Sample: Awake");
 }
 
 void SampleComponent::OnUpdate(const Time* time)
 {
-	m_Int++;
+	if (!move) return;
+
 	if (Input::GetKey(KeySig::Escape))
 		Window::Close();
 
@@ -25,6 +25,23 @@ void SampleComponent::OnUpdate(const Time* time)
 	}
 	if (Input::GetKey(KeySig::UpArrow))
 		gameobject->transform->Translate(0, 2 * time->DeltaTime());
+
 	if (Input::GetKey(KeySig::DownArrow))
 		gameobject->transform->Translate(0, -2 * time->DeltaTime());
+}
+
+void SampleComponent::OnCollisionEnter(Collider& other)
+{
+	if (gameobject->GetComponent<Collider>() != nullptr && gameobject->GetComponent<Sprite>() != nullptr)
+	{
+		gameobject->GetComponent<Sprite>()->Colors() = Color(1, 0, 0, .2);
+	}
+}
+
+void SampleComponent::OnCollisionExit(Collider& other)
+{
+	if (gameobject->GetComponent<Collider>() != nullptr && gameobject->GetComponent<Sprite>() != nullptr)
+	{
+		gameobject->GetComponent<Sprite>()->Colors() = Color(1, 1, 1, .2);
+	}
 }

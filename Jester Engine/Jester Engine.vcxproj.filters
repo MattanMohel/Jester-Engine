@@ -93,6 +93,9 @@
     <ClInclude Include="Jester\Core\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Jester\Sandbox\CollMarker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Jester\Core\Gameobject.cpp">
@@ -135,6 +138,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Core\Renderer\Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Sandbox\CollMarker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

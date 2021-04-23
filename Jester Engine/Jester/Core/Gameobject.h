@@ -22,7 +22,9 @@ class Gameobject
 	friend class Collider;
 
 public:
-	//Instances a new Gameobject, returns a pointer
+	/*Instances a new Gameobject, returns a pointer
+	Adds the gameobject to the gameobject registry only at
+	the end of the frame to avoid confusion in the application*/
 	static Gameobject* Instantiate(std::string&& name);
 	//Destroys Gameobject pointer
 	static void Destroy(Gameobject* gameobject);
@@ -33,20 +35,21 @@ public:
 
 	//Adds component of type TComponent
 	template<typename TComponent>
-	void AddComponent()
+	TComponent* AddComponent()
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
 		if (hasComponent(HASH_OF(TComponent)))
 		{
 			Logger::Print(LogFlag::Warning, "Tried to add duplicate component to ", name);
-			return;
+			return nullptr;
 		}
 
 		auto* component = new TComponent();
 		component->Init(this);
 
 		m_Components.push_back(component);
+		return component; 
 	}	
 	
 	//Removes component of type TComponent

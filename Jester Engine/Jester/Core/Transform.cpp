@@ -14,6 +14,18 @@ Transform::~Transform()
 	m_Parent->RemoveChild(gameobject);
 }
 
+Vector2 Transform::RotateAround(const Vector2& pos, const Vector2& scale, const Vector2& offset, const float theta)
+{
+	return Vector2(pos.x * scale.x * cos(theta) - pos.y * scale.y * sin(theta),
+		pos.x * scale.x * sin(theta) + pos.y * scale.y * cos(theta)) + offset;
+}
+
+Vector2 Transform::RotateAround(const Vector2& pos, const Transform& transform)
+{
+	return Vector2(pos.x * transform.scale.x * cos(transform.rotation.z) - pos.y * transform.scale.y * sin(transform.rotation.z),
+		pos.x * transform.scale.x * sin(transform.rotation.z) + pos.y * transform.scale.y * cos(transform.rotation.z)) + transform.position;
+}
+
 void Transform::Refresh()
 {
 	m_Root = m_Parent->m_Root;

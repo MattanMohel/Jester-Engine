@@ -13,6 +13,23 @@ struct Vector2
 		: x(x), y(y)
 	{}
 
+	static Vector2 UnitRight()
+	{
+		return Vector2(1, 0);
+	}
+	static Vector2 UnitUp()
+	{
+		return Vector2(0, 1);
+	}
+	static Vector2 Zero()
+	{
+		return Vector2(0, 0);
+	}
+	static Vector2 One()
+	{
+		return Vector2(1, 1);
+	}
+
 	//returns the magnitude of a vector
 	float Magnitude() const
 	{
@@ -23,7 +40,6 @@ struct Vector2
 	{
 		return x * x + y * y;
 	}
-
 
 	//returns a vector with x-y components ranging from 0 to 1
 	Vector2 Normalized() const

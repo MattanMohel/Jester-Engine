@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Jester\Sandbox\CollMarker.h" />
     <ClInclude Include="Jester\Core\Color.h" />
     <ClInclude Include="Jester\Core\Renderer\Camera.h" />
     <ClInclude Include="Jester\Core\Input.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Jester\Core\Renderer\Sprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Jester\Sandbox\CollMarker.cpp" />
     <ClCompile Include="Jester\Core\Renderer\Camera.cpp" />
     <ClCompile Include="Jester\Core\Input.cpp" />
     <ClCompile Include="Jester\Core\Collider.cpp" />

@@ -7,16 +7,11 @@ class SampleComponent : public Component
 public:
 	void OnAwake() override;
 	void OnUpdate(const Time* Time) override;
+	void OnCollisionEnter(Collider& other) override;
+	void OnCollisionExit(Collider& other) override; 
 
-	void SetInt(int a)
-	{
-		m_Int = a;
-	}
-	int GetInt()
-	{
-		return m_Int;
-	}
+	bool move = false;
 
-	int m_Int = 5;
+	std::vector<Gameobject*> points;
 };
 

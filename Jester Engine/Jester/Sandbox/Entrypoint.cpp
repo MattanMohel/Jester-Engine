@@ -1,4 +1,5 @@
 #include "Internal.h"
+#include <GL/glew.h>
 
 int main()
 {
@@ -55,22 +56,20 @@ int main()
 	//Destroy obj_1 so it isn't called on OnUpdate
 	Gameobject::Destroy(obj_1);
 #endif
-	Gameobject* obj = Gameobject::Instantiate("Camera");
-	
+	Gameobject* obj = Gameobject::Instantiate("Camera");	
   	obj->AddComponent<Camera>();
 
-	Gameobject* obj1 = Gameobject::Instantiate("Phil");
-	obj1->AddComponent<SampleComponent>(); 
-	obj1->AddComponent<Sprite>();
-	Sprite* sp = obj1->GetComponent<Sprite>();
-	obj1->transform->Dilate(1, 1.5f, 0);
-	obj1->transform->Translate(5, 5);
-	sp->SetTexture("resources/textures/Phil Statue.png"); 
+	Gameobject* player = Gameobject::Instantiate("player");
+	player->AddComponent<SampleComponent>()->move = true;
+	player->AddComponent<CollMarker>();
+	player->AddComponent<Sprite>()->SetTexture("resources/textures/block.png");
+	player->AddComponent<Collider>()->AddVertices(Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1), Vector2(0, -2));
 
-	Gameobject* obj2 = Gameobject::Instantiate("Spitoon");
-	obj2->AddComponent<SampleComponent>();
-	obj2->AddComponent<Sprite>();
-	obj2->GetComponent<Sprite>()->SetTexture("resources/textures/Spitoon.png");
+	Gameobject* target = Gameobject::Instantiate("target");
+	target->AddComponent<SampleComponent>();
+	target->AddComponent<CollMarker>();
+	target->AddComponent<Sprite>()->SetTexture("resources/textures/block.png");
+	target->AddComponent<Collider>()->AddVertices(Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1));
 
 	Application::Get()->Run(); 
 }  

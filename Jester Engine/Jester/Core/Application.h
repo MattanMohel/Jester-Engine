@@ -8,6 +8,8 @@ class Gameobject;
 #include "GL/glew.h"
 #include <GLFW/glfw3.h>
 
+#define TIME_BETWEEN_FIXED_UPDATE 0.02f
+
 class Application
 {
 	friend class Gameobject;
@@ -16,7 +18,6 @@ public:
 	static Application* Get();
 
 	void Init();
-
 	void Run();
 
 private:
@@ -32,8 +33,7 @@ private:
 	
 	const std::vector<Gameobject*>& GetGameobjects();
 
+	static bool isRunning;
 private:
 	std::vector<Gameobject*> m_GameobjectRegistry;
-
-	static constexpr float TIME_BETWEEN_FIXED_UPDATE = 0.2f;
 };

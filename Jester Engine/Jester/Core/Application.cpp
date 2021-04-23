@@ -5,6 +5,8 @@
 #include "Component.h"
 #include "Renderer/Window.h"
 
+bool Application::isRunning = false;
+
 Application* Application::Get()
 {
 	static Application* s_Instance = new Application();
@@ -15,20 +17,21 @@ Application* Application::Get()
 void Application::Init()
 {
 	Logger::Print(LogFlag::Info, "Init");
-	Window::Get(); 
-
-	//On Awake Call
-	for (Gameobject* gameobject : m_GameobjectRegistry)
-	{
-		if (!(gameobject->isEnabled)) continue;
-		gameobject->OnAwake(); 
-	}
+	Window::Get();
 }
 
 void Application::Run()
 {
+	//On Awake Call
+	for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
+	{
+		if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
+		m_GameobjectRegistry[i]->OnAwake();
+	}
+
 	Logger::Print(LogFlag::Info, "Running");
 
+	isRunning = true;
 	while (!Window::shouldClose())
 	{
 		//Poll GLFW events
@@ -47,24 +50,25 @@ void Application::Run()
 		{
 			FIXED_UPDATE_TIMER = 0;
 
-			for (Gameobject* gameobject : m_GameobjectRegistry)
+			for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 			{
-				if (!(gameobject->isEnabled)) continue;
-				gameobject->OnFixedUpdate(Time::Get());
+				if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
+				m_GameobjectRegistry[i]->OnFixedUpdate(Time::Get());
 			}
 		}
 
 		//Call Gameobject Updates
-		for (Gameobject* gameobject : m_GameobjectRegistry)
+		for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 		{
-			if (!(gameobject->isEnabled)) continue;
-			gameobject->OnUpdate(Time::Get());
+			if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
+			m_GameobjectRegistry[i]->OnUpdate(Time::Get());
 		}
 
 		Window::Get()->SwapBuffers();
 		Window::EndFrame();
 	}
 
+	isRunning = false;
 	delete Window::Get();
 }
 
