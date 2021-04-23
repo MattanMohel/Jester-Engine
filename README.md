@@ -12,3 +12,5 @@ A few things to help you set up if you for some reason want to use this:
 5) I don't have any real experience with building large-scale projects such as this, and although this may very well be out of my scope, any feedback would be appreciated
 
 5) to interact with the game engine, go to the entrypoint.cpp file, there are a few examples there of how the systems set in place work
+
+6) as of right now, you need to bind GLEW, GLFW, and GLM on your own as external libraries, working to fix that soon
