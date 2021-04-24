@@ -1,7 +1,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "Texture.h"
-#include "vendor/stb_image.h"
+#include "../vendors/stb_image.h"
 
 Texture::Texture()
 	: m_TexturePath(""), m_TextureID(0), m_Height(0), m_Width(0), m_BitDepth(0),

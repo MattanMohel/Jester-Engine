@@ -92,12 +92,12 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AssemblerOutput>NoListing</AssemblerOutput>
       <PreprocessToFile>false</PreprocessToFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\External Libs\GLEW\glew-2.1.0\include;$(SolutionDir)..\External Libs\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)..\External Libs\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\include;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)Jester Engine\Jester\vendors\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External Libs\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)..\External Libs\GLFW\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -115,14 +115,14 @@
       <AssemblerOutput>NoListing</AssemblerOutput>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\External Libs\GLEW\glew-2.1.0\include;$(SolutionDir)..\External Libs\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)..\External Libs\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\include;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)Jester Engine\Jester\vendors\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External Libs\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)..\External Libs\GLFW\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -132,12 +132,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\External Libs\GLEW\glew-2.1.0\include;$(SolutionDir)..\External Libs\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)..\External Libs\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\include;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)Jester Engine\Jester\vendors\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External Libs\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)..\External Libs\GLFW\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -149,14 +149,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\External Libs\GLEW\glew-2.1.0\include;$(SolutionDir)..\External Libs\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)..\External Libs\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\include;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)Jester Engine\Jester\vendors\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\External Libs\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)..\External Libs\GLFW\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -176,7 +176,7 @@
     <ClInclude Include="Jester\Core\Jester.h" />
     <ClInclude Include="Jester\Core\KeySignatures.h" />
     <ClInclude Include="Jester\Renderer\RendererBase.h" />
-    <ClInclude Include="Jester\Renderer\vendor\stb_image.h" />
+    <ClInclude Include="Jester\vendors\stb_image.h" />
     <ClInclude Include="Jester\Core\Time.h" />
     <ClInclude Include="Jester\Core\Vector2.h" />
     <ClInclude Include="Jester\Core\Vector3.h" />
