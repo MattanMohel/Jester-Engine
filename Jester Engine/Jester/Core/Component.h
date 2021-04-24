@@ -16,9 +16,9 @@ public:
 	//called once on app initialization
 	virtual void OnAwake() {}
 	//called once every frame
-	virtual void OnUpdate(const Time* Time) {}
+	virtual void OnUpdate() {}
 	//called once every .2 seconds;
-	virtual void OnFixedUpdate(const Time* Time) {}
+	virtual void OnFixedUpdate() {}
 
 	//collision calls, overridden in specialization
 	virtual void OnCollisionEnter(Collider& other) {}

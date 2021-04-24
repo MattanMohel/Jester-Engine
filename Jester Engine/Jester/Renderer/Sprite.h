@@ -2,9 +2,9 @@
 
 #include <string>
 
-#include "../Color.h"
-#include "../Vector2.h"
-#include "../Vector3.h"
+#include "../Core/Color.h"
+#include "../Core/Vector2.h"
+#include "../Core/Vector3.h"
 
 #include "Mesh.h"
 #include "Shader.h"
@@ -12,16 +12,14 @@
 #include "Camera.h"
 #include "Window.h"
 
-#define SCALE 500.0f
-
 class Sprite : public Component
 {
 public:
 	Sprite();
 
-	void OnUpdate(const Time* time) override;
+	void OnUpdate() override;
 
-	Color& Colors() { return m_Color; }
+	Color& color() { return m_Color; }
 
 	inline void SetTexture(const std::string& path) { m_Texture.SetTexture(path); }
 

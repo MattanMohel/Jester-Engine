@@ -13,23 +13,6 @@ struct Vector2
 		: x(x), y(y)
 	{}
 
-	static Vector2 UnitRight()
-	{
-		return Vector2(1, 0);
-	}
-	static Vector2 UnitUp()
-	{
-		return Vector2(0, 1);
-	}
-	static Vector2 Zero()
-	{
-		return Vector2(0, 0);
-	}
-	static Vector2 One()
-	{
-		return Vector2(1, 1);
-	}
-
 	//returns the magnitude of a vector
 	float Magnitude() const
 	{
@@ -134,5 +117,15 @@ struct Vector2
 		return os;
 	}
 
-	float x = 0, y = 0;
+	float x = 0, y = 0; 
+
+	static const Vector2 Right;
+	static const Vector2 Zero;
+	static const Vector2 One; 
+	static const Vector2 Up;
 };
+
+const Vector2 Vector2::Right(1, 0);
+const Vector2 Vector2::Zero(0, 0);
+const Vector2 Vector2::One(1, 1);
+const Vector2 Vector2::Up(0, 1);

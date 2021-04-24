@@ -75,12 +75,6 @@ public:
 	{
 		DERIVES_FROM_COMPONENT_ASSERT;
 
-		if (!(hasComponent(HASH_OF(TComponent))))
-		{
-			Logger::Print(LogFlag::Error, "Trying to access nonexistent component"); 
-			return nullptr;
-		}
-
 		return (TComponent*)m_Components[getComponentIndex(HASH_OF(TComponent))]; 
 	}
 
@@ -120,8 +114,8 @@ private:
 	~Gameobject();
 
 	void OnAwake();
-	void OnUpdate(const Time* Time);
-	void OnFixedUpdate(const Time* Time);
+	void OnUpdate();
+	void OnFixedUpdate();
 
 	void OnCollisionEnter(Collider& other);
 	void  OnCollisionStay(Collider& other);

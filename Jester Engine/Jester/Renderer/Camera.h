@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Component.h"
-#include "../Gameobject.h"
+#include "../Core/Component.h"
+#include "../Core/Gameobject.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
@@ -21,13 +21,12 @@ public:
 	Camera();
 	Camera(const Camera& camera) = delete;
 
-	void OnUpdate(const Time* time) override;
+	void OnUpdate() override;
 
 	glm::mat4 CalculateViewMatrix() const;
 
 	inline float& Size() { return m_Size; }
-	inline glm::mat4 Projection() { return m_Projection; }
-
+	inline glm::mat4 Projection() const { return m_Projection; }
 
 private:
 	glm::mat4 m_Projection;

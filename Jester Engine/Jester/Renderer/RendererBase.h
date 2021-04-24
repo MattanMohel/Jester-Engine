@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Vector2.h"
-#include "../Vector3.h"
+#include "../Core/Vector2.h"
+#include "../Core/Vector3.h"
 
 #define ToVec3(v) glm::vec3(v.x, v.y, v.z)
 #define ToVec3(v, z) glm::vec3(v.x, v.y, z)
@@ -11,6 +11,7 @@
 #define ToVector2(v) Vector2(v.x, v.y)
 
 #define Deg2Rad 3.14159265f / 180.0f
+#define Rad2Deg 180.0f / 3.14159265f
 
 #define VS_PATH "resources/shaders/vStandart.shader"
 #define FS_PATH "resources/shaders/fStandart.shader"
@@ -18,7 +19,7 @@
 #define Y_AXIS_SORT true
 
 static float VERTICES[] = {
-	/*  x val  y val  z val u val v val*/
+	/*      x val  y val z val u val v val*/
 	/*bl*/	-1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
 	/*tl*/	-1.0f,  1.0f, 0.0f, 0.0f, 0.0f,
 	/*tr*/	 1.0f,  1.0f, 0.0f, 1.0f, 0.0f,

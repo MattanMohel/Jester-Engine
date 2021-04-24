@@ -1,7 +1,7 @@
 #include "Mesh.h"
 
-Mesh::Mesh()
-	: VAO(0), m_IndexCount(0)
+Mesh::Mesh(const RenderMode& renderMode)
+	: m_RenderMode(renderMode), VAO(0), m_IndexCount(0)
 {}
 
 Mesh::~Mesh()
@@ -43,7 +43,7 @@ void Mesh::Draw()
 {
 	if (m_IndexCount == 0) return;
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, m_IndexCount, GL_UNSIGNED_INT, nullptr);
+	glDrawElements((GLenum)m_RenderMode, m_IndexCount, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
 }
 

@@ -1,22 +1,20 @@
 #include "Time.h"
 
+float Time::deltaTime;
+float Time::previousTime = 0.0f;
+long double Time::timeSinceInit = 0.0f;
+
+void Time::Init()
+{
+	deltaTime = Window::Get()->GetTime();
+	previousTime = Window::Get()->GetTime(); 
+}
+
 void Time::OnUpdate()
 {
 	float currTime = Window::Get()->GetTime();
-	m_DeltaTime = currTime - m_PreviousTime;
-	m_PreviousTime = currTime;
+	deltaTime = currTime - previousTime;
+	previousTime = currTime;
 
-	m_TimeSinceInit += m_DeltaTime;
+	timeSinceInit += deltaTime;
 }
-
-Time* Time::Get()
-{
-	static Time* s_Instance = new Time();
-	return s_Instance;
-}
-
-Time::Time()
-	: m_DeltaTime(Window::Get()->GetTime()), 
-	m_PreviousTime(Window::Get()->GetTime()), 
-	m_TimeSinceInit(0.0f)
-{}

@@ -3,7 +3,7 @@
 #include "Time.h"
 #include "Gameobject.h"
 #include "Component.h"
-#include "Renderer/Window.h"
+#include "../Renderer/Window.h"
 
 bool Application::isRunning = false;
 
@@ -18,6 +18,7 @@ void Application::Init()
 {
 	Logger::Print(LogFlag::Info, "Init");
 	Window::Get();
+	Time::Init();
 }
 
 void Application::Run()
@@ -38,13 +39,13 @@ void Application::Run()
 		Window::PollEvents();
 
 		//Update Time Instance
-		Time::Get()->OnUpdate();
+		Time::OnUpdate();
 
 		Window::Get()->GLClear();
 
 		//Check for FixedUpdate
 		static float FIXED_UPDATE_TIMER = 0;
-		FIXED_UPDATE_TIMER += Time::Get()->DeltaTime();
+		FIXED_UPDATE_TIMER += Time::DeltaTime();
 
 		if (FIXED_UPDATE_TIMER > TIME_BETWEEN_FIXED_UPDATE)
 		{
@@ -53,7 +54,7 @@ void Application::Run()
 			for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 			{
 				if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
-				m_GameobjectRegistry[i]->OnFixedUpdate(Time::Get());
+				m_GameobjectRegistry[i]->OnFixedUpdate();
 			}
 		}
 
@@ -61,7 +62,7 @@ void Application::Run()
 		for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 		{
 			if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
-			m_GameobjectRegistry[i]->OnUpdate(Time::Get());
+			m_GameobjectRegistry[i]->OnUpdate(); 
 		}
 
 		Window::Get()->SwapBuffers();

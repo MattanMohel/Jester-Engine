@@ -1,10 +1,10 @@
 #include "Camera.h"
 
-#include "../Time.h"
-#include "../Input.h"
+#include "../Core/Time.h"
+#include "../Core/Input.h"
 
 #include "Window.h"
-#include "rCommon.h"
+#include "RendererBase.h"
 
 Camera::Camera()
 	: m_WorldUp(0.0f, 1.0f, 0.0f), m_Yaw(90.0f), m_Pitch(0.0f), m_Front(0.0f, 0.0f, -1.0f), m_Size(5),
@@ -17,7 +17,7 @@ glm::mat4 Camera::CalculateViewMatrix() const
 	return glm::lookAt(pos, pos + m_Front, m_Up);
 }
 
-void Camera::OnUpdate(const Time* time)
+void Camera::OnUpdate()
 {
 	m_Front.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
 	m_Front.y = sin(glm::radians(m_Pitch));

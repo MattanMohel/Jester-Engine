@@ -1,7 +1,7 @@
 #include "Window.h"
-#include "../Input.h"
+#include "../Core/Input.h"
 
-#include "../Log.h"
+#include "../Core/Log.h"
 
 bool Window::isRunning = false;
 
@@ -28,6 +28,18 @@ void Window::Close()
 {
 	glfwSetWindowShouldClose(Get()->m_Window, GL_TRUE);
 	isRunning = true;
+}
+
+Vector2 Window::GetMousePosition() const
+{
+	double x, y;
+	glfwGetCursorPos(Window::Get()->m_Window, &x, &y);
+	return Vector2(x/WIDTH, -y/HEIGHT);
+}
+
+Vector2 Window::GetMousePositionInWorld(const Camera* camera) const
+{
+	return Vector2::Zero;
 }
 
 void Window::GLClear()

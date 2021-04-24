@@ -1,26 +1,43 @@
-#include "Sprite.h"
+#include "Shape.h"
 
-#include "rCommon.h"
-
-#include "../Gameobject.h"
-#include "../Component.h"
-#include "../Time.h"
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-Sprite::Sprite()
+Shape::Shape()
 	: m_Shader(VS_PATH, FS_PATH),
-	m_Color(1.0f, 1.0f, 1.0f, 1.0f), m_Camera(Gameobject::FindComponent<Camera>())
+	m_Mesh(RenderMode::TRIANGLE_FAN), m_Color(1.0f, 1.0f, 1.0f, 1.0f),
+	m_Camera(Gameobject::FindComponent<Camera>())
 {
-	m_Mesh.CreateMesh(VERTICES, INDICES, 20, 12);
-	m_Texture.LoadTexture();
+	m_Texture.SetTexture("resources/textures/block.png");
 }
 
-void Sprite::OnUpdate(const Time* time) 
+void Shape::SetVertices(const std::vector<Vector2>& verts)
+{
+	m_Vertices = verts;
+	UpdateMesh();
+}
+
+void Shape::UpdateMesh()
+{
+	float* vertices = new float[m_Vertices.size() * 5];
+	unsigned int* indices = new unsigned int[m_Vertices.size()];
+	for (size_t i = 0; i < m_Vertices.size(); i++)
+	{
+		indices[i] = i;
+
+		vertices[i * 5 + 0] = m_Vertices[i].x;
+		vertices[i * 5 + 1] = m_Vertices[i].y;
+		vertices[i * 5 + 2] = 0;
+		vertices[i * 5 + 3] = 0;
+		vertices[i * 5 + 4] = 0;
+	}
+
+	m_Mesh.CreateMesh(vertices, indices, m_Vertices.size() * 5, m_Vertices.size());
+
+	delete[] vertices, indices;
+}
+
+void Shape::OnUpdate()
 {
 	m_Shader.Bind();
-	m_Texture.Bind();
+
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, glm::vec3(gameobject->transform->position.x * SCALE, gameobject->transform->position.y * SCALE, 1));
 	model = glm::rotate(model, gameobject->transform->rotation.x, glm::vec3(1, 0, 0));
@@ -32,11 +49,8 @@ void Sprite::OnUpdate(const Time* time)
 	m_Shader.SetUniform<glm::vec4>("color", glm::vec4(m_Color.r, m_Color.g, m_Color.b, m_Color.a));
 	m_Shader.SetUniform<glm::mat4>("projection", m_Camera->Projection());
 	m_Shader.SetUniform<glm::mat4>("view", m_Camera->CalculateViewMatrix());
-	m_Shader.SetUniform<bool>("hasTex", m_Texture.hasTexture());
 
 	m_Mesh.Draw();
 
-	Texture::Unbind();
 	Shader::Unbind();
 }
-

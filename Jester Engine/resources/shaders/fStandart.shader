@@ -6,12 +6,8 @@ in vec2 TexCoord;
 out vec4 color;
 
 uniform sampler2D mainTex;
-uniform bool hasTex;
 
 void main()
 {
-	if (hasTex)
-		color = texture(mainTex, TexCoord) * Color;
-	else
-		color = Color;
+	color = Color;
 }

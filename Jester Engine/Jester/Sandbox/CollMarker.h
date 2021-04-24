@@ -7,8 +7,10 @@
 class CollMarker : public Component
 {
 public:
-	void OnAwake();
-	void OnUpdate(const Time* time);
+	void OnUpdate();
+
+	void OnCollisionEnter(Collider& other) override;
+	void OnCollisionExit(Collider& other) override;
 
 	std::vector<Gameobject*> points;
 };

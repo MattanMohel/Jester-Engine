@@ -3,7 +3,7 @@
 #include <string>
 #include <GL/glew.h>
 
-#include "../Log.h"
+#include "../Core/Log.h"
 
 enum class Filter
 {
@@ -26,8 +26,6 @@ public:
 	void LoadTexture();
 	void ClearTexture();
 
-	inline bool hasTexture() { return m_HaveTexture; }
-
 	void Bind();
 	static void Unbind();
 
@@ -39,6 +37,5 @@ private:
 	GLenum m_WrappingMode, m_FilterMode;
 
 	std::string m_TexturePath;
-	bool m_HaveTexture;
 };
 

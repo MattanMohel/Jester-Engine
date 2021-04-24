@@ -1,5 +1,7 @@
 #include "Internal.h"
 #include <GL/glew.h>
+#include "../Renderer/Line.h"
+#include "../Renderer/Shape.h"
 
 int main()
 {
@@ -59,17 +61,21 @@ int main()
 	Gameobject* obj = Gameobject::Instantiate("Camera");	
   	obj->AddComponent<Camera>();
 
+#if 1
 	Gameobject* player = Gameobject::Instantiate("player");
 	player->AddComponent<SampleComponent>()->move = true;
 	player->AddComponent<CollMarker>();
-	player->AddComponent<Sprite>()->SetTexture("resources/textures/block.png");
-	player->AddComponent<Collider>()->AddVertices(Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1), Vector2(0, -2));
+	//player->AddComponent<Sprite>()->SetTexture("resources/textures/block.png");
+	player->AddComponent<Collider>()->SetVertices(Vector2(-1, -1), Vector2(-3, 0), Vector2(-1, 1), Vector2(0, 3), Vector2(1, 1), Vector2(3, 0), Vector2(1, -1), Vector2(0, -3));
+	player->AddComponent<Shape>()->SetVertices(player->GetComponent<Collider>()->GetVertices());
 
 	Gameobject* target = Gameobject::Instantiate("target");
 	target->AddComponent<SampleComponent>();
 	target->AddComponent<CollMarker>();
-	target->AddComponent<Sprite>()->SetTexture("resources/textures/block.png");
-	target->AddComponent<Collider>()->AddVertices(Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1));
+	//target->AddComponent<Sprite>()->SetTexture("resources/textures/block.png");
+	target->AddComponent<Collider>()->SetVertices(Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1));
+	target->AddComponent<Shape>()->SetVertices(target->GetComponent<Collider>()->GetVertices());
+#endif
 
 	Application::Get()->Run(); 
 }  

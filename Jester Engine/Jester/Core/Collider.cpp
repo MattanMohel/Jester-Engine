@@ -44,8 +44,16 @@ inline bool Collider::isInCollisionArray(const Collider* a) const
 	return find(m_Collisions.begin(), m_Collisions.end(), a) != m_Collisions.end();
 }
 
-void Collider::OnUpdate(const Time* Time)
+void Collider::OnAwake()
 {
+	m_LineVisual.gameobject = gameobject;
+	m_LineVisual.color() = Color(COLLIDER_COLOR);
+}
+
+void Collider::OnUpdate()
+{
+	m_LineVisual.OnUpdate(); 
+
 	if (!checked)
 		CheckCollisions();
 }

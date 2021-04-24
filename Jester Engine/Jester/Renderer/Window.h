@@ -2,7 +2,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "../Color.h"
+#include "../Core/Vector2.h"
+#include "../Core/Color.h"
+
+#include "Camera.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -20,6 +23,9 @@ public:
 
 	static inline void PollEvents() { glfwPollEvents(); }
 	static inline float GetTime() { return glfwGetTime(); }
+
+	Vector2 GetMousePosition() const;
+	Vector2 GetMousePositionInWorld(const Camera* camera) const;
 
 	inline float GetBufferWidth() const { return m_BufferWidth; }
 	inline float GetBufferHeight() const { return m_BufferHeight; }

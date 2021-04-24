@@ -1,5 +1,5 @@
 #include "Shader.h"
-#include "../Log.h"
+#include "../Core/Log.h"
 
 Shader::Shader(const std::string& vPath, const std::string fPath)
 {

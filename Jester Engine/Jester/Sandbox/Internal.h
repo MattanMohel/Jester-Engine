@@ -6,7 +6,10 @@
 #include "CollMarker.h"
 #include "TimeKeeper.h"
 
-#include "../Core/Renderer/rCommon.h"
+#include "../Renderer/RendererBase.h"
+#include "../Renderer/Sprite.h"
+#include "../Renderer/Camera.h"
+#include "../Renderer/Line.h"
+#include "../Renderer/Shape.h"
+
 #include "../Core/Collider.h"
-#include "../Core/Renderer/Sprite.h"
-#include "../Core/Renderer/Camera.h"

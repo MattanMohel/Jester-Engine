@@ -60,13 +60,13 @@
     <ClInclude Include="Jester\Sandbox\TimeKeeper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Renderer\Window.h">
+    <ClInclude Include="Jester\Renderer\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Renderer\Texture.h">
+    <ClInclude Include="Jester\Renderer\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Renderer\vendor\stb_image.h">
+    <ClInclude Include="Jester\Renderer\vendor\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Core\Input.h">
@@ -75,25 +75,31 @@
     <ClInclude Include="Jester\Core\KeySignatures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Renderer\rCommon.h">
+    <ClInclude Include="Jester\Renderer\RendererBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Renderer\Mesh.h">
+    <ClInclude Include="Jester\Renderer\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Renderer\Shader.h">
+    <ClInclude Include="Jester\Renderer\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Renderer\Camera.h">
+    <ClInclude Include="Jester\Renderer\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Renderer\Sprite.h">
+    <ClInclude Include="Jester\Renderer\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Core\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Sandbox\CollMarker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Renderer\Line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Renderer\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -119,28 +125,34 @@
     <ClCompile Include="Jester\Core\Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Core\Renderer\Window.cpp">
+    <ClCompile Include="Jester\Renderer\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Core\Renderer\Texture.cpp">
+    <ClCompile Include="Jester\Renderer\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Core\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Core\Renderer\Mesh.cpp">
+    <ClCompile Include="Jester\Renderer\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Core\Renderer\Shader.cpp">
+    <ClCompile Include="Jester\Renderer\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Core\Renderer\Camera.cpp">
+    <ClCompile Include="Jester\Renderer\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Core\Renderer\Sprite.cpp">
+    <ClCompile Include="Jester\Renderer\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Sandbox\CollMarker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Renderer\Line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Renderer\Shape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

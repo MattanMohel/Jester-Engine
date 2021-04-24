@@ -161,9 +161,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Jester\Renderer\Line.h" />
     <ClInclude Include="Jester\Sandbox\CollMarker.h" />
     <ClInclude Include="Jester\Core\Color.h" />
-    <ClInclude Include="Jester\Core\Renderer\Camera.h" />
+    <ClInclude Include="Jester\Renderer\Camera.h" />
     <ClInclude Include="Jester\Core\Input.h" />
     <ClInclude Include="Jester\Core\Collider.h" />
     <ClInclude Include="Jester\Core\Application.h" />
@@ -174,8 +175,8 @@
     <ClInclude Include="Jester\Core\Gameobject.h" />
     <ClInclude Include="Jester\Core\Jester.h" />
     <ClInclude Include="Jester\Core\KeySignatures.h" />
-    <ClInclude Include="Jester\Core\Renderer\rCommon.h" />
-    <ClInclude Include="Jester\Core\Renderer\vendor\stb_image.h" />
+    <ClInclude Include="Jester\Renderer\RendererBase.h" />
+    <ClInclude Include="Jester\Renderer\vendor\stb_image.h" />
     <ClInclude Include="Jester\Core\Time.h" />
     <ClInclude Include="Jester\Core\Vector2.h" />
     <ClInclude Include="Jester\Core\Vector3.h" />
@@ -183,15 +184,17 @@
     <ClInclude Include="Jester\Sandbox\Sample.h" />
     <ClInclude Include="Jester\Core\Transform.h" />
     <ClInclude Include="Jester\Sandbox\TimeKeeper.h" />
-    <ClInclude Include="Jester\Core\Renderer\Window.h" />
-    <ClInclude Include="Jester\Core\Renderer\Texture.h" />
-    <ClInclude Include="Jester\Core\Renderer\Mesh.h" />
-    <ClInclude Include="Jester\Core\Renderer\Shader.h" />
-    <ClInclude Include="Jester\Core\Renderer\Sprite.h" />
+    <ClInclude Include="Jester\Renderer\Window.h" />
+    <ClInclude Include="Jester\Renderer\Texture.h" />
+    <ClInclude Include="Jester\Renderer\Mesh.h" />
+    <ClInclude Include="Jester\Renderer\Shader.h" />
+    <ClInclude Include="Jester\Renderer\Sprite.h" />
+    <ClInclude Include="Jester\Renderer\Shape.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Jester\Renderer\Line.cpp" />
     <ClCompile Include="Jester\Sandbox\CollMarker.cpp" />
-    <ClCompile Include="Jester\Core\Renderer\Camera.cpp" />
+    <ClCompile Include="Jester\Renderer\Camera.cpp" />
     <ClCompile Include="Jester\Core\Input.cpp" />
     <ClCompile Include="Jester\Core\Collider.cpp" />
     <ClCompile Include="Jester\Core\Application.cpp" />
@@ -200,11 +203,12 @@
     <ClCompile Include="Jester\Core\Transform.cpp" />
     <ClCompile Include="Jester\Sandbox\Entrypoint.cpp" />
     <ClCompile Include="Jester\Core\Gameobject.cpp" />
-    <ClCompile Include="Jester\Core\Renderer\Window.cpp" />
-    <ClCompile Include="Jester\Core\Renderer\Texture.cpp" />
-    <ClCompile Include="Jester\Core\Renderer\Mesh.cpp" />
-    <ClCompile Include="Jester\Core\Renderer\Shader.cpp" />
-    <ClCompile Include="Jester\Core\Renderer\Sprite.cpp" />
+    <ClCompile Include="Jester\Renderer\Window.cpp" />
+    <ClCompile Include="Jester\Renderer\Texture.cpp" />
+    <ClCompile Include="Jester\Renderer\Mesh.cpp" />
+    <ClCompile Include="Jester\Renderer\Shader.cpp" />
+    <ClCompile Include="Jester\Renderer\Sprite.cpp" />
+    <ClCompile Include="Jester\Renderer\Shape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\fStandart.shader" />

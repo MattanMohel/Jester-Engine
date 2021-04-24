@@ -6,12 +6,11 @@ class SampleComponent : public Component
 {
 public:
 	void OnAwake() override;
-	void OnUpdate(const Time* Time) override;
-	void OnCollisionEnter(Collider& other) override;
-	void OnCollisionExit(Collider& other) override; 
+	void OnUpdate() override;
+
 
 	bool move = false;
 
-	std::vector<Gameobject*> points;
+	Camera* cam;
 };
 

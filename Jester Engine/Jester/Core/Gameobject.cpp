@@ -62,19 +62,19 @@ void Gameobject::OnAwake()
 		component->OnAwake();
 }
 
-void Gameobject::OnUpdate(const Time* Time)
+void Gameobject::OnUpdate()
 {
 	for (auto& component : m_Components)
 	{
 		if (!(component->isEnabled)) continue;
-			component->OnUpdate(Time);
+			component->OnUpdate();
 	}
 }
 
-void Gameobject::OnFixedUpdate(const Time* Time)
+void Gameobject::OnFixedUpdate()
 {
 	for (auto& component : m_Components)
-		component->OnFixedUpdate(Time);
+		component->OnFixedUpdate();
 }
 
 void Gameobject::OnCollisionEnter(Collider& other)
