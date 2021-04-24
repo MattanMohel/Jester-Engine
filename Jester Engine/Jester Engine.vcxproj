@@ -192,6 +192,7 @@
     <ClInclude Include="Jester\Renderer\Shape.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Jester\Core\Vector2.cpp" />
     <ClCompile Include="Jester\Renderer\Line.cpp" />
     <ClCompile Include="Jester\Sandbox\CollMarker.cpp" />
     <ClCompile Include="Jester\Renderer\Camera.cpp" />

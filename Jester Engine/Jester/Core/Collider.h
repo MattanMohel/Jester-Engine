@@ -38,7 +38,7 @@ public:
 		float maxDistance = 0;
 		for (const auto& vert : m_Vertices)
 		{
-			float distance = Vector2::SquaredDistance(vert, Vector2::Zero());
+			float distance = Vector2::SquaredDistance(vert, Vector2::Zero);
 			maxDistance = distance > maxDistance? distance : maxDistance;  
 		}
 

@@ -13,8 +13,6 @@ void SampleComponent::OnUpdate()
 {
 	if (!move) return;
 
-	gameobject->transform->position = Window::Get()->GetMousePositionInWorld(cam);  
-
 	if (Input::GetKey(KeySig::Escape)) 
 		Window::Close(); 
 
