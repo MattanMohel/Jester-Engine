@@ -2,15 +2,17 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <string>
 
 #include"../Renderer/Line.h"
+#include "UI.h"
 
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Component.h"
 #include "Gameobject.h"
 
-#define CALC_PRECISION 0.005f
+#define CALC_PRECISION 0.0f
 #define COLLIDER_COLOR 70.0f/255.0f, 236.0f/255.0f, 86.0f/255.0f, 1.0f
 
 class Collider : public Component
@@ -30,6 +32,10 @@ public:
 	Collider();
 	~Collider();
 
+	void OnAwake() override;
+	void OnUpdate() override;
+	void OnGuiUpdate() override;
+
 	template<typename... Vertices>
 	void SetVertices(Vertices... vertices)
 	{
@@ -46,6 +52,11 @@ public:
 
 		m_LineVisual.SetVertices(m_Vertices);
 	}
+	void SetVertices(const std::vector<Vector2>& verts);
+	void SetVertex(Vector2& newVertex, size_t index);
+
+	void RemoveVertex(size_t index);
+	void AddVertex(size_t index);
 
 	const std::vector<Vector2>& GetVertices() const;
 	Vector2 GetIndex(int index) const;
@@ -56,9 +67,6 @@ public:
 	Type GetType() const;
 
 	inline bool isInCollisionArray(const Collider* a) const;
-
-	void OnAwake() override;
-	void OnUpdate() override;
 
 private:
 	static void CheckCollisions();

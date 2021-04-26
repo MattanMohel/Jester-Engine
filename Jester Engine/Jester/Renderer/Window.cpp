@@ -6,7 +6,7 @@
 bool Window::isRunning = false;
 
 Window::Window()
-	: m_Window(nullptr), m_Width(WIDTH), m_Height(HEIGHT), m_BufferWidth(0), m_BufferHeight(0),
+	: window(nullptr), m_Width(WIDTH), m_Height(HEIGHT), m_BufferWidth(0), m_BufferHeight(0),
 	bgColor(0.0f, 0.0f, 0.0f, 1.0f)
 {
 	Initialize();
@@ -20,20 +20,20 @@ Window* Window::Get()
 
 Window::~Window()
 {
-	glfwDestroyWindow(m_Window);
+	glfwDestroyWindow(window);
 	glfwTerminate();
 }
 
 void Window::Close()
 {
-	glfwSetWindowShouldClose(Get()->m_Window, GL_TRUE);
+	glfwSetWindowShouldClose(Get()->window, GL_TRUE);
 	isRunning = true;
 }
 
 Vector2 Window::GetMousePosition() const
 {
 	double x, y;
-	glfwGetCursorPos(Window::Get()->m_Window, &x, &y);
+	glfwGetCursorPos(Window::Get()->window, &x, &y);
 	return Vector2(x/WIDTH, -y/HEIGHT);
 }
 
@@ -67,8 +67,8 @@ int Window::Initialize()
 	// Allow forward compatibility
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-	m_Window = glfwCreateWindow(m_Width, m_Height, NAME, nullptr, nullptr);
-	if (!m_Window)
+	window = glfwCreateWindow(m_Width, m_Height, NAME, nullptr, nullptr);
+	if (!window)
 	{
 		Logger::Print("GLFW window creation failed");
 		glfwTerminate();
@@ -76,10 +76,10 @@ int Window::Initialize()
 	}
 
 	// Get buffer size information
-	glfwGetFramebufferSize(m_Window, &m_BufferWidth, &m_BufferHeight);
+	glfwGetFramebufferSize(window, &m_BufferWidth, &m_BufferHeight);
 
 	// Set context for GLEW
-	glfwMakeContextCurrent(m_Window);
+	glfwMakeContextCurrent(window);
 
 	// Handle Callbacks (key | Mouse)
 	CreateCallbacks();
@@ -92,7 +92,7 @@ int Window::Initialize()
 	if (glewInit() != GLEW_OK)
 	{
 		Logger::Print("GLEW initialization failed");
-		glfwDestroyWindow(m_Window);
+		glfwDestroyWindow(window);
 		glfwTerminate();
 		return 1;
 	}
@@ -103,13 +103,13 @@ int Window::Initialize()
 	// Setup viewport size
 	glViewport(0, 0, m_BufferWidth, m_BufferHeight);
 
-	glfwSetWindowUserPointer(m_Window, this);
+	glfwSetWindowUserPointer(window, this);
 }
 
 void Window::CreateCallbacks()
 {
-	glfwSetKeyCallback(m_Window, Input::HandleKeys);
-	glfwSetCursorPosCallback(m_Window, Input::HandleMouse);
+	glfwSetKeyCallback(window, Input::HandleKeys);
+	glfwSetCursorPosCallback(window, Input::HandleMouse);
 }
 
 void Window::EndFrame()

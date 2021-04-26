@@ -1,0 +1,112 @@
+#include "UI.h"
+
+#include "ComponentTracker.h"
+#include "CoreBase.h"
+#include "../Renderer/Window.h"
+#include "Gameobject.h"
+#include "Vector2.h"
+
+ImGuiIO* UIContext::io = nullptr;
+
+void UIContext::Init()
+{
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	io = &ImGui::GetIO(); (void)io;
+
+	ImGui::StyleColorsDark();
+
+	ImGui_ImplGlfw_InitForOpenGL(Window::Get()->window, true);
+	ImGui_ImplOpenGL3_Init("#version 330");
+}
+
+void UIContext::NewFrame()
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+}
+
+void UIContext::RenderFrame()
+{
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void UIContext::ShutDown()
+{
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui::DestroyContext();
+}
+
+void UIContext::RenderGameobject(Gameobject* gameobject)
+{
+	if (gameobject == nullptr) return;
+
+	ImGui::Begin(gameobject->name.c_str()); 
+	{
+		ImGui::InputFloat2("Positon", *gameobject->transform->position.GetValuePointer());
+		ImGui::InputFloat2("Scale", *gameobject->transform->scale.GetValuePointer());
+		ImGui::InputFloat("Rotation", &gameobject->transform->rotation.z);
+
+		for (auto* component : gameobject->GetComponents())
+		{
+			component->OnGuiUpdate();
+		}
+	}
+
+	static bool showNext = false;
+	if (ImGui::Button("Add Component"))
+		showNext = true;
+
+	if (showNext)
+	{
+		static char buffer[1024] = "";
+		ImGui::InputText("Name", buffer, IM_ARRAYSIZE(buffer));
+		ImGui::SameLine();
+		
+		if (ImGui::Button("Add") || !ImGui::IsItemFocused)
+		{
+			showNext = false;
+			RetrieveComponent(gameobject, buffer);
+		}
+	}
+
+	ImGui::End();
+}
+
+void UIContext::RenderHierarchy()
+{
+	static Gameobject* currObj = nullptr; 
+
+	ImGui::Begin("Hierarchy");
+	{
+		for (auto* gameobject : Application::Get()->GetGameobjects())
+		{
+			ImGui::Text(gameobject->name.c_str());
+			if (ImGui::Button(gameobject->name.c_str()))
+				currObj = gameobject;
+		}
+
+		static bool showNext = false;
+		if (ImGui::Button("Create New Component"))
+			showNext = true;
+
+		if (showNext)
+		{
+			static char buffer[1024] = "";
+			ImGui::InputText("Name", buffer, IM_ARRAYSIZE(buffer));
+			ImGui::SameLine();
+
+			if (ImGui::Button("Create") || !ImGui::IsItemFocused)
+			{
+				showNext = false;
+				AddComponentToFile(buffer); 
+			}
+		}
+
+	}
+	ImGui::End(); 
+
+	RenderGameobject(currObj); 
+}

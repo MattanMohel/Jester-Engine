@@ -1,15 +1,20 @@
 #include "CollMarker.h"
 
+#include "../Core/CoreBase.h"
+#include "../Core/Log.h"
+
 void CollMarker::OnUpdate()
 {
-	//gameobject->transform->Dilate(.1 * time->DeltaTime(), .2 * time->DeltaTime(), 0);
-	gameobject->transform->Rotate(0, 0, .5 * Time::DeltaTime());
-	float rotation = gameobject->transform->rotation.z;
+	Logger::Print("hi");
+	gameobject->transform->Rotate(0, 0, rotSpeed * Time::DeltaTime());  
+}
 
-	if (Input::GetKey(KeySig::W))
-		gameobject->transform->Dilate(.2 * Time::DeltaTime(), 0, 0);
-	if (Input::GetKey(KeySig::S))
-		gameobject->transform->Dilate(-.2 * Time::DeltaTime(), 0, 0);
+void CollMarker::OnGuiUpdate()
+{
+	ImGui::Text("Collider Marker");
+	ImGui::SliderFloat("rotation speed", &rotSpeed, -10, 10, "", 1);
+	if (ImGui::Button("Construct"))
+		AddComponentToFile("CollMarker");
 }
 
 void CollMarker::OnCollisionEnter(Collider& other)

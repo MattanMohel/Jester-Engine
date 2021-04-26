@@ -26,8 +26,10 @@ public:
 	Adds the gameobject to the gameobject registry only at
 	the end of the frame to avoid confusion in the application*/
 	static Gameobject* Instantiate(std::string&& name);
-	//Destroys Gameobject pointer
+	/*Destroys and removes all instances of gameobject*/
 	static void Destroy(Gameobject* gameobject);
+	/*Retrieves all gameobject compoenents*/
+	inline const std::vector<Component*>& GetComponents() { return m_Components; }
 
 	std::string name;
 	bool isEnabled = true;

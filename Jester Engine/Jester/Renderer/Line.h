@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include <glm/glm.hpp>
 
 #include "Camera.h"
@@ -25,8 +26,12 @@ public:
 		(m_Vertices.push_back(std::forward<Vector2>(vertices)), ...);
 		UpdateMesh();
 	}
-
 	void SetVertices(const std::vector<Vector2>& verts);
+	void SetVertex(const Vector2& newVertex, size_t index); 
+
+	void RemoveVertex(size_t index);
+	void AddVertex(size_t index);
+
 	void UpdateMesh();
 
 	inline Color& color() { return m_Color; }

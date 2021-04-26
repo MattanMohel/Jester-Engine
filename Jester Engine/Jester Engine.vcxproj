@@ -161,8 +161,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Jester\Core\ComponentTracker.h" />
+    <ClInclude Include="Jester\Core\CoreBase.h" />
+    <ClInclude Include="Jester\Core\UI.h" />
     <ClInclude Include="Jester\Renderer\Line.h" />
-    <ClInclude Include="Jester\Sandbox\CollMarker.h" />
     <ClInclude Include="Jester\Core\Color.h" />
     <ClInclude Include="Jester\Renderer\Camera.h" />
     <ClInclude Include="Jester\Core\Input.h" />
@@ -176,14 +178,23 @@
     <ClInclude Include="Jester\Core\Jester.h" />
     <ClInclude Include="Jester\Core\KeySignatures.h" />
     <ClInclude Include="Jester\Renderer\RendererBase.h" />
+    <ClInclude Include="Jester\Sandbox\CollMarker.h" />
+    <ClInclude Include="Jester\Sandbox\Internal.h" />
+    <ClInclude Include="Jester\Sandbox\Sample.h" />
+    <ClInclude Include="Jester\Sandbox\TimeKeeper.h" />
+    <ClInclude Include="Jester\vendors\imgui\imconfig.h" />
+    <ClInclude Include="Jester\vendors\imgui\imgui.h" />
+    <ClInclude Include="Jester\vendors\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="Jester\vendors\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Jester\vendors\imgui\imgui_internal.h" />
+    <ClInclude Include="Jester\vendors\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Jester\vendors\imgui\imstb_textedit.h" />
+    <ClInclude Include="Jester\vendors\imgui\imstb_truetype.h" />
     <ClInclude Include="Jester\vendors\stb_image.h" />
     <ClInclude Include="Jester\Core\Time.h" />
     <ClInclude Include="Jester\Core\Vector2.h" />
     <ClInclude Include="Jester\Core\Vector3.h" />
-    <ClInclude Include="Jester\Sandbox\Internal.h" />
-    <ClInclude Include="Jester\Sandbox\Sample.h" />
     <ClInclude Include="Jester\Core\Transform.h" />
-    <ClInclude Include="Jester\Sandbox\TimeKeeper.h" />
     <ClInclude Include="Jester\Renderer\Window.h" />
     <ClInclude Include="Jester\Renderer\Texture.h" />
     <ClInclude Include="Jester\Renderer\Mesh.h" />
@@ -192,6 +203,8 @@
     <ClInclude Include="Jester\Renderer\Shape.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Jester\Core\ComponentTracker.cpp" />
+    <ClCompile Include="Jester\Core\UI.cpp" />
     <ClCompile Include="Jester\Core\Vector2.cpp" />
     <ClCompile Include="Jester\Renderer\Line.cpp" />
     <ClCompile Include="Jester\Sandbox\CollMarker.cpp" />
@@ -200,9 +213,7 @@
     <ClCompile Include="Jester\Core\Collider.cpp" />
     <ClCompile Include="Jester\Core\Application.cpp" />
     <ClCompile Include="Jester\Core\Time.cpp" />
-    <ClCompile Include="Jester\Sandbox\Sample.cpp" />
     <ClCompile Include="Jester\Core\Transform.cpp" />
-    <ClCompile Include="Jester\Sandbox\Entrypoint.cpp" />
     <ClCompile Include="Jester\Core\Gameobject.cpp" />
     <ClCompile Include="Jester\Renderer\Window.cpp" />
     <ClCompile Include="Jester\Renderer\Texture.cpp" />
@@ -210,6 +221,15 @@
     <ClCompile Include="Jester\Renderer\Shader.cpp" />
     <ClCompile Include="Jester\Renderer\Sprite.cpp" />
     <ClCompile Include="Jester\Renderer\Shape.cpp" />
+    <ClCompile Include="Jester\Sandbox\Entrypoint.cpp" />
+    <ClCompile Include="Jester\Sandbox\Sample.cpp" />
+    <ClCompile Include="Jester\vendors\imgui\imgui.cpp" />
+    <ClCompile Include="Jester\vendors\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Jester\vendors\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Jester\vendors\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Jester\vendors\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Jester\vendors\imgui\imgui_tables.cpp" />
+    <ClCompile Include="Jester\vendors\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\fStandart.shader" />

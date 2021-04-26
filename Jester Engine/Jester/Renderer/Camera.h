@@ -19,7 +19,6 @@ class Camera : public Component
 {
 public:
 	Camera();
-	Camera(const Camera& camera) = delete;
 
 	void OnUpdate() override;
 

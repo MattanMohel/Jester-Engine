@@ -1,10 +1,13 @@
 #include "Collider.h"
 
+#include "UI.h"
+
 std::vector<Collider*> Collider::colliderRegistery;
 size_t Collider::callIndex = 0;
 bool Collider::checked = false;
 
 Collider::Collider()
+	: m_FurthestVertexDistance(0)
 {
 	colliderRegistery.push_back(this);
 }
@@ -12,6 +15,102 @@ Collider::Collider()
 Collider::~Collider()
 {
 	colliderRegistery.erase(find(m_Collisions.begin(), m_Collisions.end(), this));
+}
+
+void Collider::OnAwake()
+{
+	m_LineVisual.gameobject = gameobject;
+	m_LineVisual.color() = Color(COLLIDER_COLOR);
+}
+
+void Collider::OnUpdate()
+{
+	m_LineVisual.OnUpdate();
+
+	if (!checked)
+		CheckCollisions();
+}
+
+void Collider::OnGuiUpdate()
+{
+	ImGui::CollapsingHeader((const char*)"Collider");
+	ImGui::Text("Collider: ");
+
+	/*Serialize The Vertex Vector*/
+	for (size_t i = 0; i < m_Vertices.size(); i++)
+	{
+		ImGui::PushID(MAKE_UNIQUE(m_Vertices, i));
+		if (ImGui::InputFloat2("", *m_Vertices[i].GetValuePointer()))
+			SetVertex(m_Vertices[i], i);
+		ImGui::PopID();
+	}
+
+	/*Add Or Remove Vertex Entries*/
+	if (ImGui::Button("Add Vertex"))
+		AddVertex(m_Vertices.size());
+	ImGui::SameLine();
+	if (ImGui::Button("Remove Vertex"))
+		RemoveVertex(m_Vertices.size() - 1);
+
+	/*Serialize Collision State*/
+	bool isTrigger = m_State == State::Trigger;
+	if (ImGui::Checkbox("isTrigger", &isTrigger))
+		m_State = isTrigger ? State::Trigger : State::Physics;
+}
+
+void Collider::SetVertices(const std::vector<Vector2>& verts)
+{
+	m_Vertices = verts;
+
+	float maxDistance = 0;
+	for (const auto& vert : m_Vertices)
+	{
+		float distance = Vector2::SquaredDistance(vert, Vector2::Zero);
+		maxDistance = distance > maxDistance ? distance : maxDistance;
+	}
+
+	m_FurthestVertexDistance = maxDistance;
+
+	m_LineVisual.SetVertices(m_Vertices);
+}
+
+void Collider::SetVertex(Vector2& newVertex, size_t index)
+{
+	m_Vertices[index] = newVertex;
+
+	float dis = Vector2::SquaredDistance(Vector2::Zero, newVertex);
+	m_FurthestVertexDistance < dis ? dis : m_FurthestVertexDistance;
+
+	m_LineVisual.SetVertex(newVertex, index);
+}
+
+void Collider::RemoveVertex(size_t index)
+{
+	if (m_Vertices.size() == 0)
+		return;
+
+	m_Vertices.erase(m_Vertices.begin() + index);
+
+	float maxDistance = 0;
+	for (const auto& vert : m_Vertices)
+	{
+		float distance = Vector2::SquaredDistance(vert, Vector2::Zero);
+		maxDistance = distance > maxDistance ? distance : maxDistance;
+	}
+
+	m_FurthestVertexDistance = maxDistance;
+
+	m_LineVisual.RemoveVertex(index);
+}
+
+void Collider::AddVertex(size_t index)
+{
+	if (m_Vertices.size() == 0)
+		m_Vertices.push_back(Vector2::Zero);
+	else
+		m_Vertices.insert(m_Vertices.begin() + index, Vector2::Zero);
+
+	m_LineVisual.AddVertex(index);
 }
 
 const std::vector<Vector2>& Collider::GetVertices() const
@@ -42,20 +141,6 @@ Collider::Type Collider::GetType() const
 inline bool Collider::isInCollisionArray(const Collider* a) const
 {
 	return find(m_Collisions.begin(), m_Collisions.end(), a) != m_Collisions.end();
-}
-
-void Collider::OnAwake()
-{
-	m_LineVisual.gameobject = gameobject;
-	m_LineVisual.color() = Color(COLLIDER_COLOR);
-}
-
-void Collider::OnUpdate()
-{
-	m_LineVisual.OnUpdate(); 
-
-	if (!checked)
-		CheckCollisions();
 }
 
 void Collider::CheckCollisions()

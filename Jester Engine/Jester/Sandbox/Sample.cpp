@@ -31,4 +31,10 @@ void SampleComponent::OnUpdate()
 		gameobject->transform->Translate(0, -2 * Time::DeltaTime());
 }
 
+void SampleComponent::OnGuiUpdate()
+{
+	ImGui::Text((const char*)"Sample Component:");
+	ImGui::Checkbox("Move", &move);
+}
+
 

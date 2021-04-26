@@ -29,7 +29,7 @@ public:
 
 	inline float GetBufferWidth() const { return m_BufferWidth; }
 	inline float GetBufferHeight() const { return m_BufferHeight; }
-	inline void SwapBuffers() const { glfwSwapBuffers(m_Window); }
+	inline void SwapBuffers() const { glfwSwapBuffers(window); }
 
 	/*Deals with executions that need to be handeled at
 	the end of the frame*/
@@ -39,13 +39,14 @@ public:
 	static void Close();
 	void GLClear();
 
+	GLFWwindow* window;
+
 private:
 	Window(const Window& w) = delete;
 	Window();
 
 	int Initialize();
 
-	GLFWwindow* m_Window;
 
 	float m_Width, m_Height;
 	int m_BufferWidth, m_BufferHeight;

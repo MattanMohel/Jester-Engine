@@ -1,10 +1,9 @@
 #pragma once
 
 #include "../Core/Jester.h"
-
-#include "Sample.h"
-#include "CollMarker.h"
-#include "TimeKeeper.h"
+#include "../Core/Collider.h"
+#include "../Core/Input.h"
+#include "../Core/UI.h"
 
 #include "../Renderer/RendererBase.h"
 #include "../Renderer/Sprite.h"
@@ -12,4 +11,3 @@
 #include "../Renderer/Line.h"
 #include "../Renderer/Shape.h"
 
-#include "../Core/Collider.h"

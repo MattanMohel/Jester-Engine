@@ -36,9 +36,6 @@
     <ClInclude Include="Jester\Core\Vector2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Sandbox\Sample.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Jester\Core\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,16 +45,10 @@
     <ClInclude Include="Jester\Core\EventSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Sandbox\Internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Jester\Core\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Core\Vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Jester\Sandbox\TimeKeeper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Renderer\Window.h">
@@ -93,13 +84,55 @@
     <ClInclude Include="Jester\Core\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Sandbox\CollMarker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Jester\Renderer\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Renderer\Shape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Core\UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\vendors\imgui\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\vendors\imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\vendors\imgui\imgui_impl_glfw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\vendors\imgui\imgui_impl_opengl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\vendors\imgui\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\vendors\imgui\imstb_rectpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\vendors\imgui\imstb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\vendors\imgui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Core\ComponentTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Core\CoreBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Sandbox\CollMarker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Sandbox\Internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Sandbox\Sample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Sandbox\TimeKeeper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -108,12 +141,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Core\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Jester\Sandbox\Entrypoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Jester\Sandbox\Sample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Core\Transform.cpp">
@@ -156,6 +183,39 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Core\Vector2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Core\UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\vendors\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\vendors\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\vendors\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\vendors\imgui\imgui_impl_glfw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\vendors\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\vendors\imgui\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\vendors\imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Core\ComponentTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Sandbox\Entrypoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Sandbox\Sample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,6 +4,8 @@ class Time;
 class Collider;
 class Gameobject;
 
+#include <string>
+
 #define DERIVES_FROM_COMPONENT_ASSERT static_assert(std::is_base_of<Component, TComponent>::value, "TComponent must derive from Component")
 
 //Base Component
@@ -19,6 +21,8 @@ public:
 	virtual void OnUpdate() {}
 	//called once every .2 seconds;
 	virtual void OnFixedUpdate() {}
+	//updates the component's Gui Panel
+	virtual void OnGuiUpdate() {}
 
 	//collision calls, overridden in specialization
 	virtual void OnCollisionEnter(Collider& other) {}

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Log.h"
+#include "Vector2.h"
 
 class Gameobject; 
 
@@ -20,6 +21,8 @@ public:
 	void Init();
 	void Run();
 
+	inline const std::vector<Gameobject*>& GetGameobjects() { return m_GameobjectRegistry; }
+
 private:
 	Application() {};
 
@@ -31,9 +34,8 @@ private:
 	//removes gameobject from overall Gameobject vector
 	void RemoveGameobject(Gameobject* gameobject);
 	
-	const std::vector<Gameobject*>& GetGameobjects();
-
 	static bool isRunning;
+
 private:
 	std::vector<Gameobject*> m_GameobjectRegistry;
 };

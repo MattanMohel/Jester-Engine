@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include "UI.h"
+
 #include "Time.h"
 #include "Gameobject.h"
 #include "Component.h"
@@ -17,13 +19,14 @@ Application* Application::Get()
 void Application::Init()
 {
 	Logger::Print(LogFlag::Info, "Init");
+	UIContext::Init(); 
 	Window::Get();
 	Time::Init();
 }
 
 void Application::Run()
 {
-	//On Awake Call
+	/*Gameobject OnAwake Call*/
 	for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 	{
 		if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
@@ -35,15 +38,13 @@ void Application::Run()
 	isRunning = true;
 	while (!Window::shouldClose())
 	{
-		//Poll GLFW events
+		UIContext::NewFrame();
 		Window::PollEvents();
-
-		//Update Time Instance
 		Time::OnUpdate();
 
 		Window::Get()->GLClear();
 
-		//Check for FixedUpdate
+		/*Gameobject OnFixedUpdate Call*/
 		static float FIXED_UPDATE_TIMER = 0;
 		FIXED_UPDATE_TIMER += Time::DeltaTime();
 
@@ -58,19 +59,29 @@ void Application::Run()
 			}
 		}
 
-		//Call Gameobject Updates
+		/*Gameobject OnUpdate Call*/
 		for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 		{
 			if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
 			m_GameobjectRegistry[i]->OnUpdate(); 
 		}
 
+		UIContext::RenderHierarchy(); 
+
+		// Rendering
+		UIContext::RenderFrame(); 
+		int display_w, display_h;
+		glfwGetFramebufferSize(Window::Get()->window, &display_w, &display_h);
+		glViewport(0, 0, display_w, display_h);
+
 		Window::Get()->SwapBuffers();
 		Window::EndFrame();
 	}
 
-	isRunning = false;
+	//Clean-up
+	UIContext::ShutDown(); 
 	delete Window::Get();
+	isRunning = false;
 }
 
 void Application::AddGameobject(Gameobject* gameobject)
@@ -84,7 +95,4 @@ void Application::RemoveGameobject(Gameobject* gameobject)
 	m_GameobjectRegistry.erase(it);
 }
 
-const std::vector<Gameobject*>& Application::GetGameobjects()
-{
-	return m_GameobjectRegistry;
-}
+

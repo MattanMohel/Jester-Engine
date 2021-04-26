@@ -13,6 +13,18 @@ struct Vector2
 		: x(x), y(y)
 	{}
 
+	float** GetValuePointer() 
+	{ 
+		float* v[2] { &x, &y };
+		return v; 
+	}
+
+	float* GetValue() const
+	{
+		float v[2] { x, y };
+		return v;
+	}
+
 	//returns the magnitude of a vector
 	float Magnitude() const
 	{
@@ -28,13 +40,9 @@ struct Vector2
 	Vector2 Normalized() const
 	{
 		if (x > y)
-		{
 			return Vector2(1, y / x);
-		}
 		else
-		{
 			return Vector2(x / y, 1);
-		}
 	}
 
 	static float DotProduct(const Vector2& a, const Vector2& b)
@@ -88,7 +96,6 @@ struct Vector2
 		y /= divider;
 	}	
 
-
 	Vector2 operator+ (const Vector2& vec2) const
 	{
 		return Vector2(x + vec2.x, y + vec2.y);
@@ -109,6 +116,11 @@ struct Vector2
 	bool operator== (const Vector2 vec2) const
 	{
 		return vec2.x == x && vec2.y == y;
+	}	
+	
+	bool operator!= (const Vector2 vec2) const
+	{
+		return !(vec2.x == x && vec2.y == y);
 	}
 
 	static friend std::ostream& operator<< (std::ostream& os, const Vector2& vec2)

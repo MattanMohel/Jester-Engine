@@ -12,6 +12,31 @@ void Line::SetVertices(const std::vector<Vector2>& verts)
 	UpdateMesh();
 }
 
+void Line::SetVertex(const Vector2& newVertex, size_t index)
+{
+	m_Vertices[index] = newVertex;
+	UpdateMesh(); 
+}
+
+void Line::RemoveVertex(size_t index)
+{
+	if (m_Vertices.size() == 0)
+		return;
+
+	m_Vertices.erase(m_Vertices.begin() + index);
+	UpdateMesh();
+}
+
+void Line::AddVertex(size_t index)
+{
+	if (m_Vertices.size() == 0)
+		m_Vertices.push_back(Vector2::Zero);
+	else
+		m_Vertices.insert(m_Vertices.begin() + index, Vector2::Zero);
+	
+	UpdateMesh(); 
+} 
+
 void Line::UpdateMesh()
 {
 	float* vertices = new float[m_Vertices.size() * 5];
