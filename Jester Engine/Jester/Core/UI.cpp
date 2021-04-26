@@ -1,7 +1,5 @@
 #include "UI.h"
 
-#include "ComponentTracker.h"
-#include "CoreBase.h"
 #include "../Renderer/Window.h"
 #include "Gameobject.h"
 #include "Vector2.h"
@@ -68,7 +66,7 @@ void UIContext::RenderGameobject(Gameobject* gameobject)
 		if (ImGui::Button("Add") || !ImGui::IsItemFocused)
 		{
 			showNext = false;
-			RetrieveComponent(gameobject, buffer);
+			/*Retrieve Component*/
 		}
 	}
 
@@ -83,7 +81,6 @@ void UIContext::RenderHierarchy()
 	{
 		for (auto* gameobject : Application::Get()->GetGameobjects())
 		{
-			ImGui::Text(gameobject->name.c_str());
 			if (ImGui::Button(gameobject->name.c_str()))
 				currObj = gameobject;
 		}
@@ -101,7 +98,7 @@ void UIContext::RenderHierarchy()
 			if (ImGui::Button("Create") || !ImGui::IsItemFocused)
 			{
 				showNext = false;
-				AddComponentToFile(buffer); 
+				/*Add component*/
 			}
 		}
 

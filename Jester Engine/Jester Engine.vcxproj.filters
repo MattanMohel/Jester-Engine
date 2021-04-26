@@ -117,12 +117,6 @@
     <ClInclude Include="Jester\vendors\imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\ComponentTracker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Jester\Core\CoreBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Jester\Sandbox\CollMarker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -207,9 +201,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\vendors\imgui\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Jester\Core\ComponentTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Sandbox\Entrypoint.cpp">

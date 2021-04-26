@@ -161,8 +161,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Jester\Core\ComponentTracker.h" />
-    <ClInclude Include="Jester\Core\CoreBase.h" />
     <ClInclude Include="Jester\Core\UI.h" />
     <ClInclude Include="Jester\Renderer\Line.h" />
     <ClInclude Include="Jester\Core\Color.h" />
@@ -203,7 +201,6 @@
     <ClInclude Include="Jester\Renderer\Shape.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Jester\Core\ComponentTracker.cpp" />
     <ClCompile Include="Jester\Core\UI.cpp" />
     <ClCompile Include="Jester\Core\Vector2.cpp" />
     <ClCompile Include="Jester\Renderer\Line.cpp" />
