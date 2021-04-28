@@ -1,7 +1,7 @@
 #include "Time.h"
 
-float Time::deltaTime;
-float Time::previousTime = 0.0f;
+double Time::deltaTime;
+double Time::previousTime = 0.0f;
 long double Time::timeSinceInit = 0.0f;
 
 void Time::Init()

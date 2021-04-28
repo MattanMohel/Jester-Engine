@@ -3,7 +3,6 @@
 #include "../Core/Vector2.h"
 #include "../Core/Vector3.h"
 
-#define ToVec3(v) glm::vec3(v.x, v.y, v.z)
 #define ToVec3(v, z) glm::vec3(v.x, v.y, z)
 #define ToVec2(v) glm::vec2(v.x, v.y)
 
@@ -15,6 +14,7 @@
 
 #define VS_PATH "resources/shaders/vStandart.shader"
 #define FS_PATH "resources/shaders/fStandart.shader"
+#define FCOLOR_PATH "resources/shaders/fColored.shader"
 
 #define Y_AXIS_SORT true
 

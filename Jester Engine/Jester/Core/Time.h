@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Renderer/Window.h"
+#include "Window.h"
 #include <cmath>
 
 class Application;
@@ -23,6 +23,6 @@ public:
 	static inline double GetFPS() { return round(1 / deltaTime); }
 
 private:
-	static float deltaTime, previousTime;
+	static double deltaTime, previousTime;
 	static long double timeSinceInit;
 }; 

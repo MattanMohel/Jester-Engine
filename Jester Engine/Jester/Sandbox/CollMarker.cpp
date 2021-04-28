@@ -4,7 +4,7 @@
 
 void CollMarker::OnUpdate()
 {
-	gameobject->transform->Rotate(0, 0, rotSpeed * Time::DeltaTime());  
+	gameobject->transform.Rotate(rotSpeed * Time::DeltaTime());  
 }
 
 void CollMarker::OnGuiUpdate()

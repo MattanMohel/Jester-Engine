@@ -5,7 +5,7 @@
 #include "Time.h"
 #include "Gameobject.h"
 #include "Component.h"
-#include "../Renderer/Window.h"
+#include "Window.h"
 
 bool Application::isRunning = false;
 

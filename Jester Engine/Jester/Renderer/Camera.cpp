@@ -2,8 +2,8 @@
 
 #include "../Core/Time.h"
 #include "../Core/Input.h"
+#include "../Core/Window.h"
 
-#include "Window.h"
 #include "RendererBase.h"
 
 Camera::Camera()
@@ -13,7 +13,7 @@ Camera::Camera()
 
 glm::mat4 Camera::CalculateViewMatrix() const
 {
-	glm::vec3 pos = ToVec3(gameobject->transform->position, 0);
+	glm::vec3 pos = ToVec3(gameobject->transform.position, 0); 
 	return glm::lookAt(pos, pos + m_Front, m_Up);
 }
 

@@ -51,7 +51,7 @@
     <ClInclude Include="Jester\Core\Vector3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Renderer\Window.h">
+    <ClInclude Include="Jester\Core\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Renderer\Texture.h">
@@ -146,7 +146,7 @@
     <ClCompile Include="Jester\Core\Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Renderer\Window.cpp">
+    <ClCompile Include="Jester\Core\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Renderer\Texture.cpp">
@@ -213,6 +213,7 @@
   <ItemGroup>
     <None Include="resources\shaders\fStandart.shader" />
     <None Include="resources\shaders\vStandart.shader" />
+    <None Include="resources\shaders\fColored.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\Users\Mattan\Downloads\Pixel Art\Phil Statue.png">

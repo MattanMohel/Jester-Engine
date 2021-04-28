@@ -1,12 +1,10 @@
 #include "Shape.h"
 
 Shape::Shape()
-	: m_Shader(VS_PATH, FS_PATH),
+	: m_Shader(VS_PATH, FCOLOR_PATH),
 	m_Mesh(RenderMode::TRIANGLE_FAN), m_Color(1.0f, 1.0f, 1.0f, 1.0f),
 	m_Camera(Gameobject::FindComponent<Camera>())
-{
-	m_Texture.SetTexture("resources/textures/block.png");
-}
+{}
 
 void Shape::SetVertices(const std::vector<Vector2>& verts)
 {
@@ -39,11 +37,9 @@ void Shape::OnUpdate()
 	m_Shader.Bind();
 
 	glm::mat4 model(1.0f);
-	model = glm::translate(model, glm::vec3(gameobject->transform->position.x * SCALE, gameobject->transform->position.y * SCALE, 1));
-	model = glm::rotate(model, gameobject->transform->rotation.x, glm::vec3(1, 0, 0));
-	model = glm::rotate(model, gameobject->transform->rotation.y, glm::vec3(0, 1, 0));
-	model = glm::rotate(model, gameobject->transform->rotation.z, glm::vec3(0, 0, 1));
-	model = glm::scale(model, glm::vec3(gameobject->transform->scale.x * SCALE, gameobject->transform->scale.y * SCALE, 1));
+	model = glm::translate(model, glm::vec3(gameobject->transform.position.x * SCALE, gameobject->transform.position.y * SCALE, 1));
+	model = glm::rotate(model, gameobject->transform.rotation, glm::vec3(0, 0, 1));
+	model = glm::scale(model, glm::vec3(gameobject->transform.scale.x * SCALE, gameobject->transform.scale.y * SCALE, 1));
 
 	m_Shader.SetUniform<glm::mat4>("model", model);
 	m_Shader.SetUniform<glm::vec4>("color", glm::vec4(m_Color.r, m_Color.g, m_Color.b, m_Color.a));

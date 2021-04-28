@@ -1,8 +1,10 @@
 #include "Transform.h"
 
+#include "Gameobject.h"
+
 Transform::Transform(Gameobject* gameobject)
 	: gameobject(gameobject), m_Parent(this), m_Root(this)
-	, position(0, 0), scale(1, 1), rotation(0, 0, 0) { }
+	, position(0, 0), scale(1, 1), rotation(0) { }
 
 Transform::~Transform()
 {
@@ -22,8 +24,8 @@ Vector2 Transform::RotateAround(const Vector2& pos, const Vector2& scale, const 
 
 Vector2 Transform::RotateAround(const Vector2& pos, const Transform& transform)
 {
-	return Vector2(pos.x * transform.scale.x * cos(transform.rotation.z) - pos.y * transform.scale.y * sin(transform.rotation.z),
-		pos.x * transform.scale.x * sin(transform.rotation.z) + pos.y * transform.scale.y * cos(transform.rotation.z)) + transform.position;
+	return Vector2(pos.x * transform.scale.x * cos(transform.rotation) - pos.y * transform.scale.y * sin(transform.rotation),
+		pos.x * transform.scale.x * sin(transform.rotation) + pos.y * transform.scale.y * cos(transform.rotation)) + transform.position;
 }
 
 void Transform::Refresh()
@@ -37,10 +39,10 @@ void Transform::Refresh()
 
 void Transform::SetChild(Gameobject* gameobject)
 {
-	gameobject->transform->m_Parent = this;
-	gameobject->transform->Refresh();
+	gameobject->transform.m_Parent = this; 
+	gameobject->transform.Refresh(); 
 
-	m_Children.push_back(gameobject->transform);
+	m_Children.push_back(&gameobject->transform); 
 }
 
 void Transform::RemoveChild(const size_t index)
@@ -54,7 +56,7 @@ void Transform::RemoveChild(const size_t index)
 
 void Transform::RemoveChild(const Gameobject* gameobject)
 {
-	const size_t index = std::find(m_Children.begin(), m_Children.end(), gameobject->transform) - m_Children.begin();
+	const size_t index = std::find(m_Children.begin(), m_Children.end(), &gameobject->transform) - m_Children.begin();
 
 	m_Children[index]->m_Parent = m_Children[index];
 	m_Children[index]->m_Root = m_Children[index];

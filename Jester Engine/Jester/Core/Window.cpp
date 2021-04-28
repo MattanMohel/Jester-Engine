@@ -1,7 +1,9 @@
 #include "Window.h"
-#include "../Core/Input.h"
 
-#include "../Core/Log.h"
+#include "../Renderer/Camera.h"
+
+#include "Input.h"
+#include "Log.h"
 
 bool Window::isRunning = false;
 

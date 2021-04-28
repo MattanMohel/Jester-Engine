@@ -67,10 +67,10 @@ int main()
 
 	Gameobject* obj = Gameobject::Instantiate("Camera");	 
   	obj->AddComponent<Camera>();
-	obj->AddComponent<CollMarker>();
 
 	Gameobject* player = Gameobject::Instantiate("player");
 	player->AddComponent<SampleComponent>()->move = true;
+	player->AddComponent<Sprite>()->SetTexture("resources/textures/spitoon.png");
 
 	Gameobject* target = Gameobject::Instantiate("target");
 	target->AddComponent<Collider>()->SetVertices(Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1));

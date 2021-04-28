@@ -2,10 +2,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "../Core/Vector2.h"
-#include "../Core/Color.h"
+#include "Vector2.h"
+#include "Color.h"
 
-#include "Camera.h"
+class Camera;
 
 #define WIDTH 1920
 #define HEIGHT 1080

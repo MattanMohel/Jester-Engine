@@ -193,7 +193,7 @@
     <ClInclude Include="Jester\Core\Vector2.h" />
     <ClInclude Include="Jester\Core\Vector3.h" />
     <ClInclude Include="Jester\Core\Transform.h" />
-    <ClInclude Include="Jester\Renderer\Window.h" />
+    <ClInclude Include="Jester\Core\Window.h" />
     <ClInclude Include="Jester\Renderer\Texture.h" />
     <ClInclude Include="Jester\Renderer\Mesh.h" />
     <ClInclude Include="Jester\Renderer\Shader.h" />
@@ -212,7 +212,7 @@
     <ClCompile Include="Jester\Core\Time.cpp" />
     <ClCompile Include="Jester\Core\Transform.cpp" />
     <ClCompile Include="Jester\Core\Gameobject.cpp" />
-    <ClCompile Include="Jester\Renderer\Window.cpp" />
+    <ClCompile Include="Jester\Core\Window.cpp" />
     <ClCompile Include="Jester\Renderer\Texture.cpp" />
     <ClCompile Include="Jester\Renderer\Mesh.cpp" />
     <ClCompile Include="Jester\Renderer\Shader.cpp" />
@@ -229,6 +229,7 @@
     <ClCompile Include="Jester\vendors\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\shaders\fColored.shader" />
     <None Include="resources\shaders\fStandart.shader" />
     <None Include="resources\shaders\vStandart.shader" />
   </ItemGroup>

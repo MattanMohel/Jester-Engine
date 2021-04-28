@@ -1,8 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <glm/glm.hpp>
-
 #include "Camera.h"
 #include "Mesh.h"
 #include "Texture.h"
@@ -37,7 +35,6 @@ private:
 
 	Mesh m_Mesh;
 	Shader m_Shader;
-	Texture m_Texture; 
 
 	Color m_Color;
 

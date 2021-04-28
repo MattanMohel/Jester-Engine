@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cmath>
-#include <iostream>
 
 struct Vector2
 {
@@ -13,10 +12,10 @@ struct Vector2
 		: x(x), y(y)
 	{}
 
-	float** GetValuePointer() 
+	float* GetValuePointer() 
 	{ 
 		float* v[2] { &x, &y };
-		return v; 
+		return *v; 
 	}
 
 	float* GetValue() const
@@ -123,11 +122,11 @@ struct Vector2
 		return !(vec2.x == x && vec2.y == y);
 	}
 
-	static friend std::ostream& operator<< (std::ostream& os, const Vector2& vec2)
-	{
-		os << "x: " << vec2.x << " y: " << vec2.y;
-		return os;
-	}
+	//static friend std::ostream& operator<< (std::ostream& os, const Vector2& vec2)
+	//{
+	//	os << "x: " << vec2.x << " y: " << vec2.y;
+	//	return os;
+	//}
 
 	float x = 0, y = 0; 
 

@@ -66,8 +66,8 @@ private:
 			mouseFirstMoved = false;
 		}
 
-		posDelta.x = xPos - lastPos.x;
-		posDelta.y = lastPos.y - yPos;
+		posDelta.x = (float)xPos - lastPos.x;
+		posDelta.y = lastPos.y - (float)yPos;
 
 		lastPos = glm::vec2(xPos, yPos);
 	}

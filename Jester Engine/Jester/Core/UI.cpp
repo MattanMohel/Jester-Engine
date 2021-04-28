@@ -1,6 +1,6 @@
 #include "UI.h"
 
-#include "../Renderer/Window.h"
+#include "Window.h"
 #include "Gameobject.h"
 #include "Vector2.h"
 
@@ -43,13 +43,18 @@ void UIContext::RenderGameobject(Gameobject* gameobject)
 
 	ImGui::Begin(gameobject->name.c_str()); 
 	{
-		ImGui::InputFloat2("Positon", *gameobject->transform->position.GetValuePointer());
-		ImGui::InputFloat2("Scale", *gameobject->transform->scale.GetValuePointer());
-		ImGui::InputFloat("Rotation", &gameobject->transform->rotation.z);
+		ImGui::Text("Enabled"); ImGui::SameLine(); ImGui::Checkbox("", &gameobject->isEnabled);
+		ImGui::InputFloat2("Positon", gameobject->transform.position.GetValuePointer());
+		ImGui::InputFloat2("Scale", gameobject->transform.scale.GetValuePointer());
+		ImGui::InputFloat("Rotation", &gameobject->transform.rotation);
 
+		size_t i = 0;
 		for (auto* component : gameobject->GetComponents())
 		{
+			ImGui::PushID(MAKE_UNIQUE(component, i));
+			ImGui::Checkbox("Enabled", &component->isEnabled);
 			component->OnGuiUpdate();
+			ImGui::PopID(); i++;
 		}
 	}
 

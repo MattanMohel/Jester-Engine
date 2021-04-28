@@ -30,10 +30,12 @@ public:
 	static void Destroy(Gameobject* gameobject);
 	/*Retrieves all gameobject compoenents*/
 	inline const std::vector<Component*>& GetComponents() { return m_Components; }
+	/*Retrieves Gameobject ID*/
+	inline const unsigned int long& GetID() { return m_ID; }
 
 	std::string name;
 	bool isEnabled = true;
-	Transform* transform;
+	Transform transform;
 
 	//Adds component of type TComponent
 	template<typename TComponent>
@@ -108,6 +110,16 @@ public:
 		return components;
 	}
 
+	inline bool operator== (const Gameobject* gameobject) const
+	{
+		return m_ID == gameobject->m_ID;
+	}	
+
+	inline bool operator!= (const Gameobject* gameobject) const
+	{
+		return m_ID != gameobject->m_ID;
+	}
+
 private:
 	bool hasComponent(unsigned int hash);
 	size_t getComponentIndex(unsigned int hash);
@@ -124,7 +136,6 @@ private:
 	void  OnCollisionExit(Collider& other);
 
 private:
-
 	std::vector<Component*> m_Components;
 	unsigned long m_ID;
 };

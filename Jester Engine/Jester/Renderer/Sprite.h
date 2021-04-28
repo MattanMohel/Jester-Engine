@@ -5,12 +5,12 @@
 #include "../Core/Color.h"
 #include "../Core/Vector2.h"
 #include "../Core/Vector3.h"
+#include "../Core/Window.h"
 
 #include "Mesh.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "Camera.h"
-#include "Window.h"
 
 class Sprite : public Component
 {
@@ -18,6 +18,7 @@ public:
 	Sprite();
 
 	void OnUpdate() override;
+	void OnGuiUpdate() override;
 
 	Color& color() { return m_Color; }
 

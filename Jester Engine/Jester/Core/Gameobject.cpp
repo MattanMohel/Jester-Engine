@@ -39,7 +39,7 @@ size_t Gameobject::getComponentIndex(unsigned int hash)
 }
 
 Gameobject::Gameobject(std::string& name)
-	:name(name), m_ID(0), transform(new Transform(this))
+	:name(name), m_ID(0), transform(this)
 {
 	Application::Get()->AddGameobject(this);
 }
@@ -47,8 +47,6 @@ Gameobject::Gameobject(std::string& name)
 Gameobject::~Gameobject()
 {
 	Logger::Print("Deleting ", name);
-
-	delete transform;
 
 	Application::Get()->RemoveGameobject(this);
 
@@ -82,7 +80,7 @@ void Gameobject::OnCollisionEnter(Collider& other)
 	for (auto& component : m_Components)
 		component->OnCollisionEnter(other);
 
-	for (auto& child : transform->m_Children)
+	for (auto& child : transform.m_Children)
 		child->gameobject->OnCollisionEnter(other);
 }
 
@@ -91,7 +89,7 @@ void Gameobject::OnCollisionStay(Collider& other)
 	for (auto& component : m_Components)
 		component->OnCollisionStay(other);
 
-	for (auto& child : transform->m_Children)
+	for (auto& child : transform.m_Children)
 		child->gameobject->OnCollisionStay(other);
 }
 
@@ -100,6 +98,6 @@ void Gameobject::OnCollisionExit(Collider& other)
 	for (auto& component : m_Components)
 		component->OnCollisionExit(other);
 
-	for (auto& child : transform->m_Children)
+	for (auto& child : transform.m_Children)
 		child->gameobject->OnCollisionExit(other);
 }
