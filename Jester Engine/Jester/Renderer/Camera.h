@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "../Core/Component.h"
 #include "../Core/Gameobject.h"
 
@@ -20,6 +22,7 @@ class Camera : public Component
 public:
 	Camera();
 
+	const char* GetName() override { return "Camera"; }
 	void OnUpdate() override;
 
 	glm::mat4 CalculateViewMatrix() const;

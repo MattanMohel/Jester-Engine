@@ -1,6 +1,6 @@
 #include "Collider.h"
 
-#include "UI.h"
+#include "../User Interface/UI.h"
 
 std::vector<Collider*> Collider::colliderRegistery;
 size_t Collider::callIndex = 0;
@@ -33,29 +33,7 @@ void Collider::OnUpdate()
 
 void Collider::OnGuiUpdate()
 {
-	ImGui::CollapsingHeader((const char*)"Collider");
-	ImGui::Text("Collider: ");
 
-	/*Serialize The Vertex Vector*/
-	for (size_t i = 0; i < m_Vertices.size(); i++)
-	{
-		ImGui::PushID(MAKE_UNIQUE(m_Vertices, i));
-		if (ImGui::InputFloat2("", m_Vertices[i].GetValuePointer()))
-			SetVertex(m_Vertices[i], i);
-		ImGui::PopID();
-	}
-
-	/*Add Or Remove Vertex Entries*/
-	if (ImGui::Button("Add Vertex"))
-		AddVertex(m_Vertices.size());
-	ImGui::SameLine();
-	if (ImGui::Button("Remove Vertex"))
-		RemoveVertex(m_Vertices.size() - 1);
-
-	/*Serialize Collision State*/
-	bool isTrigger = m_State == State::Trigger;
-	if (ImGui::Checkbox("isTrigger", &isTrigger))
-		m_State = isTrigger ? State::Trigger : State::Physics;
 }
 
 void Collider::SetVertices(const std::vector<Vector2>& verts)

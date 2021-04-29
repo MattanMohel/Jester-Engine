@@ -5,7 +5,7 @@
 #include <string>
 
 #include"../Renderer/Line.h"
-#include "UI.h"
+#include "../User Interface/UI.h"
 
 #include "Vector2.h"
 #include "Vector3.h"
@@ -32,7 +32,8 @@ public:
 	Collider();
 	~Collider();
 
-	void OnAwake() override;
+	const char* GetName() override{ return "Collider"; }
+	void OnAwake() override; 
 	void OnUpdate() override;
 	void OnGuiUpdate() override;
 

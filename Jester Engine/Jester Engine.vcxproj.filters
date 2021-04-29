@@ -90,7 +90,7 @@
     <ClInclude Include="Jester\Renderer\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\UI.h">
+    <ClInclude Include="Jester\User Interface\UI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\vendors\imgui\imconfig.h">
@@ -127,6 +127,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Sandbox\TimeKeeper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\Renderer\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\User Interface\Gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Jester\User Interface\ImGuiContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -179,7 +188,7 @@
     <ClCompile Include="Jester\Core\Vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Core\UI.cpp">
+    <ClCompile Include="Jester\User Interface\UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\vendors\imgui\imgui.cpp">
@@ -207,6 +216,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Sandbox\Sample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Renderer\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\User Interface\ImGuiContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

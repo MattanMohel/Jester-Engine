@@ -161,7 +161,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Jester\Core\UI.h" />
+    <ClInclude Include="Jester\User Interface\ImGuiContext.h" />
+    <ClInclude Include="Jester\User Interface\Gui.h" />
+    <ClInclude Include="Jester\User Interface\UI.h" />
     <ClInclude Include="Jester\Renderer\Line.h" />
     <ClInclude Include="Jester\Core\Color.h" />
     <ClInclude Include="Jester\Renderer\Camera.h" />
@@ -199,9 +201,11 @@
     <ClInclude Include="Jester\Renderer\Shader.h" />
     <ClInclude Include="Jester\Renderer\Sprite.h" />
     <ClInclude Include="Jester\Renderer\Shape.h" />
+    <ClInclude Include="Jester\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Jester\Core\UI.cpp" />
+    <ClCompile Include="Jester\User Interface\ImGuiContext.cpp" />
+    <ClCompile Include="Jester\User Interface\UI.cpp" />
     <ClCompile Include="Jester\Core\Vector2.cpp" />
     <ClCompile Include="Jester\Renderer\Line.cpp" />
     <ClCompile Include="Jester\Sandbox\CollMarker.cpp" />
@@ -227,6 +231,7 @@
     <ClCompile Include="Jester\vendors\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Jester\vendors\imgui\imgui_tables.cpp" />
     <ClCompile Include="Jester\vendors\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Jester\Renderer\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\fColored.shader" />

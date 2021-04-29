@@ -17,6 +17,7 @@ class Sprite : public Component
 public:
 	Sprite();
 
+	const char* GetName() override { return "Sprite"; }
 	void OnUpdate() override;
 	void OnGuiUpdate() override;
 

@@ -16,6 +16,7 @@ class Shape : public Component
 public:
 	Shape();
 
+	const char* GetName() override { return "Shape"; }
 	void OnUpdate() override;
 
 	template<typename... Vertices>

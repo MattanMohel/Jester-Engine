@@ -18,6 +18,7 @@ class Line : public Component
 public:
 	Line();
 
+	const char* GetName() override { return "Line"; }
 	void OnUpdate() override;
 
 	template<typename... Vertices>

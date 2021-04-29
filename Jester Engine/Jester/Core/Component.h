@@ -4,8 +4,6 @@ class Time;
 class Collider;
 class Gameobject;
 
-#include <string>
-
 #define DERIVES_FROM_COMPONENT_ASSERT static_assert(std::is_base_of<Component, TComponent>::value, "TComponent must derive from Component")
 
 //Base Component
@@ -15,6 +13,8 @@ class Component
 	friend class Gameobject; 
 
 public:
+	//Returns Component Name
+	virtual const char* GetName() = 0;
 	//called once on app initialization
 	virtual void OnAwake() {}
 	//called once every frame

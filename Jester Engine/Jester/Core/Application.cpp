@@ -1,11 +1,13 @@
 #include "Application.h"
 
-#include "UI.h"
-
 #include "Time.h"
 #include "Gameobject.h"
 #include "Component.h"
 #include "Window.h"
+
+#include "../Renderer/Renderer.h"
+#include "../User Interface/UI.h"
+#include "../User Interface/ImGuiContext.h"
 
 bool Application::isRunning = false;
 
@@ -20,6 +22,7 @@ void Application::Init()
 {
 	Logger::Print(LogFlag::Info, "Init");
 	UIContext::Init(); 
+	Renderer::Init();
 	Window::Get();
 	Time::Init();
 }
@@ -66,10 +69,11 @@ void Application::Run()
 			m_GameobjectRegistry[i]->OnUpdate(); 
 		}
 
-		UIContext::RenderHierarchy(); 
+		Jester::UI::RenderHierarchy(); 
 
 		// Rendering
-		UIContext::RenderFrame(); 
+		Renderer::Render();
+		UIContext::RenderFrame();  
 		int display_w, display_h;
 		glfwGetFramebufferSize(Window::Get()->window, &display_w, &display_h);
 		glViewport(0, 0, display_w, display_h);
@@ -79,6 +83,7 @@ void Application::Run()
 	}
 
 	//Clean-up
+	Renderer::Shutdown(); 
 	UIContext::ShutDown(); 
 	delete Window::Get();
 	isRunning = false;

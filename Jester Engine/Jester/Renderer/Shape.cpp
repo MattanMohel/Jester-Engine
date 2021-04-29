@@ -37,7 +37,7 @@ void Shape::OnUpdate()
 	m_Shader.Bind();
 
 	glm::mat4 model(1.0f);
-	model = glm::translate(model, glm::vec3(gameobject->transform.position.x * SCALE, gameobject->transform.position.y * SCALE, 1));
+	model = glm::translate(model, glm::vec3(-gameobject->transform.position.x * SCALE, gameobject->transform.position.y * SCALE, 1));
 	model = glm::rotate(model, gameobject->transform.rotation, glm::vec3(0, 0, 1));
 	model = glm::scale(model, glm::vec3(gameobject->transform.scale.x * SCALE, gameobject->transform.scale.y * SCALE, 1));
 

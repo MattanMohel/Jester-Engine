@@ -5,6 +5,7 @@
 class CollMarker : public Component
 {
 public:
+	const char* GetName() override { return "Coll Marker"; }
 	void OnUpdate();
 	void OnGuiUpdate();
 

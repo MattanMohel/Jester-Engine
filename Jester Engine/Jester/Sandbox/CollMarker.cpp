@@ -9,8 +9,7 @@ void CollMarker::OnUpdate()
 
 void CollMarker::OnGuiUpdate()
 {
-	ImGui::Text("Collider Marker");
-	ImGui::SliderFloat("rotation speed", &rotSpeed, -10, 10, "", 1);
+
 }
 
 void CollMarker::OnCollisionEnter(Collider& other)

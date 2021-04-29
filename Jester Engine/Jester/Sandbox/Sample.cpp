@@ -33,8 +33,7 @@ void SampleComponent::OnUpdate()
 
 void SampleComponent::OnGuiUpdate()
 {
-	ImGui::Text((const char*)"Sample Component:");
-	ImGui::Checkbox("Move", &move);
+	Jester::UI::RenderBool("Move", move, true); 
 }
 
 
