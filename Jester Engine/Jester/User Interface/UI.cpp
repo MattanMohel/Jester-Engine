@@ -4,51 +4,97 @@
 #include "../Core/Gameobject.h"
 #include "../Core/Vector2.h"
 
-#define NORM_WIDTH 0.25f
-
-void Jester::UI::RenderVector2(const std::string& label, Vector2& value, float resetValue = 0.0f)
+template<> bool Jester::UI::Serialize<std::string>(const std::string& label, std::string& value, bool indent)
 {
+	bool changed = false;
+
+	float width = ImGui::GetWindowWidth();
+	ImGui::PushID(label.c_str());
+
+	if (indent)
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(.3 * width, 3));
+
+	ImGui::Text(label.c_str());
+
+	ImGui::SameLine();
+	ImGui::PushItemWidth(ImGui::CalcItemWidth());
+
+	//static char buffer[1024] = { *value.c_str() };
+	//if (ImGui::InputText(label.c_str(), buffer, IM_ARRAYSIZE(buffer)))
+	//	changed = true;
+
+	//value = buffer;
+
+	ImGui::PopItemWidth();
+
+	if (indent)
+		ImGui::PopStyleVar();
+
+	ImGui::Columns(1);
+	ImGui::PopID();
+
+	return changed;
+}
+
+template<> bool Jester::UI::Serialize(const std::string& label, Vector2& value, bool indent)
+{
+	bool changed = false;
+
 	float width = ImGui::GetWindowWidth();
 	ImGui::PushID(label.c_str());
 	ImGui::Columns(2);
 
 	ImGui::Text(label.c_str());
-	ImGui::SetColumnWidth(0, .3 * width); 
+	ImGui::SetColumnWidth(0, .3 * width);
 	ImGui::NextColumn();
 
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 3));
 
-	ImGui::PushStyleColor       (ImGuiCol_Button, ImVec4(247 / 255.0f, 184 / 255.0f, 1 / 255.0f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(247 / 255.0f, 184 / 255.0f, 1 / 255.0f, 1.0f));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(254 / 255.0f, 199 / 255.0f, 1 / 255.0f, 1.0f));
-	ImGui::PushStyleColor (ImGuiCol_ButtonActive, ImVec4(254 / 255.0f, 142 / 255.0f, 1 / 255.0f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(254 / 255.0f, 142 / 255.0f, 1 / 255.0f, 1.0f));
 	if (ImGui::Button("X", ImVec2(20, 20)))
-		value.x = resetValue;
+	{
+		value.x = 0.0f;
+		changed = true;
+	}
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
 	ImGui::PushItemWidth(.30 * width);
-	ImGui::DragFloat("##X", &value.x, 0.1f, 0.0f, 0.0f, "%.2f");
+
+	if (ImGui::DragFloat("##X", &value.x, 0.1f, 0.0f, 0.0f, "%.2f"))
+		changed = true;
+
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
-	ImGui::PushStyleColor       (ImGuiCol_Button, ImVec4(234 / 255.0f, 115 / 255.0f, 23 / 255.0f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(234 / 255.0f, 115 / 255.0f, 23 / 255.0f, 1.0f));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(234 / 255.0f, 143 / 255.0f, 23 / 255.0f, 1.0f));
-	ImGui::PushStyleColor (ImGuiCol_ButtonActive, ImVec4(234 / 255.0f, 105 / 255.0f, 23 / 255.0f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(234 / 255.0f, 105 / 255.0f, 23 / 255.0f, 1.0f));
 	if (ImGui::Button("Y", ImVec2(20, 20)))
-		value.y = resetValue;
+	{
+		value.y = 0.0f;
+		changed = true;
+	}
 	ImGui::PopStyleColor(3);
 
 	ImGui::SameLine();
-	ImGui::PushItemWidth(ImGui::CalcItemWidth()); 
-	ImGui::DragFloat("##Y", &value.y, 0.1f, 0.0f, 0.0f, "%.2f"); 
-	ImGui::PopItemWidth();
+
+	if (ImGui::DragFloat("##Y", &value.y, 0.1f, 0.0f, 0.0f, "%.2f"))
+		changed = true;
+
 	ImGui::PopStyleVar();
 	ImGui::Columns(1);
-	ImGui::PopID(); 
+	ImGui::PopID();
+
+	return changed;
 }
 
-void Jester::UI::RenderFloat(const std::string& label, float& value, bool indent = true)
+template<> bool Jester::UI::Serialize(const std::string& label, float& value, bool indent)
 {
+	bool changed = false;
+
 	float width = ImGui::GetWindowWidth();
 	ImGui::PushID(label.c_str());
 
@@ -59,18 +105,70 @@ void Jester::UI::RenderFloat(const std::string& label, float& value, bool indent
 
 	ImGui::SameLine();
 	ImGui::PushItemWidth(ImGui::CalcItemWidth());
-	ImGui::DragFloat("##X", &value, 0.1f, 0.0f, 0.0f, "%.2f");
+
+	if (ImGui::DragFloat("##X", &value, 0.1f, 0.0f, 0.0f, "%.2f"))
+		changed = true;
+
 	ImGui::PopItemWidth();
+
+	if (indent)
+		ImGui::PopStyleVar();
+
+	ImGui::Columns(1);
+	ImGui::PopID();
+
+	return changed;
+}
+
+template<> bool Jester::UI::Serialize<Color>(const std::string& label, Color& value, bool indent)
+{
+	bool changed = false;
+
+	ImGui::Text(label.c_str());
+	ImGui::SameLine();
+	ImGui::PushID(label.c_str());
+
+	if (ImGui::ColorEdit4("##color", value.GetValuePointer()))
+		changed = true;
+
+	ImGui::PopID();
+
+	return changed;
+}
+
+template<> bool Jester::UI::Serialize(const std::string& label, int& value, bool indent)
+{
+	bool changed = false;
+
+	float width = ImGui::GetWindowWidth();
+	ImGui::PushID(label.c_str());
+
+	if (indent)
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(.3 * width, 3));
+
+	ImGui::Text(label.c_str());
+
+	ImGui::SameLine();
+	ImGui::PushItemWidth(ImGui::CalcItemWidth());
 	
+	if (ImGui::DragInt("##X", &value, 0.1f, 0.0f, 0.0f, "%.0f"))
+		changed = true;
+
+	ImGui::PopItemWidth();
+
 	if (indent)
 		ImGui::PopStyleVar();
 
 	ImGui::Columns(1);
 	ImGui::PopID();
+
+	return changed;
 }
 
-void Jester::UI::RenderBool(const std::string& label, bool& value, bool indent = true)
+template<> bool Jester::UI::Serialize(const std::string& label, bool& value, bool indent)
 {
+	bool changed = false;
+
 	float width = ImGui::GetWindowWidth();
 	ImGui::PushID(label.c_str());
 
@@ -81,7 +179,10 @@ void Jester::UI::RenderBool(const std::string& label, bool& value, bool indent =
 
 	ImGui::SameLine();
 	ImGui::PushItemWidth(ImGui::CalcItemWidth());
-	ImGui::Checkbox("##X", &value);
+	
+	if (ImGui::Checkbox("##X", &value))
+		changed = true;
+
 	ImGui::PopItemWidth();
 
 	if (indent)
@@ -89,35 +190,15 @@ void Jester::UI::RenderBool(const std::string& label, bool& value, bool indent =
 
 	ImGui::Columns(1);
 	ImGui::PopID();
-}
 
-void Jester::UI::RenderInt(const std::string& label, int& value, bool indent = true)
-{
-	float width = ImGui::GetWindowWidth();
-	ImGui::PushID(label.c_str());
-
-	if (indent)
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(.3 * width, 3));
-
-	ImGui::Text(label.c_str());
-
-	ImGui::SameLine();
-	ImGui::PushItemWidth(ImGui::CalcItemWidth());
-	ImGui::DragInt("##X", &value, 0.1f, 0.0f, 0.0f, "%.0f");
-	ImGui::PopItemWidth();
-
-	if (indent)
-		ImGui::PopStyleVar();
-
-	ImGui::Columns(1);
-	ImGui::PopID();
+	return changed;
 }
 
 void Jester::UI::RenderComponent(Component* component)
 {
 	ImGui::PushID(component->GetName());
 
-	RenderBool("Enabled", component->isEnabled, false);
+	Serialize("Enabled", component->isEnabled, false);
 
 	ImGui::SameLine();
 
@@ -138,15 +219,15 @@ void Jester::UI::RenderGameobject(Gameobject* gameobject)
 
 	ImGui::Begin(gameobject->name.c_str());
 	{
-		RenderBool("Enabled", gameobject->isEnabled, false);
+		Serialize("Enabled", gameobject->isEnabled, false);
 
 		ImGui::SameLine();
 
 		if (ImGui::CollapsingHeader("Transform"))
 		{
-			RenderVector2("Positon: ", gameobject->transform.position);
-			RenderVector2("Scale: ", gameobject->transform.scale, 1.0f);
-			RenderFloat("Rotation: ", gameobject->transform.rotation);
+			Serialize("Positon: ", gameobject->transform.position, true);
+			Serialize("Scale: ", gameobject->transform.scale, true);
+			Serialize("Rotation: ", gameobject->transform.rotation, true);
 		}
 
 		ImGui::Separator();
@@ -171,24 +252,6 @@ void Jester::UI::RenderHierarchy()
 			if (ImGui::Button(gameobject->name.c_str()))
 				currObj = gameobject;
 		}
-
-		static bool showNext = false;
-		if (ImGui::Button("Create New Component"))
-			showNext = true;
-
-		if (showNext)
-		{
-			static char buffer[1024] = "";
-			ImGui::InputText("Name", buffer, IM_ARRAYSIZE(buffer));
-			ImGui::SameLine();
-
-			if (ImGui::Button("Create") || !ImGui::IsItemFocused)
-			{
-				showNext = false;
-				/*Add component*/
-			}
-		}
-
 	}
 	ImGui::End();
 

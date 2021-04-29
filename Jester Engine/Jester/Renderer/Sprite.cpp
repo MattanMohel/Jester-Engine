@@ -42,6 +42,6 @@ void Sprite::OnUpdate()
 
 void Sprite::OnGuiUpdate()
 {
-	
+	Jester::UI::Serialize("Color", m_Color);
 }
 

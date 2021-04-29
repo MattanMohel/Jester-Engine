@@ -33,7 +33,7 @@ void SampleComponent::OnUpdate()
 
 void SampleComponent::OnGuiUpdate()
 {
-	Jester::UI::RenderBool("Move", move, true); 
+	Jester::UI::Serialize("Move", move, true); 
 }
 
 

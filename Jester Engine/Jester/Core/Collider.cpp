@@ -33,7 +33,9 @@ void Collider::OnUpdate()
 
 void Collider::OnGuiUpdate()
 {
-
+	using namespace Jester::UI;
+	if (SerializeVec("Vertices", m_Vertices))
+		RefreshVertices();
 }
 
 void Collider::SetVertices(const std::vector<Vector2>& verts)
@@ -89,6 +91,20 @@ void Collider::AddVertex(size_t index)
 		m_Vertices.insert(m_Vertices.begin() + index, Vector2::Zero);
 
 	m_LineVisual.AddVertex(index);
+}
+
+void Collider::RefreshVertices()
+{
+	float maxDistance = 0;
+	for (const auto& vert : m_Vertices)
+	{
+		float distance = Vector2::SquaredDistance(vert, Vector2::Zero);
+		maxDistance = distance > maxDistance ? distance : maxDistance;
+	}
+
+	m_FurthestVertexDistance = maxDistance;
+
+	m_LineVisual.SetVertices(m_Vertices);
 }
 
 const std::vector<Vector2>& Collider::GetVertices() const

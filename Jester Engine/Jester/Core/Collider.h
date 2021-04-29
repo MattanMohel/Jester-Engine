@@ -59,6 +59,8 @@ public:
 	void RemoveVertex(size_t index);
 	void AddVertex(size_t index);
 
+	void RefreshVertices();
+
 	const std::vector<Vector2>& GetVertices() const;
 	Vector2 GetIndex(int index) const;
 
