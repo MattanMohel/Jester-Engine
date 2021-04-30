@@ -249,8 +249,10 @@ void Jester::UI::RenderHierarchy()
 
 		for (auto* gameobject : Application::Get()->GetGameobjects())
 		{
+			ImGui::PushID(gameobject->GetID());
 			if (ImGui::Button(gameobject->name.c_str()))
 				currObj = gameobject;
+			ImGui::PopID();
 		}
 	}
 	ImGui::End();

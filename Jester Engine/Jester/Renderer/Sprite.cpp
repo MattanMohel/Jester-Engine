@@ -12,11 +12,10 @@
 
 Sprite::Sprite()
 	: m_Shader(VS_PATH, FS_PATH),
-	m_Mesh(RenderMode::TRIANGLES), m_Color(1.0f, 1.0f, 1.0f, 1.0f), 
-	m_Camera(Gameobject::FindComponent<Camera>())
+	m_Mesh(RenderMode::TRIANGLES), color(1.0f, 1.0f, 1.0f, 1.0f), 
+	sortingLayer(SortingLayer::Default), orderInLayer(0), m_Camera(Gameobject::FindComponent<Camera>())
 {
 	m_Mesh.CreateMesh(VERTICES, INDICES, 20, 12);
-	m_Texture.LoadTexture();
 }
 
 void Sprite::OnUpdate() 
@@ -28,9 +27,12 @@ void Sprite::OnUpdate()
 	model = glm::translate(model, glm::vec3(-gameobject->transform.position.x * SCALE, gameobject->transform.position.y * SCALE, 1));
 	model = glm::rotate(model, gameobject->transform.rotation * Deg2Rad, glm::vec3(0, 0, 1));
 	model = glm::scale(model, glm::vec3(gameobject->transform.scale.x * SCALE, gameobject->transform.scale.y * SCALE, 1));
+	// projection * view * model * vec4(pos, 1.0f);
 
-	m_Shader.SetUniform<glm::mat4>("model", model);
-	m_Shader.SetUniform<glm::vec4>("color", glm::vec4(m_Color.r, m_Color.g, m_Color.b, m_Color.a));
+	glm::vec4 pos = m_Camera->Projection() * m_Camera->CalculateViewMatrix() * model * glm::vec4(1, 1, 1, 1);
+
+	m_Shader.SetUniform<glm::mat4>("model", model); 
+	m_Shader.SetUniform<glm::vec4>("color", glm::vec4(color.r, color.g, color.b, color.a));
 	m_Shader.SetUniform<glm::mat4>("projection", m_Camera->Projection());
 	m_Shader.SetUniform<glm::mat4>("view", m_Camera->CalculateViewMatrix());
 
@@ -42,6 +44,6 @@ void Sprite::OnUpdate()
 
 void Sprite::OnGuiUpdate()
 {
-	Jester::UI::Serialize("Color", m_Color);
+	Jester::UI::Serialize("Color", color);
 }
 

@@ -21,7 +21,6 @@ public:
 	template<typename T> void SetUniform(const std::string& name, const T& t)
 	{
 		static_assert(false, "Type is not integrated in shader class");
-		//raise error - unmatched type (ASSERT)
 	}
 	template<> void SetUniform<glm::vec1>(const std::string& name, const glm::vec1& vec1);
 	template<> void SetUniform<glm::vec2>(const std::string& name, const glm::vec2& vec2);
@@ -36,6 +35,7 @@ public:
 	static void Unbind();
 
 private:
+	static std::unordered_map<unsigned int, GLuint> m_ShaderCache;
 	std::unordered_map<std::string, GLuint> m_UniformCache;
 	GLuint m_RendererID;
 

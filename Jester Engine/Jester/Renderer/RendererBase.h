@@ -29,3 +29,5 @@ static size_t INDICES[] = {
 	3, 0, 1,
 	1, 2, 3
 };
+
+static std::hash<std::string> STR_HASH;

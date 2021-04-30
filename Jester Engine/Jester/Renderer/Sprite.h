@@ -12,25 +12,37 @@
 #include "Texture.h"
 #include "Camera.h"
 
+#include "Renderer.h"
+
+enum class SortingLayer
+{
+	Default   = -1,
+	Background = 0,
+	Forground  = 1,
+	UI         = 2,
+};
+
 class Sprite : public Component
 {
+
+	friend Renderer;
+
 public:
 	Sprite();
 
 	const char* GetName() override { return "Sprite"; }
 	void OnUpdate() override;
 	void OnGuiUpdate() override;
-
-	Color& color() { return m_Color; }
-
 	inline void SetTexture(const std::string& path) { m_Texture.SetTexture(path); }
+
+	Color color;
+	SortingLayer sortingLayer;
+	int orderInLayer;
 
 private:
 	Mesh m_Mesh;
 	Shader m_Shader;
 	Texture m_Texture;
-
-	Color m_Color;
 
 	Camera* m_Camera;
 };

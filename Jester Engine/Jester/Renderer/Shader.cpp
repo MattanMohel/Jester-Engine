@@ -1,9 +1,16 @@
 #include "Shader.h"
 #include "../Core/Log.h"
+#include "RendererBase.h"
+
+std::unordered_map<unsigned int, GLuint> Shader::m_ShaderCache;
 
 Shader::Shader(const std::string& vPath, const std::string fPath)
 {
-	m_RendererID = CreateProgram(ParseShader(vPath), ParseShader(fPath));
+	unsigned int hash = STR_HASH(vPath) + STR_HASH(fPath);
+	if (m_ShaderCache.find(hash) == m_ShaderCache.end())
+		m_ShaderCache[hash] = CreateProgram(ParseShader(vPath), ParseShader(fPath));
+	
+	m_RendererID = m_ShaderCache[hash];
 }
 
 Shader::~Shader()

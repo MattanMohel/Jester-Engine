@@ -31,11 +31,15 @@ public:
 
 	void SetTexture(const std::string& path);
 
+	inline unsigned int GetTextureHashID() const { return m_TextureHashID; }
+	inline GLuint GetTextureID() const { return m_TextureID; }
+
 private:
 	GLuint m_TextureID;
 	int m_Width, m_Height, m_BitDepth;
 	GLenum m_WrappingMode, m_FilterMode;
 
 	std::string m_TexturePath;
+	unsigned int m_TextureHashID;
 };
 

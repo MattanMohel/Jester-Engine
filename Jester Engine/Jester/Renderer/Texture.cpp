@@ -1,11 +1,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "Texture.h"
+#include "RendererBase.h"
 #include "../vendors/stb_image.h"
 
 Texture::Texture()
 	: m_TexturePath(""), m_TextureID(0), m_Height(0), m_Width(0), m_BitDepth(0),
-	m_WrappingMode(GL_REPEAT), m_FilterMode(GL_NEAREST)
+	m_WrappingMode(GL_REPEAT), m_FilterMode(GL_NEAREST), m_TextureHashID(0)
 {}
 
 Texture::~Texture()
@@ -18,6 +19,8 @@ void Texture::LoadTexture()
 	unsigned char* data = stbi_load(m_TexturePath.c_str(), &m_Width, &m_Height, &m_BitDepth, 0);
 	if (!data)
 		Logger::Print(LogFlag::Warning, stbi_failure_reason(), ": ", m_TexturePath);
+
+	m_TextureHashID = STR_HASH(m_TexturePath);
 
 	glGenTextures(1, &m_TextureID);
 	glBindTexture(GL_TEXTURE_2D, m_TextureID);
