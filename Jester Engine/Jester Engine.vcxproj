@@ -88,11 +88,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AssemblerOutput>NoListing</AssemblerOutput>
       <PreprocessToFile>false</PreprocessToFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\include;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)Jester Engine\Jester\vendors\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,13 +110,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PreprocessToFile>false</PreprocessToFile>
       <AssemblerOutput>NoListing</AssemblerOutput>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\include;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)Jester Engine\Jester\vendors\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +135,9 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\include;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)Jester Engine\Jester\vendors\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +155,9 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Jester Engine\Jester\vendors\GLEW\glew-2.1.0\include;$(SolutionDir)Jester Engine\Jester\vendors\GLFW\glfw-3.3.4.bin.WIN32\include;$(SolutionDir)Jester Engine\Jester\vendors\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

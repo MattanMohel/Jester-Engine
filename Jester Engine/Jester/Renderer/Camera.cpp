@@ -30,3 +30,13 @@ void Camera::OnUpdate()
 	m_Projection = glm::ortho(-WIDTH * m_Size, WIDTH * m_Size,
 		-HEIGHT * m_Size, HEIGHT * m_Size, NEAR_CLIPPING_PLANE, FAR_CLIPPING_PLANE);
 }
+
+glm::mat4 Camera::CalculateMVP(Transform& transform)
+{
+	glm::mat4 model(1.0f);
+	model = glm::translate(model, glm::vec3(transform.position.x * SCALE, transform.position.y * SCALE, 1));
+	model = glm::rotate(model, transform.rotation * Deg2Rad, glm::vec3(0, 0, 1));
+	model = glm::scale(model, glm::vec3(transform.scale.x * SCALE, transform.scale.y * SCALE, 1));
+
+	return m_Projection * CalculateViewMatrix() * model;
+}

@@ -68,20 +68,11 @@ int main()
 	Gameobject* obj = Gameobject::Instantiate("Camera");	 
   	obj->AddComponent<Camera>();
 
-	Gameobject* player = Gameobject::Instantiate("player1");
-	player->AddComponent<SampleComponent>()->move = true;
-	player->AddComponent<Sprite>()->SetTexture("resources/textures/spitoon.png");	
-	
-	Gameobject* player2 = Gameobject::Instantiate("player");
-	player2->AddComponent<SampleComponent>()->move = true;
-	player2->AddComponent<Sprite>()->SetTexture("resources/textures/spitoon.png");	
-	
-	Gameobject* player3 = Gameobject::Instantiate("player");
-	player3->AddComponent<SampleComponent>()->move = true;
-	player3->AddComponent<Sprite>()->SetTexture("resources/textures/spitoon.png");
-
-	Gameobject* target = Gameobject::Instantiate("target");
-	target->AddComponent<Collider>()->SetVertices(Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1));
+	for (int i = 0; i < 1000; i++)
+	{
+		Gameobject* obj = Gameobject::Instantiate("Obj");
+		obj->AddComponent<Sprite>()->SetTexture("resources/textures/spitoon.png");
+	}
 
 	Application::Get()->Run(); 
 }  

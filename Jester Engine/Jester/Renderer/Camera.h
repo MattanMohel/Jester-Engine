@@ -16,6 +16,7 @@
 
 #define ORTHO_VIEW 1
 #define CAMERA_SCALE_FACTOR 1
+#define SCALE 500.0f
 
 class Camera : public Component
 {
@@ -28,7 +29,9 @@ public:
 	glm::mat4 CalculateViewMatrix() const;
 
 	inline float& Size() { return m_Size; }
-	inline glm::mat4 Projection() const { return m_Projection; }
+	inline glm::mat4 GetProjection() const { return m_Projection; }
+
+	glm::mat4 CalculateMVP(Transform& transform);
 
 private:
 	glm::mat4 m_Projection;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 #include <GL/glew.h>
 
 #include "../Core/Log.h"
@@ -26,8 +27,8 @@ public:
 	void LoadTexture();
 	void ClearTexture();
 
-	void Bind();
-	static void Unbind();
+	void Bind(GLuint slot);
+	static void Unbind(GLuint slot);
 
 	void SetTexture(const std::string& path);
 
@@ -41,5 +42,7 @@ private:
 
 	std::string m_TexturePath;
 	unsigned int m_TextureHashID;
+
+	static std::unordered_map<unsigned int, GLuint> textureCache;
 };
 

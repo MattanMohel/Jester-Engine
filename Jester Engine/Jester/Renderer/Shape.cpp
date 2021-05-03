@@ -43,7 +43,7 @@ void Shape::OnUpdate()
 
 	m_Shader.SetUniform<glm::mat4>("model", model);
 	m_Shader.SetUniform<glm::vec4>("color", glm::vec4(m_Color.r, m_Color.g, m_Color.b, m_Color.a));
-	m_Shader.SetUniform<glm::mat4>("projection", m_Camera->Projection());
+	m_Shader.SetUniform<glm::mat4>("projection", m_Camera->GetProjection());
 	m_Shader.SetUniform<glm::mat4>("view", m_Camera->CalculateViewMatrix());
 
 	m_Mesh.Draw();

@@ -3,8 +3,7 @@
 #include "GL/glew.h"
 #include <vector>
 class Sprite;
-
-#define FLOATS_PER_VERTEX 10
+struct Vertex;
 
 class Renderer
 {
@@ -13,17 +12,19 @@ public:
 
 	static void Init();
 	static void Shutdown();
-	/*should accept: a Transform, a Vertex Buffer, a Index Buffer, a Color, a Texture, a Shader*/
-	/*Each sprite passed will have a SORTING_LAYER/ORDER, once you have all the sprites, in render, 
-	you order them, or maybe order them as they come in*/
-	static void Render();
+
 	static void AddSprite(Sprite*);
+	static void Render(); 
 
 private:
 	static void CreateBuffer();
 
-	static GLint MAX_TEXTURE_SLOTS;
-	static size_t remainingTextureSlots;
+	static Vertex* vertexBuffer;
+	static size_t* indexBuffer;
+	static GLint MAX_TEXTURE_SLOTS, MAX_QUADS_PER_DRAW;
+	static size_t usedTextureSlots, usedQuads;
 	static std::vector<Sprite*> sprites;
+	static std::vector<GLuint> usedTextures;
+	static GLuint VAO, VBO, IBO;
 };
 

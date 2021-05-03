@@ -4,6 +4,8 @@
 #include "RendererBase.h"
 #include "../vendors/stb_image.h"
 
+std::unordered_map<unsigned int, GLuint> Texture::textureCache;
+
 Texture::Texture()
 	: m_TexturePath(""), m_TextureID(0), m_Height(0), m_Width(0), m_BitDepth(0),
 	m_WrappingMode(GL_REPEAT), m_FilterMode(GL_NEAREST), m_TextureHashID(0)
@@ -16,40 +18,39 @@ Texture::~Texture()
 
 void Texture::LoadTexture()
 {
-	unsigned char* data = stbi_load(m_TexturePath.c_str(), &m_Width, &m_Height, &m_BitDepth, 0);
-	if (!data)
-		Logger::Print(LogFlag::Warning, stbi_failure_reason(), ": ", m_TexturePath);
-
 	m_TextureHashID = STR_HASH(m_TexturePath);
 
-	glGenTextures(1, &m_TextureID);
+	if (textureCache.find(m_TextureHashID) != textureCache.end())
+	{
+		m_TextureID = textureCache[m_TextureHashID];
+		return;
+	}
+
+	auto* data = stbi_load(m_TexturePath.c_str(), &m_Width, &m_Height, &m_BitDepth, 0);
+	if (!data) Logger::Print(LogFlag::Warning, stbi_failure_reason(), ": ", m_TexturePath);
+
+	glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
 	glBindTexture(GL_TEXTURE_2D, m_TextureID);
 
-	glEnable(GL_BLEND);
-	/*glDepthFunc(GL_ALWAYS); glDepthFunc(GL_LESS)*/
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_WrappingMode);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_WrappingMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_FilterMode);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_FilterMode);
-
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_WrappingMode);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_WrappingMode);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	glGenerateMipmap(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
 	stbi_image_free(data);
+
+	textureCache[m_TextureHashID] = m_TextureID; 
 }
 
-void Texture::Bind()
+void Texture::Bind(GLuint slot)
 {
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_TextureID);
+	glBindTextureUnit(slot, m_TextureID);
 }
 
-void Texture::Unbind()
+void Texture::Unbind(GLuint slot)
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTextureUnit(slot, 0);
 }
 
 void Texture::SetTexture(const std::string& path)

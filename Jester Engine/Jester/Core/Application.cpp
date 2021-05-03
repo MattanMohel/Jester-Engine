@@ -47,10 +47,10 @@ void Application::Run()
 
 		Window::Get()->GLClear();
 
-		/*Gameobject OnFixedUpdate Call*/
 		static float FIXED_UPDATE_TIMER = 0;
 		FIXED_UPDATE_TIMER += Time::DeltaTime();
 
+		/*Gameobject OnFixedUpdate Call*/
 		if (FIXED_UPDATE_TIMER > TIME_BETWEEN_FIXED_UPDATE)
 		{
 			FIXED_UPDATE_TIMER = 0;
