@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Internal.h"
-#include "../User Interface/UI.h"
+#include "../Jester.h"
 
 class SampleComponent : public Component
 {

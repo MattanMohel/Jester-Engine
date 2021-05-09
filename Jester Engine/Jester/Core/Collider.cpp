@@ -19,7 +19,7 @@ Collider::~Collider()
 
 void Collider::OnAwake()
 {
-	m_LineVisual.gameobject = gameobject;
+	m_LineVisual.object = object;
 	m_LineVisual.color() = Color(COLLIDER_COLOR);
 }
 
@@ -158,22 +158,22 @@ void Collider::CheckCollisions()
 			{
 				if (coll_i->isInCollisionArray(coll_j)) /*if already colliding*/
 				{
-					coll_i->gameobject->transform.GetRoot()->OnCollisionStay((Collider&)coll_j);
-					coll_j->gameobject->transform.GetRoot()->OnCollisionStay((Collider&)coll_i);
+					coll_i->object->transform.GetRoot()->OnCollisionStay((Collider&)coll_j);
+					coll_j->object->transform.GetRoot()->OnCollisionStay((Collider&)coll_i);
 				}
 				else /*if wasn't colliding before*/
 				{
 					coll_i->m_Collisions.push_back(coll_j);
 					coll_j->m_Collisions.push_back(coll_i);
 
-					coll_i->gameobject->transform.GetRoot()->OnCollisionEnter((Collider&)coll_j); 
-					coll_j->gameobject->transform.GetRoot()->OnCollisionEnter((Collider&)coll_i); 
+					coll_i->object->transform.GetRoot()->OnCollisionEnter((Collider&)coll_j); 
+					coll_j->object->transform.GetRoot()->OnCollisionEnter((Collider&)coll_i); 
 				}	
 			}
 			else if (coll_i->isInCollisionArray(coll_j)) /*if stopped colliding*/
 			{
-				coll_i->gameobject->transform.GetRoot()->OnCollisionExit((Collider&)coll_j);
-				coll_j->gameobject->transform.GetRoot()->OnCollisionExit((Collider&)coll_i);
+				coll_i->object->transform.GetRoot()->OnCollisionExit((Collider&)coll_j);
+				coll_j->object->transform.GetRoot()->OnCollisionExit((Collider&)coll_i);
 
 				coll_i->m_Collisions.erase(find(coll_i->m_Collisions.begin(), coll_i->m_Collisions.end(), coll_j));
 				coll_j->m_Collisions.erase(find(coll_j->m_Collisions.begin(), coll_j->m_Collisions.end(), coll_i));
@@ -205,9 +205,9 @@ bool Collider::isColliding(const Collider* a, const Collider* b)
 		for (size_t i = 0; i < b->m_Vertices.size(); i++) 
 		{
 			/*the refrenced vertices, transformed to match the gameobject*/
-			Vector2 segmentOffset((Transform::RotateAround(b->m_Vertices[i], b->gameobject->transform))); 
-			Vector2 segmentSlope(Transform::RotateAround(b->m_Vertices[(i + 1) % b->m_Vertices.size()], b->gameobject->transform) - segmentOffset); 
-			Vector2 transformedVert(Transform::RotateAround(vert, a->gameobject->transform)); 
+			Vector2 segmentOffset((Transform::RotateAround(b->m_Vertices[i], b->object->transform))); 
+			Vector2 segmentSlope(Transform::RotateAround(b->m_Vertices[(i + 1) % b->m_Vertices.size()], b->object->transform) - segmentOffset); 
+			Vector2 transformedVert(Transform::RotateAround(vert, a->object->transform)); 
 
 			/*collison check uses a [1 0] vector, so if line is below there's no way to reach it*/
 			if (segmentSlope.y == 0 && abs(transformedVert.y - segmentOffset.y) > CALC_PRECISION)  

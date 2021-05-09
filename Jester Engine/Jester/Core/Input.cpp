@@ -1,7 +1,7 @@
 #include "Input.h"
 
-glm::vec2 Input::lastPos;
-glm::vec2 Input::posDelta;
+Vector2 Input::lastPos;
+Vector2 Input::posDelta;
 bool Input::mouseFirstMoved = true;
 
 KeySig Input::lastInput;

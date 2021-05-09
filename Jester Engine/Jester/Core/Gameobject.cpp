@@ -1,66 +1,49 @@
 #include "Gameobject.h"
 
-Gameobject* Gameobject::Instantiate(std::string&& name)
+#include "Application.h"
+
+Object* Object::Instantiate(std::string&& name)
 {
-	auto* gameobject = new Gameobject(name);
-	
-	static unsigned long curr_ID = 0;
-	gameobject->m_ID = curr_ID;
-	curr_ID++;
+	static ID id = 0; id++;
+	auto* gameobject = new Object(name, id);
 
 	return gameobject;
 }
 
-void Gameobject::Destroy(Gameobject* gameobject)
+void Object::Destroy(Object* gameobject)
 {
 	delete gameobject;
 }
 
-bool Gameobject::hasComponent(unsigned int hash)
-{
-	for (auto& component : m_Components)
-	{
-		if (hash == HASH_OF(*component))
-			return true;
-	}
-
-	return false;
-}
-
-size_t Gameobject::getComponentIndex(unsigned int hash)
+Info Object::hasComponent(unsigned int hash)
 {
 	for (size_t i = 0; i < m_Components.size(); i++)
-	{
-		if (hash == HASH_OF(*m_Components[i]))
-			return i;
-	}
+		if (hash == HASH_OF(*m_Components[i])) return { true, i };
 
-	return 0;
+	return { false, 0 };
 }
 
-Gameobject::Gameobject(std::string& name)
-	:name(name), m_ID(0), transform(this)
+Object::Object(const std::string& name, const ID& id)
+	: name(name), m_ID(id), transform(this)
 {
 	Application::Get()->AddGameobject(this);
 }
 
-Gameobject::~Gameobject()
+Object::~Object()
 {
-	Logger::Print("Deleting ", name);
-
 	Application::Get()->RemoveGameobject(this);
 
 	for (auto& component : m_Components)
 		delete component;
 }
 
-void Gameobject::OnAwake()
+void Object::OnAwake()
 {
 	for (auto& component : m_Components)
 		component->OnAwake();
 }
 
-void Gameobject::OnUpdate()
+void Object::OnUpdate()
 {
 	for (auto& component : m_Components)
 	{
@@ -69,13 +52,7 @@ void Gameobject::OnUpdate()
 	}
 }
 
-void Gameobject::OnFixedUpdate()
-{
-	for (auto& component : m_Components)
-		component->OnFixedUpdate();
-}
-
-void Gameobject::OnCollisionEnter(Collider& other)
+void Object::OnCollisionEnter(Collider& other)
 {
 	for (auto& component : m_Components)
 		component->OnCollisionEnter(other);
@@ -84,7 +61,7 @@ void Gameobject::OnCollisionEnter(Collider& other)
 		child->gameobject->OnCollisionEnter(other);
 }
 
-void Gameobject::OnCollisionStay(Collider& other)
+void Object::OnCollisionStay(Collider& other)
 {
 	for (auto& component : m_Components)
 		component->OnCollisionStay(other);
@@ -93,7 +70,7 @@ void Gameobject::OnCollisionStay(Collider& other)
 		child->gameobject->OnCollisionStay(other);
 }
 
-void Gameobject::OnCollisionExit(Collider& other)
+void Object::OnCollisionExit(Collider& other)
 {
 	for (auto& component : m_Components)
 		component->OnCollisionExit(other);

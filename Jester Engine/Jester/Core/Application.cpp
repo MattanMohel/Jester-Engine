@@ -1,13 +1,12 @@
 #include "Application.h"
 
 #include "Time.h"
-#include "Gameobject.h"
-#include "Component.h"
 #include "Window.h"
+#include "Gameobject.h"
 
 #include "../Renderer/Renderer.h"
-#include "../User Interface/UI.h"
 #include "../User Interface/ImGuiContext.h"
+#include "../User Interface/UI.h"
 
 bool Application::isRunning = false;
 
@@ -47,21 +46,6 @@ void Application::Run()
 
 		Window::Get()->GLClear();
 
-		/*Gameobject OnFixedUpdate Call*/
-		static float FIXED_UPDATE_TIMER = 0;
-		FIXED_UPDATE_TIMER += Time::DeltaTime();
-
-		if (FIXED_UPDATE_TIMER > TIME_BETWEEN_FIXED_UPDATE)
-		{
-			FIXED_UPDATE_TIMER = 0;
-
-			for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
-			{
-				if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
-				m_GameobjectRegistry[i]->OnFixedUpdate();
-			}
-		}
-
 		/*Gameobject OnUpdate Call*/
 		for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 		{
@@ -89,12 +73,12 @@ void Application::Run()
 	isRunning = false;
 }
 
-void Application::AddGameobject(Gameobject* gameobject)
+void Application::AddGameobject(Object* gameobject)
 {
 	m_GameobjectRegistry.push_back(gameobject);
 }
 
-void Application::RemoveGameobject(Gameobject* gameobject)
+void Application::RemoveGameobject(Object* gameobject)
 {
 	const auto& it = std::find(m_GameobjectRegistry.begin(), m_GameobjectRegistry.end(), gameobject);
 	m_GameobjectRegistry.erase(it);

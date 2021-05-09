@@ -2,7 +2,7 @@
 
 #include "Gameobject.h"
 
-Transform::Transform(Gameobject* gameobject)
+Transform::Transform(Object* gameobject)
 	: gameobject(gameobject), m_Parent(this), m_Root(this)
 	, position(0, 0), scale(1, 1), rotation(0) { }
 
@@ -37,7 +37,7 @@ void Transform::Refresh()
 	}
 }
 
-void Transform::SetChild(Gameobject* gameobject)
+void Transform::SetChild(Object* gameobject)
 {
 	gameobject->transform.m_Parent = this; 
 	gameobject->transform.Refresh(); 
@@ -54,7 +54,7 @@ void Transform::RemoveChild(const size_t index)
 	m_Children.erase(m_Children.begin() + index);
 }
 
-void Transform::RemoveChild(const Gameobject* gameobject)
+void Transform::RemoveChild(const Object* gameobject)
 {
 	const size_t index = std::find(m_Children.begin(), m_Children.end(), &gameobject->transform) - m_Children.begin();
 
@@ -65,17 +65,17 @@ void Transform::RemoveChild(const Gameobject* gameobject)
 	m_Children.erase(m_Children.begin() + index);
 }
 
-Gameobject* Transform::GetChild(const size_t index)
+Object* Transform::GetChild(const size_t index)
 {
 	return m_Children[index]->gameobject;
 }
 
-Gameobject* Transform::GetParent()
+Object* Transform::GetParent()
 {
 	return m_Parent->gameobject;
 }
 
-Gameobject* Transform::GetRoot()
+Object* Transform::GetRoot()
 {
 	return m_Root->gameobject;
 }

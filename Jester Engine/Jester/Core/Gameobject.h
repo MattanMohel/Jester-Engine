@@ -1,142 +1,102 @@
 #pragma once
 
 #include <vector>
-#include <typeindex>
-#include <unordered_map>
+#include <string>
+#include <concepts>
 
-#include "Log.h"
-#include "Application.h"
 #include "Component.h"
 #include "Transform.h"
 
-class Timer; 
-class Collider;
-class Transform;
+template<typename T> concept TComponent = std::is_base_of<Component, T>::value;
+using ID = long long unsigned int;
+using Info = std::pair<bool, size_t>;
 
-#define HASH_OF(TComponent) std::type_index(typeid(TComponent)).hash_code()
-
-class Gameobject  
+class Object  
 {
-
 	friend class Application;
 	friend class Collider;
 
 public:
-	/*Instances a new Gameobject, returns a pointer
-	Adds the gameobject to the gameobject registry only at
-	the end of the frame to avoid confusion in the application*/
-	static Gameobject* Instantiate(std::string&& name);
-	/*Destroys and removes all instances of gameobject*/
-	static void Destroy(Gameobject* gameobject);
-	/*Retrieves all gameobject compoenents*/
+	// Instances a new Object, returns a pointer
+	static Object* Instantiate(std::string&& name);
+	// Destroys a given Object instance
+	static void Destroy(Object* gameobject);
+	// Retrieves a vector of all binded components
 	inline const std::vector<Component*>& GetComponents() { return m_Components; }
-	/*Retrieves Gameobject ID*/
-	inline const unsigned int long& GetID() { return m_ID; }
+	// Retrieves the Object's ID
+	inline const ID& GetID() { return m_ID; }
 
 	std::string name;
 	bool isEnabled = true;
 	Transform transform;
 
-	//Adds component of type TComponent
-	template<typename TComponent>
-	TComponent* AddComponent()
+	// Binds a new component of a specified type
+	template<TComponent comp>
+	comp* AddComponent()
 	{
-		DERIVES_FROM_COMPONENT_ASSERT;
-
-		if (hasComponent(HASH_OF(TComponent)))
-		{
-			Logger::Print(LogFlag::Warning, "Tried to add duplicate component to ", name);
-			return nullptr;
-		}
-
-		auto* component = new TComponent();
-		component->Init(this);
-
-		m_Components.push_back(component);
-		return component; 
+		return (comp*)m_Components.emplace_back(new comp())->Init(this);
 	}	
 	
-	//Removes component of type TComponent
-	template<typename TComponent>
+	// Removes a component of a specified type
+	template<TComponent comp>
 	void RemoveComponent()
 	{
-		DERIVES_FROM_COMPONENT_ASSERT;
+		size_t index = hasComponent(HASH_OF(comp)).second;
+		delete m_Components[index]; m_Components.erase(m_Components.begin() + index);
+	}
 
-		if (!(hasComponent(HASH_OF(TComponent))))
+	// Returns pointer to binded component of a specified type
+	template<TComponent comp>
+	comp* GetComponent()
+	{
+		return (comp*)m_Components[hasComponent(HASH_OF(comp)).second];
+	}
+
+	// Returns first found instance of a specified type
+	template<TComponent comp>
+	static comp* FindComponent()
+	{
+		for (Object* object : Application::Get()->GetGameobjects())
 		{
-			Logger::Print(LogFlag::Warning, "Tried to remove non-existing component from ", name);
-			return;
+			auto [present, index] = object->hasComponent(HASH_OF(comp));
+			if (present) return (comp*)(object->m_Components[index]);
 		}
-
-		size_t index = getComponentIndex(HASH_OF(TComponent));
-		delete m_Components[index];
-		m_Components.erase(m_Components.begin() + index);
-	}
-
-	//Accesses type TComponent of gameobject
-	template<typename TComponent>
-	TComponent* GetComponent()
-	{
-		DERIVES_FROM_COMPONENT_ASSERT;
-
-		return (TComponent*)m_Components[getComponentIndex(HASH_OF(TComponent))]; 
-	}
-
-	//Finds first instance of type TComponent
-	template<typename TComponent>
-	static TComponent* FindComponent()
-	{
-		DERIVES_FROM_COMPONENT_ASSERT;
-
-		for (Gameobject* gameobject : Application::Get()->GetGameobjects())
-			if (gameobject->hasComponent(HASH_OF(TComponent))) 
-				return (TComponent*)(gameobject->m_Components[gameobject->getComponentIndex(HASH_OF(TComponent))]); 
 
 		return nullptr;
 	}	
 	
 	//Finds all instances of type TComponent 
-	template<typename TComponent>
-	static std::vector<TComponent*> FindComponents()
+	template<TComponent comp>
+	static std::vector<comp*> FindComponents()
 	{
-		DERIVES_FROM_COMPONENT_ASSERT;
+		std::vector<comp*> components;
 
-		std::vector<TComponent*> components; 
-
-		for (Gameobject* gameobject : Application::Get()->GetGameobjects()) 
-			if (gameobject->hasComponent(HASH_OF(TComponent))) 
-				components.push_back((TComponent*)gameobject->m_Components[gameobject->getComponentIndex(HASH_OF(TComponent))]);
+		for (Object* object : Application::Get()->GetGameobjects())
+		{
+			auto [present, index] = object->hasComponent(HASH_OF(comp));
+			if (present) components.push_back((comp*)object->m_Components[index]);
+		}
 
 		return components;
 	}
 
-	inline bool operator== (const Gameobject* gameobject) const
-	{
-		return m_ID == gameobject->m_ID;
-	}	
-
-	inline bool operator!= (const Gameobject* gameobject) const
-	{
-		return m_ID != gameobject->m_ID;
-	}
+	bool operator== (const Object* obj) const { return m_ID == obj->m_ID; }	
+	bool operator!= (const Object* obj) const { return m_ID != obj->m_ID; }
 
 private:
-	bool hasComponent(unsigned int hash);
-	size_t getComponentIndex(unsigned int hash);
+	Info hasComponent(unsigned int hash);
 
-	Gameobject(std::string& name);
-	~Gameobject();
+	Object(const std::string&, const ID&);
+	~Object();
 
 	void OnAwake();
 	void OnUpdate();
-	void OnFixedUpdate();
 
 	void OnCollisionEnter(Collider& other);
-	void  OnCollisionStay(Collider& other);
-	void  OnCollisionExit(Collider& other);
+	void OnCollisionStay(Collider& other);
+	void OnCollisionExit(Collider& other);
 
-private:
+	ID m_ID;
 	std::vector<Component*> m_Components;
-	unsigned long m_ID;
 };
 

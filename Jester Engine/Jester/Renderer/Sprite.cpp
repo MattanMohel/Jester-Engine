@@ -13,9 +13,9 @@
 Sprite::Sprite()
 	: m_Shader(VS_PATH, FS_PATH),
 	m_Mesh(RenderMode::TRIANGLES), color(1.0f, 1.0f, 1.0f, 1.0f), 
-	sortingLayer(SortingLayer::Default), orderInLayer(0), m_Camera(Gameobject::FindComponent<Camera>())
+	sortingLayer(SortingLayer::Default), orderInLayer(0), m_Camera(Object::FindComponent<Camera>())
 {
-	m_Mesh.CreateMesh(VERTICES, INDICES, 20, 12);
+	m_Mesh.CreateMesh(VERTICES, (unsigned int*)INDICES, 20, 12);
 }
 
 void Sprite::OnUpdate() 
@@ -24,9 +24,9 @@ void Sprite::OnUpdate()
 	m_Texture.Bind();
 
 	glm::mat4 model(1.0f);
-	model = glm::translate(model, glm::vec3(-gameobject->transform.position.x * SCALE, gameobject->transform.position.y * SCALE, 1));
-	model = glm::rotate(model, gameobject->transform.rotation * Deg2Rad, glm::vec3(0, 0, 1));
-	model = glm::scale(model, glm::vec3(gameobject->transform.scale.x * SCALE, gameobject->transform.scale.y * SCALE, 1));
+	model = glm::translate(model, glm::vec3(-object->transform.position.x * SCALE, object->transform.position.y * SCALE, 1));
+	model = glm::rotate(model, object->transform.rotation * Deg2Rad, glm::vec3(0, 0, 1));
+	model = glm::scale(model, glm::vec3(object->transform.scale.x * SCALE, object->transform.scale.y * SCALE, 1));
 	// projection * view * model * vec4(pos, 1.0f);
 
 	glm::vec4 pos = m_Camera->Projection() * m_Camera->CalculateViewMatrix() * model * glm::vec4(1, 1, 1, 1);

@@ -1,17 +1,13 @@
 #pragma once
 
 #include <vector>
-#include <string>
-#include <glm/glm.hpp>
-
-#include "Camera.h"
 #include "Mesh.h"
 #include "Shader.h"
-#include "RendererBase.h"
-
 #include "../Core/Vector2.h"
 #include "../Core/Component.h"
 #include "../Core/Color.h"
+
+class Camera;
 
 class Line : public Component 
 {
@@ -27,11 +23,12 @@ public:
 		(m_Vertices.push_back(std::forward<Vector2>(vertices)), ...);
 		UpdateMesh();
 	}
-	void SetVertices(const std::vector<Vector2>& verts);
-	void SetVertex(const Vector2& newVertex, size_t index); 
 
-	void RemoveVertex(size_t index);
-	void AddVertex(size_t index);
+	void SetVertices(const std::vector<Vector2>&);
+	void SetVertex(const Vector2&, size_t); 
+
+	void RemoveVertex(size_t);
+	void AddVertex(size_t);
 
 	void UpdateMesh();
 

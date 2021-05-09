@@ -1,9 +1,7 @@
 #include "Window.h"
 
-#include "../Renderer/Camera.h"
-
-#include "Input.h"
 #include "Log.h"
+#include "Input.h"
 
 bool Window::isRunning = false;
 
@@ -116,6 +114,6 @@ void Window::CreateCallbacks()
 
 void Window::EndFrame()
 {
-	Input::posDelta = glm::vec2(0.0f, 0.0f);
+	Input::posDelta = Vector2(0.0f, 0.0f); 
 }
 

@@ -47,11 +47,9 @@ private:
 
 	int Initialize();
 
-
 	float m_Width, m_Height;
 	int m_BufferWidth, m_BufferHeight;
 
-	//make a Color struct later
 	Color bgColor; 
 
 	void CreateCallbacks();

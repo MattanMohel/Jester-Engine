@@ -2,18 +2,14 @@
 
 #include <vector>
 #include "Log.h"
-#include "Vector2.h"
 
-class Gameobject; 
-
-#include "GL/glew.h"
-#include <GLFW/glfw3.h>
+class Object;
 
 #define TIME_BETWEEN_FIXED_UPDATE 0.02f
 
 class Application
 {
-	friend class Gameobject;
+	friend class Object;
 
 public:
 	static Application* Get();
@@ -21,7 +17,7 @@ public:
 	void Init();
 	void Run();
 
-	inline const std::vector<Gameobject*>& GetGameobjects() { return m_GameobjectRegistry; }
+	inline const std::vector<Object*>& GetGameobjects() { return m_GameobjectRegistry; }
 
 private:
 	Application() {};
@@ -29,13 +25,13 @@ private:
 	~Application() { delete Get(); Logger::Print(LogFlag::Info, "Application Terminated"); }
 
 	//adds gameobject from overall Gameobject vector
-	void AddGameobject(Gameobject* gameobject);
+	void AddGameobject(Object* gameobject);
 	
 	//removes gameobject from overall Gameobject vector
-	void RemoveGameobject(Gameobject* gameobject);
+	void RemoveGameobject(Object* gameobject);
 	
 	static bool isRunning;
 
 private:
-	std::vector<Gameobject*> m_GameobjectRegistry;
+	std::vector<Object*> m_GameobjectRegistry;
 };

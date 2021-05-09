@@ -1,16 +1,8 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include <vector>
-#include <string>
-
-#include"../Renderer/Line.h"
-#include "../User Interface/UI.h"
-
 #include "Vector2.h"
-#include "Vector3.h"
-#include "Component.h"
-#include "Gameobject.h"
+#include"../Renderer/Line.h"
 
 #define CALC_PRECISION 0.0f
 #define COLLIDER_COLOR 70.0f/255.0f, 236.0f/255.0f, 86.0f/255.0f, 1.0f

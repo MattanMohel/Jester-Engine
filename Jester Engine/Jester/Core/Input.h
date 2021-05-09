@@ -1,7 +1,7 @@
 #pragma once
 
 #include "KeySignatures.h"
-#include <glm/vec2.hpp>
+#include "Vector2.h"
 
 class GLFWwindow;
 class Window; 
@@ -16,15 +16,15 @@ struct Input
 
 	Input() = delete;
 
-	//Returns true if key is pressed
+	// Returns true if key is pressed
 	static bool GetKey(const KeySig& signature);
-	//Returns true on frame key was pressed
+	// Returns true on frame key was pressed
 	static bool GetKeyDown(const KeySig& signature);
-	//Returns true on frame key is released
+	// Returns true on frame key is released
 	static bool GetKeyUp(const KeySig& signature);
-	//Returns the latest input
+	// Returns the latest input
 	static KeySig GetKeyInput();
-	//Returns if signature represents a character
+	// Returns if signature represents a character
 	static inline bool isChar(const KeySig& signature)
 	{
 		return (int)signature >= 65 && (int)signature <= 90;
@@ -62,18 +62,18 @@ private:
 	{
 		if (mouseFirstMoved)
 		{
-			lastPos = glm::vec2(xPos, yPos);
+			lastPos = Vector2(xPos, yPos);
 			mouseFirstMoved = false;
 		}
 
 		posDelta.x = (float)xPos - lastPos.x;
 		posDelta.y = lastPos.y - (float)yPos;
 
-		lastPos = glm::vec2(xPos, yPos);
+		lastPos = Vector2(xPos, yPos);
 	}
 
-	static glm::vec2 posDelta;
-	static glm::vec2 lastPos;
+	static Vector2 posDelta;
+	static Vector2 lastPos;
 	static bool mouseFirstMoved;
 
 	static KeySig lastInput;

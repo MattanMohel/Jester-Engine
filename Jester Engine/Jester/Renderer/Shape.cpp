@@ -3,7 +3,7 @@
 Shape::Shape()
 	: m_Shader(VS_PATH, FCOLOR_PATH),
 	m_Mesh(RenderMode::TRIANGLE_FAN), m_Color(1.0f, 1.0f, 1.0f, 1.0f),
-	m_Camera(Gameobject::FindComponent<Camera>())
+	m_Camera(Object::FindComponent<Camera>())
 {}
 
 void Shape::SetVertices(const std::vector<Vector2>& verts)
@@ -37,9 +37,9 @@ void Shape::OnUpdate()
 	m_Shader.Bind();
 
 	glm::mat4 model(1.0f);
-	model = glm::translate(model, glm::vec3(-gameobject->transform.position.x * SCALE, gameobject->transform.position.y * SCALE, 1));
-	model = glm::rotate(model, gameobject->transform.rotation, glm::vec3(0, 0, 1));
-	model = glm::scale(model, glm::vec3(gameobject->transform.scale.x * SCALE, gameobject->transform.scale.y * SCALE, 1));
+	model = glm::translate(model, glm::vec3(-object->transform.position.x * SCALE, object->transform.position.y * SCALE, 1));
+	model = glm::rotate(model, object->transform.rotation, glm::vec3(0, 0, 1));
+	model = glm::scale(model, glm::vec3(object->transform.scale.x * SCALE, object->transform.scale.y * SCALE, 1));
 
 	m_Shader.SetUniform<glm::mat4>("model", model);
 	m_Shader.SetUniform<glm::vec4>("color", glm::vec4(m_Color.r, m_Color.g, m_Color.b, m_Color.a));

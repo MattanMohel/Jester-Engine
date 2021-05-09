@@ -1,45 +1,49 @@
 #pragma once
 
-class Time;
+class Object;
 class Collider;
-class Gameobject;
 
-#define DERIVES_FROM_COMPONENT_ASSERT static_assert(std::is_base_of<Component, TComponent>::value, "TComponent must derive from Component")
+#include <typeindex>
+#define HASH_OF(comp) std::type_index(typeid(comp)).hash_code()
 
-//Base Component
 class Component
 {
-
-	friend class Gameobject; 
+	friend class Object; 
 
 public:
-	//Returns Component Name
-	virtual const char* GetName() = 0;
-	//called once on app initialization
-	virtual void OnAwake() {}
-	//called once every frame
-	virtual void OnUpdate() {}
-	//called once every .2 seconds;
-	virtual void OnFixedUpdate() {}
-	//updates the component's Gui Panel
-	virtual void OnGuiUpdate() {}
+	// Resturns the component's name
+	virtual const char* GetName() { return "Component"; }
+	// Awake call - in app initiation
+	virtual void OnAwake()        {}
+	// Update call - once per frame
+	virtual void OnUpdate()       {}
+	// Editor call - called in play/edit mode
+	virtual void OnEditorUpdate() {}
+	// GUI call - once per frame
+	virtual void OnGuiUpdate()    {}
+	// Destructor - called on destroy
+	virtual void OnDestroy()      {}
 
-	//collision calls, overridden in specialization
+	// Called on frame of collision
 	virtual void OnCollisionEnter(Collider& other) {}
-	virtual void  OnCollisionStay(Collider& other) {}
-	virtual void  OnCollisionExit(Collider& other) {}
+	// Called on every frame of collision
+	virtual void OnCollisionStay(Collider& other)  {}
+	// Called on last frame of collision
+	virtual void OnCollisionExit(Collider& other)  {}
 
-	Gameobject* gameobject;
+	// The owning object of the component
+	Object* object;
+	// Whether to update the component or not
 	bool isEnabled = true;
 
 protected:
-	~Component()
-	{}
+	~Component() { OnDestroy(); }
 
 private:
-	//initializes gameobject value
-	virtual void Init(Gameobject* gameobject)
+
+	Component* Init(Object* obj)
 	{
-		this->gameobject = gameobject;
+		this->object = obj;
+		return this;
 	}
 };

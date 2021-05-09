@@ -1,11 +1,5 @@
 #include "Camera.h"
 
-#include "../Core/Time.h"
-#include "../Core/Input.h"
-#include "../Core/Window.h"
-
-#include "RendererBase.h"
-
 Camera::Camera()
 	: m_WorldUp(0.0f, 1.0f, 0.0f), m_Yaw(90.0f), m_Pitch(0.0f), m_Front(0.0f, 0.0f, -1.0f), m_Size(5),
 	m_Projection(glm::ortho(-WIDTH * m_Size, WIDTH * m_Size, -HEIGHT * m_Size, HEIGHT * m_Size, NEAR_CLIPPING_PLANE, FAR_CLIPPING_PLANE))
@@ -13,7 +7,7 @@ Camera::Camera()
 
 glm::mat4 Camera::CalculateViewMatrix() const
 {
-	glm::vec3 pos = ToVec3(gameobject->transform.position, 0); 
+	glm::vec3 pos = ToVec3(object->transform.position, 0); 
 	return glm::lookAt(pos, pos + m_Front, m_Up);
 }
 

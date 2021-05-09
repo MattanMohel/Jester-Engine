@@ -1,16 +1,7 @@
 #pragma once
 
-#include <string>
-#include <vector>
-
+#include "../Jester.h"
 #include "Gui.h"
-#include "../Core/Color.h"
-
-class Gameobject;
-class Component;
-class Vector2;
-
-#define MAKE_UNIQUE(obj, index) (#obj + std::to_string(index)).c_str()
 
 namespace Jester::UI
 {
@@ -45,6 +36,6 @@ namespace Jester::UI
 		return changed; 
 	}
 
-	void RenderGameobject(Gameobject*); 
+	void RenderGameobject(Object*); 
 	void RenderComponent(Component*);
 }

@@ -1,16 +1,16 @@
 #pragma once
 
-class Gameobject;
+class Object;
 
 template<typename Args>
 struct EventArgs
 {
-	EventArgs(Args args, Gameobject* sender)
+	EventArgs(Args args, Object* sender)
 		: args(args), sender(sender)
 	{}
 
 	Args args;
-	Gameobject* sender;
+	Object* sender;
 };
 
 template<typename Args>

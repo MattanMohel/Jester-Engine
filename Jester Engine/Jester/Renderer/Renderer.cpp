@@ -57,11 +57,11 @@ void Renderer::CreateBuffer()
 
 	for (size_t i = 0; i < sprites.size(); i++)
 	{
-		VB[i + 0] = sprites[i]->gameobject->transform.position.x;
-		VB[i + 1] = sprites[i]->gameobject->transform.position.y;
-		VB[i + 2] = sprites[i]->gameobject->transform.scale.x;
-		VB[i + 3] = sprites[i]->gameobject->transform.scale.y;
-		VB[i + 4] = sprites[i]->gameobject->transform.rotation;
+		VB[i + 0] = sprites[i]->object->transform.position.x;
+		VB[i + 1] = sprites[i]->object->transform.position.y;
+		VB[i + 2] = sprites[i]->object->transform.scale.x;
+		VB[i + 3] = sprites[i]->object->transform.scale.y;
+		VB[i + 4] = sprites[i]->object->transform.rotation;
 		VB[i + 5] = sprites[i]->color.r;
 		VB[i + 6] = sprites[i]->color.g;
 		VB[i + 7] = sprites[i]->color.b;

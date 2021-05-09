@@ -1,10 +1,6 @@
 #pragma once
 
-#include <string>
-
-#include "../Core/Component.h"
-#include "../Core/Gameobject.h"
-
+#include "../Jester.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
 

@@ -2,26 +2,27 @@
 
 #include <vector>
 #include "Vector2.h"
-class Gameobject;
+
+class Object;
 
 class Transform 
 {
 
-	friend class Gameobject;
+	friend class Object;
 
 public:
-	Transform(Gameobject* gameobject);
+	Transform(Object*);
 	~Transform();
 
-	void SetChild(Gameobject* transform);
+	void SetChild(Object*);
 
-	void RemoveChild(const size_t index);
-	void RemoveChild(const Gameobject* gameobject);
-	Gameobject* GetChild(const size_t index);
-	Gameobject* GetParent();
-	Gameobject* GetRoot();
+	void RemoveChild(const size_t);
+	void RemoveChild(const Object*);
+	Object* GetChild(const size_t);
+	Object* GetParent();
+	Object* GetRoot();
 
-	Gameobject* gameobject;
+	Object* gameobject;
 
 	Vector2 scale;
 	Vector2 position;
@@ -32,8 +33,8 @@ public:
 	void Rotate(float angle) { rotation += angle; }
 
 	//returns your position rotated by a specified angle around a given point
-	static Vector2 RotateAround(const Vector2& pos, const Vector2& scale, const Vector2& offset, const float theta);
-	static Vector2 RotateAround(const Vector2& pos, const Transform& transform);
+	static Vector2 RotateAround(const Vector2&, const Vector2&, const Vector2&, const float);
+	static Vector2 RotateAround(const Vector2&, const Transform&);
 
 	inline bool operator== (Transform& transform) const
 	{

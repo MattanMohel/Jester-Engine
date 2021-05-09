@@ -1,6 +1,6 @@
 #pragma once
 
-class Gameobject;
+class Object;
 
 class UIContext
 {

@@ -213,7 +213,7 @@ void Jester::UI::RenderComponent(Component* component)
 	ImGui::PopID();
 }
 
-void Jester::UI::RenderGameobject(Gameobject* gameobject)
+void Jester::UI::RenderGameobject(Object* gameobject)
 {
 	if (gameobject == nullptr) return;
 
@@ -241,7 +241,7 @@ void Jester::UI::RenderGameobject(Gameobject* gameobject)
 
 void Jester::UI::RenderHierarchy()
 {
-	static Gameobject* currObj = nullptr;
+	static Object* currObj = nullptr;
 
 	ImGui::Begin("Hierarchy");
 	{
