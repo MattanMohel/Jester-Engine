@@ -3,7 +3,7 @@
 #include "Gameobject.h"
 
 Transform::Transform(Object* gameobject)
-	: gameobject(gameobject), m_Parent(this), m_Root(this)
+	: object(gameobject), m_Parent(this), m_Root(this)
 	, position(0, 0), scale(1, 1), rotation(0) { }
 
 Transform::~Transform()
@@ -13,7 +13,7 @@ Transform::~Transform()
 		delete child;
 	}
 
-	m_Parent->RemoveChild(gameobject);
+	m_Parent->RemoveChild(object);
 }
 
 Vector2 Transform::RotateAround(const Vector2& pos, const Vector2& scale, const Vector2& offset, const float theta)
@@ -67,15 +67,15 @@ void Transform::RemoveChild(const Object* gameobject)
 
 Object* Transform::GetChild(const size_t index)
 {
-	return m_Children[index]->gameobject;
+	return m_Children[index]->object;
 }
 
 Object* Transform::GetParent()
 {
-	return m_Parent->gameobject;
+	return m_Parent->object;
 }
 
 Object* Transform::GetRoot()
 {
-	return m_Root->gameobject;
+	return m_Root->object;
 }

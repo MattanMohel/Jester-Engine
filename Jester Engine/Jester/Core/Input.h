@@ -11,17 +11,16 @@ class Window;
 
 struct Input
 {
-
 	friend Window;
 
 	Input() = delete;
 
 	// Returns true if key is pressed
-	static bool GetKey(const KeySig& signature);
+	static bool GetKey(const KeySig&);
 	// Returns true on frame key was pressed
-	static bool GetKeyDown(const KeySig& signature);
+	static bool GetKeyDown(const KeySig&);
 	// Returns true on frame key is released
-	static bool GetKeyUp(const KeySig& signature);
+	static bool GetKeyUp(const KeySig&);
 	// Returns the latest input
 	static KeySig GetKeyInput();
 	// Returns if signature represents a character

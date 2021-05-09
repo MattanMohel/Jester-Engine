@@ -27,7 +27,7 @@
     <ClInclude Include="Jester\Core\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Core\Jester.h">
+    <ClInclude Include="Jester\Jester.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Jester\Core\Time.h">
@@ -117,12 +117,6 @@
     <ClInclude Include="Jester\vendors\imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Jester\Sandbox\CollMarker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Jester\Sandbox\Internal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Jester\Sandbox\Sample.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -176,9 +170,6 @@
     <ClCompile Include="Jester\Renderer\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Jester\Sandbox\CollMarker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Jester\Renderer\Line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -222,6 +213,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\User Interface\ImGuiContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Jester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

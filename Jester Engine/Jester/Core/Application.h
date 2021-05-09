@@ -5,7 +5,7 @@
 
 class Object;
 
-#define TIME_BETWEEN_FIXED_UPDATE 0.02f
+using ID = long long unsigned int;
 
 class Application
 {
@@ -25,10 +25,9 @@ private:
 	~Application() { delete Get(); Logger::Print(LogFlag::Info, "Application Terminated"); }
 
 	//adds gameobject from overall Gameobject vector
-	void AddGameobject(Object* gameobject);
-	
+	Object* AddGameobject(const std::string&, const ID&);
 	//removes gameobject from overall Gameobject vector
-	void RemoveGameobject(Object* gameobject);
+	void RemoveGameobject(Object*);
 	
 	static bool isRunning;
 

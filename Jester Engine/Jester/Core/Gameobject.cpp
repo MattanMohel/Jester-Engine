@@ -4,15 +4,14 @@
 
 Object* Object::Instantiate(std::string&& name)
 {
-	static ID id = 0; id++;
-	auto* gameobject = new Object(name, id);
-
-	return gameobject;
+	static ID id = 0;
+	return Application::Get()->AddGameobject(name, id++);
 }
 
-void Object::Destroy(Object* gameobject)
+void Object::Destroy(Object* object)
 {
-	delete gameobject;
+	Application::Get()->RemoveGameobject(object);
+	delete object;
 }
 
 Info Object::hasComponent(unsigned int hash)
@@ -25,14 +24,10 @@ Info Object::hasComponent(unsigned int hash)
 
 Object::Object(const std::string& name, const ID& id)
 	: name(name), m_ID(id), transform(this)
-{
-	Application::Get()->AddGameobject(this);
-}
+{}
 
 Object::~Object()
 {
-	Application::Get()->RemoveGameobject(this);
-
 	for (auto& component : m_Components)
 		delete component;
 }
@@ -58,7 +53,7 @@ void Object::OnCollisionEnter(Collider& other)
 		component->OnCollisionEnter(other);
 
 	for (auto& child : transform.m_Children)
-		child->gameobject->OnCollisionEnter(other);
+		child->object->OnCollisionEnter(other);
 }
 
 void Object::OnCollisionStay(Collider& other)
@@ -67,7 +62,7 @@ void Object::OnCollisionStay(Collider& other)
 		component->OnCollisionStay(other);
 
 	for (auto& child : transform.m_Children)
-		child->gameobject->OnCollisionStay(other);
+		child->object->OnCollisionStay(other);
 }
 
 void Object::OnCollisionExit(Collider& other)
@@ -76,5 +71,5 @@ void Object::OnCollisionExit(Collider& other)
 		component->OnCollisionExit(other);
 
 	for (auto& child : transform.m_Children)
-		child->gameobject->OnCollisionExit(other);
+		child->object->OnCollisionExit(other);
 }

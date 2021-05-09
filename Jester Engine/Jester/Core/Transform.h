@@ -22,7 +22,7 @@ public:
 	Object* GetParent();
 	Object* GetRoot();
 
-	Object* gameobject;
+	Object* object;
 
 	Vector2 scale;
 	Vector2 position;

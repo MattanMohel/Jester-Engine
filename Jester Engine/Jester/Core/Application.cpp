@@ -28,7 +28,7 @@ void Application::Init()
 
 void Application::Run()
 {
-	/*Gameobject OnAwake Call*/
+	// Object OnAwake Call
 	for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 	{
 		if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
@@ -46,7 +46,7 @@ void Application::Run()
 
 		Window::Get()->GLClear();
 
-		/*Gameobject OnUpdate Call*/
+		// Object OnUpdate Call
 		for (size_t i = 0; i < m_GameobjectRegistry.size(); i++)
 		{
 			if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
@@ -66,16 +66,16 @@ void Application::Run()
 		Window::EndFrame();
 	}
 
-	//Clean-up
+	// Clean-up
 	Renderer::Shutdown(); 
 	UIContext::ShutDown(); 
 	delete Window::Get();
 	isRunning = false;
 }
 
-void Application::AddGameobject(Object* gameobject)
+Object* Application::AddGameobject(const std::string& name, const ID& id)
 {
-	m_GameobjectRegistry.push_back(gameobject);
+	return m_GameobjectRegistry.emplace_back(new Object(name, id));
 }
 
 void Application::RemoveGameobject(Object* gameobject)
