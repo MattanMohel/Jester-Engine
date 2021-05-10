@@ -6,6 +6,7 @@ class Time;
 
 void SampleComponent::OnAwake()
 {
+	rb = object->GetComponent<Rigidbody>();
 	cam = Object::FindComponent<Camera>(); 
 }
 
@@ -16,24 +17,33 @@ void SampleComponent::OnUpdate()
 	if (Input::GetKey(KeySig::Escape)) 
 		Window::Close(); 
 
+	Vector2 speed;
 	if (Input::GetKey(KeySig::LeftArrow))
-	{
-		object->transform.Translate(2 * Time::DeltaTime(), 0);	
-	}
+		speed -= Vector2::Right;
 	if (Input::GetKey(KeySig::RightArrow))
-	{
-		object->transform.Translate(-2 * Time::DeltaTime(), 0);
-	}
+		speed += Vector2::Right;
 	if (Input::GetKey(KeySig::UpArrow))
-		object->transform.Translate(0, 2 * Time::DeltaTime());
-
+		speed += Vector2::Up;
 	if (Input::GetKey(KeySig::DownArrow))
-		object->transform.Translate(0, -2 * Time::DeltaTime());
+		speed -= Vector2::Up;
+
+	rb->velocity = speed;
 }
 
 void SampleComponent::OnGuiUpdate()
 {
 	Jester::UI::Serialize("Move", move, true); 
+	Jester::UI::Serialize("Speed", speed);
+}
+
+void SampleComponent::OnCollisionStay(Collider& other, Vector2)
+{
+	object->GetComponent<Sprite>()->color = Color(1, 0, 0, 1);
+}
+
+void SampleComponent::OnCollisionExit(Collider& other, Vector2)
+{
+	object->GetComponent<Sprite>()->color = Color(1, 1, 1, 1);
 }
 
 

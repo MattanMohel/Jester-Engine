@@ -56,7 +56,7 @@ void Application::Run()
 
 		// Rigidbody update - position
 		for (auto& rb : Rigidbody::GetRigidbodies())
-			rb->object->transform.position += rb->velocity * rb->GetVelocityMultiplier() * Time::DeltaTime();
+			if (rb->isEnabled) rb->object->transform.position += rb->velocity * rb->GetVelocityMultiplier() * Time::DeltaTime();
 
 		Jester::UI::RenderHierarchy(); 
 

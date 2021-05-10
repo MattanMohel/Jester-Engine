@@ -10,8 +10,12 @@ public:
 	void OnUpdate() override;
 	void OnGuiUpdate() override;
 
-	bool move = false;
+	void OnCollisionStay(Collider&, Vector2) override;
+	void OnCollisionExit(Collider&, Vector2) override;
 
+	float speed = 5;
+	bool move = false;
+	Rigidbody* rb;
 	Camera* cam;
 };
 

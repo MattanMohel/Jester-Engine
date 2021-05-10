@@ -152,6 +152,8 @@ void Collider::CheckCollisions()
 			Collider* coll_i = colliderRegistery[i];
 			Collider* coll_j = colliderRegistery[j];
 
+			if (!coll_i->isEnabled || !coll_j->isEnabled) return;
+
 			// If either shape is intersecting
 			/*Collision indices for i and j*/ Vector2 i_coll, j_coll;
 			bool colliding = isColliding(coll_i, coll_j, i_coll, j_coll) || isColliding(coll_j, coll_i, j_coll, i_coll);

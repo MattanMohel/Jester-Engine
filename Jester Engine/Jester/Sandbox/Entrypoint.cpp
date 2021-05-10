@@ -12,7 +12,7 @@ int main()
 	player->AddComponent<SampleComponent>()->move = true;
 	player->AddComponent<Collider>()->SetVertices(Vector2(-1, -1), Vector2(-1, 1), Vector2(1, 1), Vector2(1, -1));
 	player->AddComponent<Rigidbody>()->isEnabled = false;
-	player->AddComponent<Sprite>()->SetTexture("resources/textures/spitoon.png");	
+	player->AddComponent<Sprite>()->SetTexture("resources/textures/block.png");	
 	
 	Object* player3 = Object::Instantiate("target");
 	player3->AddComponent<SampleComponent>();

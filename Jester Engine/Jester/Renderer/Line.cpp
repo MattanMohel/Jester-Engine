@@ -69,7 +69,7 @@ void Line::OnUpdate()
 
 	glm::mat4 model(1.0f);
 	model = glm::translate(model, glm::vec3(-object->transform.position.x * SCALE, object->transform.position.y * SCALE, 1));
-	model = glm::rotate(model, object->transform.rotation, glm::vec3(0, 0, 1));
+	model = glm::rotate(model, object->transform.rotation * Deg2Rad, glm::vec3(0, 0, 1));
 	model = glm::scale(model, glm::vec3(object->transform.scale.x * SCALE, object->transform.scale.y * SCALE, 1));
 
 	m_Shader.SetUniform<glm::mat4>("model", model);
