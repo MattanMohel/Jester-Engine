@@ -33,6 +33,7 @@ class Line;
 #include "Core/Application.h"
 #include "Core/Gameobject.h"
 #include "Core/Collider.h"
+#include "Core/Rigidbody.h"
 
 //      RENDERER
 #include "Renderer/RendererBase.h"

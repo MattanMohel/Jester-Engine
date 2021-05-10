@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Vector2.h"
 class Object;
 class Collider;
 
@@ -25,11 +26,11 @@ public:
 	virtual void OnDestroy()      {}
 
 	// Called on frame of collision
-	virtual void OnCollisionEnter(Collider& other) {}
+	virtual void OnCollisionEnter(Collider& other, Vector2 indices) {}
 	// Called on every frame of collision
-	virtual void OnCollisionStay(Collider& other)  {}
+	virtual void OnCollisionStay(Collider& other, Vector2 indices)  {}
 	// Called on last frame of collision
-	virtual void OnCollisionExit(Collider& other)  {}
+	virtual void OnCollisionExit(Collider& other, Vector2 indices)  {}
 
 	// The owning object of the component
 	Object* object;

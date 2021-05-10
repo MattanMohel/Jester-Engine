@@ -132,6 +132,9 @@
     <ClInclude Include="Jester\User Interface\ImGuiContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Jester\Core\Rigidbody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Jester\Core\Gameobject.cpp">
@@ -216,6 +219,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Jester\Jester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Jester\Core\Rigidbody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

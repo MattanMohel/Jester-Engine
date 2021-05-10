@@ -21,14 +21,12 @@ enum class State
 };
 
 public:
-	Collider();
-	~Collider();
-
 	const char* GetName() override{ return "Collider"; }
 	void OnAwake() override; 
+	void OnDestroy() override;
 	void OnUpdate() override;
 	void OnGuiUpdate() override;
-
+	// Set vertices via variadic template
 	template<typename... Vertices>
 	void SetVertices(Vertices... vertices)
 	{
@@ -45,27 +43,32 @@ public:
 
 		m_LineVisual.SetVertices(m_Vertices);
 	}
-	void SetVertices(const std::vector<Vector2>& verts);
-	void SetVertex(Vector2& newVertex, size_t index);
-
-	void RemoveVertex(size_t index);
-	void AddVertex(size_t index);
-
-	void RefreshVertices();
-
+	// Set vertices via existing vector
+	void SetVertices(const std::vector<Vector2>&);
+	// Set a vertex at a given index
+	void SetVertex(Vector2&, size_t);
+	// Remove a vertex at a given index
+	void RemoveVertex(size_t);
+	// Add vertex at a given index
+	void AddVertex(size_t);
+	// Returns the normal between two given indices
+	Vector2 GetSegmentNormal(size_t, size_t) const;
+	// Returns a vector of all indices
 	const std::vector<Vector2>& GetVertices() const;
-	Vector2 GetIndex(int index) const;
+	// Returns a given index 
+	Vector2 GetIndex(int) const;
 
 	bool isTrigger() const;
 	bool isPhysics() const;
 
 	Type GetType() const;
 
-	inline bool isInCollisionArray(const Collider* a) const;
+	inline bool isInCollisionArray(const Collider*) const;
 
 private:
+	void RefreshVertices();
 	static void CheckCollisions();
-	static bool isColliding(const Collider* a, const Collider* b);	
+	static bool isColliding(const Collider*, const Collider*, Vector2&, Vector2&);	
 
 	Type m_Type = Type::Polygon;
 	State m_State = State::Physics;

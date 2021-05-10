@@ -211,6 +211,7 @@
     <ClInclude Include="Jester\Renderer\Sprite.h" />
     <ClInclude Include="Jester\Renderer\Shape.h" />
     <ClInclude Include="Jester\Renderer\Renderer.h" />
+    <ClInclude Include="Jester\Core\Rigidbody.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Jester\Jester.cpp">
@@ -305,6 +306,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Jester\Core\Rigidbody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\fColored.shader" />

@@ -7,6 +7,8 @@
 #include "Component.h"
 #include "Transform.h"
 
+class Rigidbody;
+
 template<typename T> concept TComponent = std::is_base_of<Component, T>::value;
 using ID = long long unsigned int;
 using Info = std::pair<bool, size_t>;
@@ -14,6 +16,7 @@ using Info = std::pair<bool, size_t>;
 class Object  
 {
 	friend class Application;
+	friend class Rigidbody;
 	friend class Collider;
 
 public:
@@ -25,6 +28,8 @@ public:
 	inline const std::vector<Component*>& GetComponents() { return m_Components; }
 	// Retrieves the Object's ID
 	inline const ID& GetID() { return m_ID; }
+	// Retrieves whether the Object is a physics object
+	inline bool IsRigidbody() { return hasRigidbody; }
 
 	std::string name;
 	bool isEnabled = true;
@@ -36,7 +41,6 @@ public:
 	{
 		return (comp*)m_Components.emplace_back(new comp())->Init(this);
 	}	
-	
 	// Removes a component of a specified type
 	template<TComponent comp>
 	void RemoveComponent()
@@ -44,14 +48,12 @@ public:
 		size_t index = hasComponent(HASH_OF(comp)).second;
 		delete m_Components[index]; m_Components.erase(m_Components.begin() + index);
 	}
-
 	// Returns pointer to binded component of a specified type
 	template<TComponent comp>
 	comp* GetComponent()
 	{
 		return (comp*)m_Components[hasComponent(HASH_OF(comp)).second];
 	}
-
 	// Returns first found instance of a specified type
 	template<TComponent comp>
 	static comp* FindComponent()
@@ -63,8 +65,7 @@ public:
 		}
 
 		return nullptr;
-	}	
-	
+	}		
 	//Finds all instances of type TComponent 
 	template<TComponent comp>
 	static std::vector<comp*> FindComponents()
@@ -92,11 +93,12 @@ private:
 	void OnAwake();
 	void OnUpdate();
 
-	void OnCollisionEnter(Collider& other);
-	void OnCollisionStay(Collider& other);
-	void OnCollisionExit(Collider& other);
+	void OnCollisionEnter(Collider&, Vector2);
+	void OnCollisionStay(Collider&, Vector2);
+	void OnCollisionExit(Collider&, Vector2);
 
 	ID m_ID;
+	bool hasRigidbody = false;
 	std::vector<Component*> m_Components;
 };
 

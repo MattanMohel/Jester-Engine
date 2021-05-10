@@ -47,29 +47,29 @@ void Object::OnUpdate()
 	}
 }
 
-void Object::OnCollisionEnter(Collider& other)
+void Object::OnCollisionEnter(Collider& other, Vector2 indices)
 {
 	for (auto& component : m_Components)
-		component->OnCollisionEnter(other);
+		component->OnCollisionEnter(other, indices);
 
 	for (auto& child : transform.m_Children)
-		child->object->OnCollisionEnter(other);
+		child->object->OnCollisionEnter(other, indices);
 }
 
-void Object::OnCollisionStay(Collider& other)
+void Object::OnCollisionStay(Collider& other, Vector2 indices)
 {
 	for (auto& component : m_Components)
-		component->OnCollisionStay(other);
+		component->OnCollisionStay(other, indices);
 
 	for (auto& child : transform.m_Children)
-		child->object->OnCollisionStay(other);
+		child->object->OnCollisionStay(other, indices);
 }
 
-void Object::OnCollisionExit(Collider& other)
+void Object::OnCollisionExit(Collider& other, Vector2 indices)
 {
 	for (auto& component : m_Components)
-		component->OnCollisionExit(other);
+		component->OnCollisionExit(other, indices);
 
 	for (auto& child : transform.m_Children)
-		child->object->OnCollisionExit(other);
+		child->object->OnCollisionExit(other, indices);
 }

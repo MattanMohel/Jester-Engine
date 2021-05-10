@@ -38,10 +38,8 @@ struct Vector2
 	//returns a vector with x-y components ranging from 0 to 1
 	Vector2 Normalized() const
 	{
-		if (x > y)
-			return Vector2(1, y / x);
-		else
-			return Vector2(x / y, 1);
+		float mag = Magnitude();
+		return { x / mag, y / mag };
 	}
 
 	static float DotProduct(const Vector2& a, const Vector2& b)
@@ -88,11 +86,21 @@ struct Vector2
 	{
 		x *= multiplier;
 		y *= multiplier;
+	}	
+	void operator*= (const Vector2& multiplier)
+	{
+		x *= multiplier.x;
+		y *= multiplier.y;
 	}
 	void operator/= (const float& divider)
 	{
 		x /= divider;
 		y /= divider;
+	}		
+	void operator/= (const Vector2& divider)
+	{
+		x /= divider.x;
+		y /= divider.y;
 	}	
 
 	Vector2 operator+ (const Vector2& vec2) const
@@ -106,10 +114,18 @@ struct Vector2
 	Vector2 operator* (const float& num) const
 	{
 		return Vector2(x * num, y * num);
+	}	
+	Vector2 operator* (const Vector2& num) const
+	{
+		return Vector2(x * num.x, y * num.y);
 	}
 	Vector2 operator/ (const float& num) const
 	{
 		return Vector2(x / num, y / num);
+	}	
+	Vector2 operator/ (const Vector2& num) const
+	{
+		return Vector2(x / num.x, y / num.y);
 	}
 
 	bool operator== (const Vector2 vec2) const

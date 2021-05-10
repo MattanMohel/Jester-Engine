@@ -6,21 +6,18 @@ std::vector<Collider*> Collider::colliderRegistery;
 size_t Collider::callIndex = 0;
 bool Collider::checked = false;
 
-Collider::Collider()
-	: m_FurthestVertexDistance(0)
-{
-	colliderRegistery.push_back(this);
-}
-
-Collider::~Collider()
-{
-	colliderRegistery.erase(find(m_Collisions.begin(), m_Collisions.end(), this));
-}
-
 void Collider::OnAwake()
 {
+	colliderRegistery.push_back(this);
+
+	m_FurthestVertexDistance = 0;
 	m_LineVisual.object = object;
 	m_LineVisual.color() = Color(COLLIDER_COLOR);
+}
+
+void Collider::OnDestroy()
+{
+	colliderRegistery.erase(find(m_Collisions.begin(), m_Collisions.end(), this));
 }
 
 void Collider::OnUpdate()
@@ -86,25 +83,16 @@ void Collider::RemoveVertex(size_t index)
 void Collider::AddVertex(size_t index)
 {
 	if (m_Vertices.size() == 0)
-		m_Vertices.push_back(Vector2::Zero);
+		m_Vertices.emplace_back(Vector2::Zero);
 	else
 		m_Vertices.insert(m_Vertices.begin() + index, Vector2::Zero);
 
 	m_LineVisual.AddVertex(index);
 }
 
-void Collider::RefreshVertices()
+Vector2 Collider::GetSegmentNormal(size_t a, size_t b) const
 {
-	float maxDistance = 0;
-	for (const auto& vert : m_Vertices)
-	{
-		float distance = Vector2::SquaredDistance(vert, Vector2::Zero);
-		maxDistance = distance > maxDistance ? distance : maxDistance;
-	}
-
-	m_FurthestVertexDistance = maxDistance;
-
-	m_LineVisual.SetVertices(m_Vertices);
+	return (m_Vertices[a] - m_Vertices[b]).Normalized();
 }
 
 const std::vector<Vector2>& Collider::GetVertices() const
@@ -137,11 +125,24 @@ inline bool Collider::isInCollisionArray(const Collider* a) const
 	return find(m_Collisions.begin(), m_Collisions.end(), a) != m_Collisions.end();
 }
 
+void Collider::RefreshVertices()
+{
+	float maxDistance = 0;
+	for (const auto& vert : m_Vertices)
+	{
+		float distance = Vector2::SquaredDistance(vert, Vector2::Zero);
+		maxDistance = distance > maxDistance ? distance : maxDistance;
+	}
+
+	m_FurthestVertexDistance = maxDistance;
+
+	m_LineVisual.SetVertices(m_Vertices);
+}
+
 void Collider::CheckCollisions()
 {
 	checked = true;
 	
-	//declare out of method
 	callIndex++;
 
 	for (int i = 0; i < colliderRegistery.size() - 1; i++)
@@ -151,29 +152,33 @@ void Collider::CheckCollisions()
 			Collider* coll_i = colliderRegistery[i];
 			Collider* coll_j = colliderRegistery[j];
 
-			/*checks if either of the shape's vertex lies within the other shape*/
-			bool colliding = isColliding(coll_i, coll_j) || isColliding(coll_j, coll_i);
+			// If either shape is intersecting
+			/*Collision indices for i and j*/ Vector2 i_coll, j_coll;
+			bool colliding = isColliding(coll_i, coll_j, i_coll, j_coll) || isColliding(coll_j, coll_i, j_coll, i_coll);
 
 			if (colliding)
 			{
-				if (coll_i->isInCollisionArray(coll_j)) /*if already colliding*/
+				if (coll_i->isInCollisionArray(coll_j)) // If already colliding
 				{
-					coll_i->object->transform.GetRoot()->OnCollisionStay((Collider&)coll_j);
-					coll_j->object->transform.GetRoot()->OnCollisionStay((Collider&)coll_i);
+					coll_i->object->transform.GetRoot()->OnCollisionStay(*coll_j, i_coll);
+					coll_j->object->transform.GetRoot()->OnCollisionStay(*coll_i, j_coll);
 				}
-				else /*if wasn't colliding before*/
+				else // If started colliding
 				{
 					coll_i->m_Collisions.push_back(coll_j);
 					coll_j->m_Collisions.push_back(coll_i);
 
-					coll_i->object->transform.GetRoot()->OnCollisionEnter((Collider&)coll_j); 
-					coll_j->object->transform.GetRoot()->OnCollisionEnter((Collider&)coll_i); 
+					coll_i->object->transform.GetRoot()->OnCollisionEnter(*coll_j, i_coll);
+					coll_j->object->transform.GetRoot()->OnCollisionEnter(*coll_i, j_coll);
+
+					coll_i->object->transform.GetRoot()->OnCollisionStay(*coll_j, i_coll);
+					coll_j->object->transform.GetRoot()->OnCollisionStay(*coll_i, j_coll);
 				}	
 			}
-			else if (coll_i->isInCollisionArray(coll_j)) /*if stopped colliding*/
+			else if (coll_i->isInCollisionArray(coll_j)) // if stopped colliding
 			{
-				coll_i->object->transform.GetRoot()->OnCollisionExit((Collider&)coll_j);
-				coll_j->object->transform.GetRoot()->OnCollisionExit((Collider&)coll_i);
+				coll_i->object->transform.GetRoot()->OnCollisionExit(*coll_j, i_coll);
+				coll_j->object->transform.GetRoot()->OnCollisionExit(*coll_i, j_coll);
 
 				coll_i->m_Collisions.erase(find(coll_i->m_Collisions.begin(), coll_i->m_Collisions.end(), coll_j));
 				coll_j->m_Collisions.erase(find(coll_j->m_Collisions.begin(), coll_j->m_Collisions.end(), coll_i));
@@ -188,7 +193,7 @@ void Collider::CheckCollisions()
 	}
 }
 
-bool Collider::isColliding(const Collider* a, const Collider* b)
+bool Collider::isColliding(const Collider* a, const Collider* b, Vector2& a_Indices, Vector2& b_Indices)
 {
 	bool colliding = false;
 	bool collisionSide[2] = { false, false };
@@ -200,41 +205,44 @@ bool Collider::isColliding(const Collider* a, const Collider* b)
 			> a->m_FurthestVertexDistance + b->m_FurthestVertexDistance)
 			return false;*/
 
-	for (const auto& vert : a->m_Vertices)  
+	for (size_t i = 0; i < a->m_Vertices.size(); i++)  
 	{
-		for (size_t i = 0; i < b->m_Vertices.size(); i++) 
+		for (size_t j = 0; j < b->m_Vertices.size(); j++) 
 		{
-			/*the refrenced vertices, transformed to match the gameobject*/
-			Vector2 segmentOffset((Transform::RotateAround(b->m_Vertices[i], b->object->transform))); 
-			Vector2 segmentSlope(Transform::RotateAround(b->m_Vertices[(i + 1) % b->m_Vertices.size()], b->object->transform) - segmentOffset); 
-			Vector2 transformedVert(Transform::RotateAround(vert, a->object->transform)); 
+			// The refrenced vertices, transformed to match the object
+			Vector2 segmentOffset((Transform::RotateAround(b->m_Vertices[j], b->object->transform))); 
+			Vector2 segmentSlope(Transform::RotateAround(b->m_Vertices[(j + 1) % b->m_Vertices.size()], b->object->transform) - segmentOffset); 
+			Vector2 transformedVert(Transform::RotateAround(a->m_Vertices[i], a->object->transform)); 
 
-			/*collison check uses a [1 0] vector, so if line is below there's no way to reach it*/
+			// Collison check uses a [1 0] vector, so if line is below there's no way to reach it
+			// as the Y slope is 0
 			if (segmentSlope.y == 0 && abs(transformedVert.y - segmentOffset.y) > CALC_PRECISION)  
 				continue;
 
-			/*the difference between the two constant vectors*/
+			// The difference between the two constant vectors
 			Vector2 constDiff = transformedVert - segmentOffset;
-			/*the x-position where the segment intersects with the vertex*/
+			// The x-position where the segment intersects with the vertex
 			float segmentVar = constDiff.y / segmentSlope.y; 
 
-			/*if the intersction is not within the confines of the shape*/
+			// If the intersction is not within the confines of the shape
+			// where the shape is confined between 1 and 0
 			if (!(segmentVar >= 0 && segmentVar <= 1))
 				continue;
 			
-			/*the x position where the vertex intersects with the segment*/
+			// The x position where the vertex intersects with the segment
 			float vertexVar = constDiff.x - segmentSlope.x * segmentVar;
 
-			/*check if collison was on left or right side*/
-			if (vertexVar < 0) 
-				collisionSide[0] = true; 
-			else
-				collisionSide[1] = true; 
+			// Check if collison was on left or right side
+			if (vertexVar < 0) collisionSide[0] = true; 
+			else collisionSide[1] = true; 
 
-			/*if the vertex collides with shape on both left and right ||
-			the x distance between vertex x and segment x is close enough to zero == collision*/
+			// If the vertex collides with shape on both left and right ||
+			// the x distance between vertex x and segment x is close enough to zero == collision
 			if ((collisionSide[0] && collisionSide[1]) || abs(vertexVar) <= CALC_PRECISION)
 			{
+				a_Indices = Vector2(j, (j + 1) % b->m_Vertices.size());
+				b_Indices = Vector2(i, (i + 1) % a->m_Vertices.size());
+
 				colliding = true;
 				break;
 			}

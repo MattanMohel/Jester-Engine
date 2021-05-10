@@ -3,6 +3,7 @@
 #include "Time.h"
 #include "Window.h"
 #include "Gameobject.h"
+#include "Rigidbody.h"
 
 #include "../Renderer/Renderer.h"
 #include "../User Interface/ImGuiContext.h"
@@ -52,6 +53,10 @@ void Application::Run()
 			if (!(m_GameobjectRegistry[i]->isEnabled)) continue;
 			m_GameobjectRegistry[i]->OnUpdate(); 
 		}
+
+		// Rigidbody update - position
+		for (auto& rb : Rigidbody::GetRigidbodies())
+			rb->object->transform.position += rb->velocity * rb->GetVelocityMultiplier() * Time::DeltaTime();
 
 		Jester::UI::RenderHierarchy(); 
 
