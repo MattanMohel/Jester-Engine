@@ -8,6 +8,16 @@ void SampleComponent::OnAwake()
 {
 	rb = object->GetComponent<Rigidbody>();
 	cam = Object::FindComponent<Camera>(); 
+
+	for (auto& index : object->GetComponent<Collider>()->GetVertices())
+	{
+		Object* obj = Object::Instantiate("follower");
+		obj->AddComponent<Sprite>()->SetTexture("resources/textures/block.png");
+		obj->GetComponent<Sprite>()->color = objectColor;
+		obj->transform.position = index;
+		obj->transform.scale = Vector2(.1f, .1f);
+		objects.emplace_back(obj); 
+	}
 }
 
 void SampleComponent::OnUpdate()
@@ -16,6 +26,12 @@ void SampleComponent::OnUpdate()
 
 	if (Input::GetKey(KeySig::Escape)) 
 		Window::Close(); 
+
+	for (int i = 0; i < objects.size(); i++)
+	{
+		objects[i]->GetComponent<Sprite>()->color = objectColor;
+		objects[i]->transform.position = Transform::RotateAround(object->GetComponent<Collider>()->GetIndex(i), object->transform);
+	}
 
 	Vector2 speed;
 	if (Input::GetKey(KeySig::LeftArrow))

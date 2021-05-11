@@ -1,9 +1,9 @@
 #include "Transform.h"
-
 #include "Gameobject.h"
+#include "../Renderer/RendererBase.h"
 
-Transform::Transform(Object* gameobject)
-	: object(gameobject), m_Parent(this), m_Root(this)
+Transform::Transform(Object* object)
+	: object(object), m_Parent(this), m_Root(this)
 	, position(0, 0), scale(1, 1), rotation(0) { }
 
 Transform::~Transform()
@@ -18,14 +18,14 @@ Transform::~Transform()
 
 Vector2 Transform::RotateAround(const Vector2& pos, const Vector2& scale, const Vector2& offset, const float theta)
 {
-	return Vector2(pos.x * scale.x * cos(theta) - pos.y * scale.y * sin(theta),
-		pos.x * scale.x * sin(theta) + pos.y * scale.y * cos(theta)) + offset;
+	return Vector2(pos.x * scale.x * cos(-theta * Deg2Rad) - pos.y * scale.y * sin(-theta * Deg2Rad),
+		pos.x * scale.x * sin(-theta * Deg2Rad) + pos.y * scale.y * cos(-theta * Deg2Rad)) + offset;
 }
 
 Vector2 Transform::RotateAround(const Vector2& pos, const Transform& transform)
 {
-	return Vector2(pos.x * transform.scale.x * cos(transform.rotation) - pos.y * transform.scale.y * sin(transform.rotation),
-		pos.x * transform.scale.x * sin(transform.rotation) + pos.y * transform.scale.y * cos(transform.rotation)) + transform.position;
+	return Vector2(pos.x * transform.scale.x * cos(-transform.rotation * Deg2Rad) - pos.y * transform.scale.y * sin(-transform.rotation * Deg2Rad),
+		pos.x * transform.scale.x * sin(-transform.rotation * Deg2Rad) + pos.y * transform.scale.y * cos(-transform.rotation * Deg2Rad)) + transform.position;
 }
 
 void Transform::Refresh()
